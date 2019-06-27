@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "algoRhythms",
   "version": "2.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -54,6 +54,7 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-ace": "^7.0.2",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
