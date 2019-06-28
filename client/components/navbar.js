@@ -5,15 +5,15 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {signOutThunk} from '../store/auth'
 
-const Navbar = ({handleClick, isLoggedIn, signOut}) => (
+const Navbar = ({handleClick, auth, signOut}) => (
   <div>
     <h1>algoRhythms</h1>
     <nav>
-      {isLoggedIn ? (
+      {auth.uid ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <a href="#" onClick={signOut}>
             Logout
           </a>
         </div>
@@ -22,9 +22,6 @@ const Navbar = ({handleClick, isLoggedIn, signOut}) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <button type="button" onClick={signOut}>
-            Sign Out
-          </button>
         </div>
       )}
     </nav>
@@ -36,9 +33,9 @@ const Navbar = ({handleClick, isLoggedIn, signOut}) => (
  * CONTAINER
  */
 const mapState = state => {
-  console.log(state)
+  console.log(state.firebase.auth)
   return {
-    // isLoggedIn: !!state.user.id
+    auth: state.firebase.auth
   }
 }
 
