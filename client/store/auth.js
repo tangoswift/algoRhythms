@@ -8,7 +8,7 @@ const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS'
 /**
  * INITIAL STATE
  */
-const initState = {authError: null}
+const initialState = {authError: null}
 
 /**
  * ACTION CREATOR
@@ -27,30 +27,30 @@ export const signInThunk = credentials => async (
 ) => {
   try {
     const firebase = getFirebase()
-
     await firebase
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
-
-    console.log('LOGIN SUCCESS')
     dispatch(loginSuccess())
   } catch (err) {
-    console.log('LOGIN ERROR')
+    console.error('TCL: err', err)
     dispatch(loginFail(err))
   }
 }
 
 export const signOutThunk = () => async (dispatch, getState, {getFirebase}) => {
-  const firebase = getFirebase()
-
-  await firebase.auth().signOut()
-  dispatch(signOutSuccess())
+  try {
+    const firebase = getFirebase()
+    await firebase.auth().signOut()
+    dispatch(signOutSuccess())
+  } catch (error) {
+    console.error('TCL: signOutThunk -> error', error)
+  }
 }
 
 /**
  * REDUCER
  */
-export default function(state = initState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {...state, authError: null}

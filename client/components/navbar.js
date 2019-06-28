@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {signOutThunk} from '../store/auth'
 
-const Navbar = ({handleClick, auth, signOut}) => (
+const Navbar = ({auth, signOut}) => (
   <div>
     <h1>algoRhythms</h1>
     <nav>
@@ -33,7 +33,6 @@ const Navbar = ({handleClick, auth, signOut}) => (
  * CONTAINER
  */
 const mapState = state => {
-  console.log(state.firebase.auth)
   return {
     auth: state.firebase.auth
   }
@@ -41,9 +40,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout())
-    },
     signOut: () => dispatch(signOutThunk())
   }
 }
@@ -53,7 +49,3 @@ export default connect(mapState, mapDispatch)(Navbar)
 /**
  * PROP TYPES
  */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}

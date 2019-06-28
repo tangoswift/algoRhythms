@@ -1,4 +1,5 @@
 import React from 'react'
+import history from '../history'
 import {connect} from 'react-redux'
 import {signInThunk} from '../store/auth'
 
@@ -17,6 +18,7 @@ class Login extends React.Component {
   handleOnSubmit = event => {
     event.preventDefault()
     this.props.signIn(this.state)
+    history.push('/home')
   }
 
   handleOnChange = event => {

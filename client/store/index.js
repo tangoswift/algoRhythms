@@ -28,7 +28,7 @@ const middleware = composeWithDevTools(
   ),
   //Connect firebase with Redux Store
   reduxFirestore(fbConfig),
-  reactReduxFirebase(fbConfig)
+  reactReduxFirebase(fbConfig, {attachAuthIsReady: true})
 )
 const store = createStore(reducer, middleware)
 
