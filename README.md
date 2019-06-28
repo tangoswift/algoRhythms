@@ -1,4 +1,11 @@
-# Boilermaker
+# algoRhythms
+
+# Team Members
+
+* Jason Cho
+* Jorge Acosta
+* Sidharth Nambiar
+* Feng Jiang
 
 _Good things come in pairs_
 

@@ -17,6 +17,7 @@ const reducer = combineReducers({
   firestore: firestoreReducer,
   firebase: firebaseReducer
 })
+
 const middleware = composeWithDevTools(
   //Add extra arguments to the Redux Store with access firestore/firebase
   applyMiddleware(
