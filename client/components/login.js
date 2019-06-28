@@ -26,6 +26,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const {authError} = this.props
     return (
       <div>
         <form onSubmit={this.handleOnSubmit}>
@@ -41,6 +42,7 @@ class Login extends React.Component {
           />
           <button type="submit">Submit</button>
         </form>
+        {authError}
       </div>
     )
   }
