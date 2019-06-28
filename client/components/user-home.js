@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 export const UserHome = props => {
   return (
     <div>
-      <h3>Welcome, User Home</h3>
+      <h3>Welcome, {props.profile.firstName}</h3>
     </div>
   )
 }
@@ -16,7 +16,10 @@ export const UserHome = props => {
  * CONTAINER
  */
 const mapState = state => {
-  return {}
+  console.log(state, 'STATE')
+  return {
+    profile: state.firebase.profile
+  }
 }
 
 export default connect(mapState)(UserHome)
