@@ -3,6 +3,7 @@
  */
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_FAIL = 'LOGIN_FAIL'
+const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS'
 
 /**
  * INITIAL STATE
@@ -14,6 +15,7 @@ const initState = {authError: null}
  */
 const loginSuccess = () => ({type: LOGIN_SUCCESS})
 const loginFail = err => ({type: LOGIN_FAIL, err})
+const signOutSuccess = () => ({type: SIGN_OUT_SUCCESS})
 
 /**
  * THUNK CREATOR
@@ -38,6 +40,13 @@ export const signInThunk = credentials => async (
   }
 }
 
+export const signOutThunk = () => async (dispatch, getState, {getFirebase}) => {
+  const firebase = getFirebase()
+
+  await firebase.auth().signOut()
+  dispatch(signOutSuccess())
+}
+
 /**
  * REDUCER
  */
@@ -47,6 +56,8 @@ export default function(state = initState, action) {
       return {...state, authError: null}
     case LOGIN_FAIL:
       return {...state, authError: action.err}
+    case SIGN_OUT_SUCCESS:
+      return {...state, authError: null}
     default:
       return state
   }

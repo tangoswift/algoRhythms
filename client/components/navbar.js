@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {signOutThunk} from '../store/auth'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, signOut}) => (
   <div>
     <h1>algoRhythms</h1>
     <nav>
@@ -21,6 +22,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <button type="button" onClick={signOut}>
+            Sign Out
+          </button>
         </div>
       )}
     </nav>
@@ -42,7 +46,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    }
+    },
+    signOut: () => dispatch(signOutThunk())
   }
 }
 
