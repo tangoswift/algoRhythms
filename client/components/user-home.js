@@ -25,7 +25,9 @@ export const UserHome = props => {
         {rooms ? (
           roomKeys.map(roomName => (
             <li key={roomName}>
-              <Link to={rooms[roomName].name}>{rooms[roomName].name}</Link>
+              <Link to={`/rooms/${rooms[roomName].name}`}>
+                {rooms[roomName].name}
+              </Link>
               <a>{rooms[roomName].instructions}</a>
             </li>
           ))
@@ -41,7 +43,6 @@ export const UserHome = props => {
  * CONTAINER
  */
 const mapStateToProps = state => {
-  console.log(state, 'STATE')
   return {
     profile: state.firebase.profile,
     rooms: state.firestore.data.rooms

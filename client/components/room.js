@@ -55,10 +55,11 @@ class Room extends React.Component {
   // }
 
   render() {
+    const name = this.props.match.params.name
     return (
       <div>
-        {' '}
         Get Into The Rhythm:
+        <h2>{name}</h2>
         <AceEditor
           mode="javascript"
           // theme="solarized_dark"
