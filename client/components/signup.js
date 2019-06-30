@@ -67,6 +67,7 @@ class SignUp extends React.Component {
     event.preventDefault()
     this.props.signUp(this.state)
     history.push('/home')
+    console.log(state)
   }
 
   handleOnChange = event => {
