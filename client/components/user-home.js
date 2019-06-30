@@ -16,7 +16,6 @@ export const UserHome = props => {
  * CONTAINER
  */
 const mapState = state => {
-  console.log(state, 'STATE')
   return {
     profile: state.firebase.profile
   }
