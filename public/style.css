@@ -1,5 +1,16 @@
+html {
+  min-height: 100%;
+}
+
 body {
+  margin: 0;
+  padding: 0;
   font-family: sans-serif;
+  /* background: url(./img/code-bg.jpg) ; */
+  background-size: 100%;
+  background-position: bottom;
+  background-color: #303133;
+  min-height: 100%;
 }
 
 a {
