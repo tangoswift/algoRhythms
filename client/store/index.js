@@ -11,9 +11,11 @@ import {
 } from 'react-redux-firebase'
 import fbConfig from '../../server/firebase/fbConfig'
 import auth from './auth'
+import rooms from './rooms'
 
 const reducer = combineReducers({
   auth,
+  rooms,
   firestore: firestoreReducer,
   firebase: firebaseReducer
 })
