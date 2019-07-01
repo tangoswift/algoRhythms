@@ -126,7 +126,8 @@ class Room extends React.Component {
 const mapStateToProps = state => {
   return {
     profile: state.firebase.profile,
-    rooms: state.firestore.data.rooms
+    rooms: state.firestore.data.rooms,
+    users: state.firestore.data.users
   }
 }
 
