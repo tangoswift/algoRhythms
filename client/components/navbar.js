@@ -1,37 +1,85 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link as RouterLink} from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 import {signOutThunk} from '../store/auth'
+
 // Material UI Dependencies
-
+import {fade, makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import Badge from '@material-ui/core/Badge'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import MailIcon from '@material-ui/icons/Mail'
+import CodeIcon from '@material-ui/icons/Code'
 
-const Navbar = ({auth, signOut}) => (
-  <div>
-    <AppBar position="static">
-      <Typography component="h1" variant="h3">
-        algoRhythms
-      </Typography>
-      {auth.uid ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/profile">My Profile</Link>
-          <a href="#" onClick={signOut}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </AppBar>
-  </div>
-)
+const useStyles = makeStyles(theme => ({
+  grow: {
+    flexGrow: 1
+  }
+}))
+
+const Navbar = ({auth, signOut}) => {
+  const classes = useStyles()
+
+  return (
+    <div className={classes.grow}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+            algoRhythms
+          </Typography>
+          <div className={classes.grow} />
+          <div>
+            {auth.uid ? (
+              <div>
+                {/* The navbar will show these links after you log in */}
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <Link component={RouterLink} color="inherit" to="/home">
+                      Home
+                    </Link>
+                  </Badge>
+                </IconButton>
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <Link component={RouterLink} color="inherit" to="/profile">
+                      My Profile
+                    </Link>
+                  </Badge>
+                </IconButton>
+
+                <a href="#" onClick={signOut}>
+                  Logout
+                </a>
+              </div>
+            ) : (
+              <div>
+                {/* The navbar will show these links before you log in */}
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <Link component={RouterLink} color="inherit" to="/login">
+                      Login
+                    </Link>
+                  </Badge>
+                </IconButton>
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <Link component={RouterLink} color="inherit" to="/signup">
+                      Sign Up
+                    </Link>
+                  </Badge>
+                </IconButton>
+              </div>
+            )}
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
+  )
+}
 
 /**
  * CONTAINER
