@@ -19,9 +19,9 @@ class Routes extends Component {
         {auth.uid && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/rooms/:id" component={Room} />
             <Route path="/home" component={UserHome} />
             <Route path="/profile" component={UserProfile} />
-            <Route exact path="/rooms/:name/:id" component={Room} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

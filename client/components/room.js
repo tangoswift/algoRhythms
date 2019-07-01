@@ -2,6 +2,9 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/twoSumWorker'
+import 'brace/ext/language_tools'
+import 'brace/mode/javascript'
+import 'brace/theme/solarized_dark'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {Link, Redirect} from 'react-router-dom'
@@ -11,12 +14,11 @@ import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import {changeCodeThunk} from '../store/roomId'
 
 class Room extends React.Component {
   constructor(props) {
     super(props)
-    // this.room = db.collection('rooms')
-
     this.state = {
       // worker: twoSumWorker,
       code: '',
@@ -28,20 +30,9 @@ class Room extends React.Component {
   // this.handleOnRun = this.handleOnRun.bind(this)
   // this.onChange = this.onChange.bind(this)
 
-  // onChange = async newValue => {
-  //   await this.room.doc('1').set({
-  //     code: newValue
-  //   })
-  //   this.setState({...this.state, code: newValue})
-  // }
-
-  // componentDidMount = async () => {
-  //   await this.room.doc('1').onSnapshot(doc => {
-  //     const data = doc.data().code || this.state.code
-  //     const result = doc.data().result
-  //     this.setState({...this.state, code: data, result: result})
-  //   })
-  // }
+  onChange = async newValue => {
+    await this.props.changeCode(this.props.match.params.id, newValue)
+  }
 
   // handleOnRun = () => {
   //   this.worker = new WebWorker(this.state.worker)
@@ -72,10 +63,14 @@ class Room extends React.Component {
     let id = this.props.match.params.id
 
     let instructions
-    this.props.rooms
-      ? (instructions = this.props.rooms[id].instructions + ':')
-      : (instructions = 'loading')
-    console.log('instructions', instructions)
+    let code
+    if (this.props.rooms) {
+      instructions = this.props.rooms[id].instructions + ':'
+      code = this.props.rooms[id].code
+    } else {
+      instructions = 'loading'
+    }
+
     return (
       <Container>
         <div>
@@ -87,8 +82,8 @@ class Room extends React.Component {
           </Typography>
           <AceEditor
             mode="javascript"
-            // theme="solarized_dark"
-            // onChange={this.onChange}
+            theme="solarized_dark"
+            onChange={this.onChange}
             name="UNIQUE_ID_OF_DIV"
             editorProps={{$blockScrolling: true}}
             enableLiveAutocompletion={true}
@@ -101,7 +96,7 @@ class Room extends React.Component {
             wrapEnabled={true}
             width="100%"
             height="200px"
-            value={instructions}
+            value={code}
           />
           <Button
             type="submit"
@@ -131,11 +126,18 @@ class Room extends React.Component {
 const mapStateToProps = state => {
   return {
     profile: state.firebase.profile,
-    rooms: state.firestore.data.rooms
+    rooms: state.firestore.data.rooms,
+    users: state.firestore.data.users
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeCode: (roomId, code) => dispatch(changeCodeThunk(roomId, code))
   }
 }
 
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{collection: 'rooms'}])
 )(Room)
