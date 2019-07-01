@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getRoomsThunk} from '../store/rooms'
+import {addRoomThunk} from '../store/roomId'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {Link} from 'react-router-dom'
@@ -15,12 +15,14 @@ import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import {blue} from '@material-ui/core/colors'
 import {makeStyles} from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import {roomToUserThunk} from '../store/user'
 
 /**
  * MATERIAL UI
  */
 
-const useStyles = makeStyles({
+const styles = theme => ({
   card: {
     minWidth: 275
   },
@@ -40,60 +42,79 @@ const useStyles = makeStyles({
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {rooms} = props
 
-  let roomKeys = null
-  if (rooms) {
-    roomKeys = Object.keys(rooms)
+class UserHome extends Component {
+  constructor(props) {
+    super(props)
   }
-  const classes = useStyles()
-  const bull = <span className={classes.bullet}>•</span>
-  return (
-    <Container>
-      <Typography component="h2" variant="h5">
-        Welcome, {props.profile.firstName} {props.profile.lastName}
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Card className={classes.card} color="primary">
-            <ul>
-              <Typography component="h5" variant="h5">
-                Available rooms:{' '}
-              </Typography>
 
-              {rooms ? (
-                roomKeys.map(roomName => (
-                  <li key={roomName}>
-                    <Typography component="h5" variant="h5">
-                      <Link to={`/rooms/${rooms[roomName].name}/${roomName}`}>
-                        {rooms[roomName].name}
-                      </Link>
-                      <a> {rooms[roomName].instructions}</a>
-                    </Typography>
-                  </li>
-                ))
-              ) : (
-                <h5>loading...</h5>
-              )}
-            </ul>
-          </Card>
+  createRoom = async roomInfo => {
+    await this.props.createRoom(roomInfo)
+    console.log(this.props.roomId)
+    this.props.addRoomToUser(this.props.roomId, this.props.auth.uid)
+  }
+
+  render() {
+    const {problems} = this.props
+    let problemsKeys = null
+    if (problems) {
+      problemsKeys = Object.keys(problems)
+    }
+
+    const classes = this.props
+    const bull = <span className={classes.bullet}>•</span>
+    return (
+      <Container>
+        <Typography component="h2" variant="h5">
+          Welcome, {this.props.profile.firstName} {this.props.profile.lastName}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Card className={classes.card} color="primary">
+              <ul>
+                <Typography component="h5" variant="h5">
+                  Available rooms:{' '}
+                </Typography>
+
+                {problems ? (
+                  problemsKeys.map(problemName => (
+                    <li key={problemName}>
+                      <Typography component="h5" variant="h5">
+                        <Button
+                          onClick={() => this.createRoom(problems[problemName])}
+                          // to={`/rooms/${
+                          //   problems[problemName].name
+                          // }/${problemName}`}
+                        >
+                          {problems[problemName].name}
+                        </Button>
+                        <a> {problems[problemName].instructions}</a>
+                      </Typography>
+                    </li>
+                  ))
+                ) : (
+                  <h5>loading...</h5>
+                )}
+              </ul>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card className={classes.card}>
+              <Typography component="h5" variant="h5">
+                USER STATS:
+                <li>
+                  Name: {this.props.profile.firstName}{' '}
+                  {this.props.profile.lastName}
+                </li>
+                <li>Problems solved: 0</li>
+                <li>Points earned: 0</li>
+              </Typography>
+            </Card>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Card className={classes.card}>
-            <Typography component="h5" variant="h5">
-              USER STATS:
-              <li>
-                Name: {props.profile.firstName} {props.profile.lastName}
-              </li>
-              <li>Problems solved: 0</li>
-              <li>Points earned: 0</li>
-            </Typography>
-          </Card>
-        </Grid>
-      </Grid>
-    </Container>
-  )
+      </Container>
+    )
+  }
 }
 
 /**
@@ -101,12 +122,23 @@ export const UserHome = props => {
  */
 const mapStateToProps = state => {
   return {
+    auth: state.firebase.auth,
     profile: state.firebase.profile,
-    rooms: state.firestore.data.rooms
+    problems: state.firestore.data.problems,
+    roomId: state.roomId
   }
 }
 
-export default compose(
-  connect(mapStateToProps),
-  firestoreConnect([{collection: 'rooms'}])
-)(UserHome)
+const mapDispatchToProps = dispatch => {
+  return {
+    createRoom: roomInfo => dispatch(addRoomThunk(roomInfo)),
+    addRoomToUser: (roomId, userId) => dispatch(roomToUserThunk(roomId, userId))
+  }
+}
+
+export default withStyles(styles)(
+  compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect([{collection: 'problems'}])
+  )(UserHome)
+)
