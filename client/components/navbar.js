@@ -11,6 +11,7 @@ const Navbar = ({auth, signOut}) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
+          <Link to="/profile">My Profile</Link>
           <a href="#" onClick={signOut}>
             Logout
           </a>
