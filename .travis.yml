@@ -16,7 +16,7 @@ install:
 before_script:
   - psql -c 'create database "algorhythms-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
 
 # before_deploy:
@@ -27,3 +27,7 @@ script:
 #   app: YOUR-HEROKU-APP-NAME-HERE # see README
 #   api_key:
 #     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+deploy:
+  provider: firebase
+  token:
+    secure: '1/ZAZAlGySvOo1Jrm8K00MoPMGdXC_HHTtpTm9fZ7Id70'
