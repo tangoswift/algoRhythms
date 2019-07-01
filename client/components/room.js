@@ -1,7 +1,7 @@
 import React from 'react'
 import AceEditor from 'react-ace'
 import WebWorker from '../workers/WebWorker'
-import twoSumWorker from '../workers/twoSumWorker'
+import twoSumWorker from '../workers/TwoSumWorker'
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'

@@ -2,16 +2,18 @@
  * ACTION TYPES
  */
 const ROOM_TO_USER = 'ROOM_TO_USER'
+const GET_ROOM_HISTORY = 'GET_ROOM_HISTORY'
 
 /**
  * INITIAL STATE
  */
-const defaultRoomId = ''
+const defaultRoomId = {}
 
 /**
  * ACTION CREATORS
  */
 const roomToUser = () => ({type: 'ROOM_TO_USER'})
+const getRoomHistory = rooms => ({type: 'GET_ROOM_HISTORY', rooms})
 
 /**
  * THUNK CREATORS
@@ -52,10 +54,55 @@ export const roomToUserThunk = (roomId, userId) => async (
   }
 }
 
+export const getRoomHistoryThunk = userId => async (
+  dispatch,
+  getState,
+  {getFirestore}
+) => {
+  try {
+    const firestore = getFirestore()
+    let collections = []
+    // let roomHistory = {}
+    let roomHistory = []
+
+    await firestore
+      .collection('users')
+      .doc(userId)
+      .collection('rooms')
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          collections.push(doc.id)
+        })
+      })
+      .catch(error => console.log(error))
+
+    await collections.forEach(async roomId => {
+      console.log('test...')
+      let roomDetail = await firestore
+        .collection('rooms')
+        .doc(roomId)
+        .get()
+
+      // roomHistory[roomId] = roomDetail.data()
+      roomHistory.push(roomDetail.data())
+    })
+
+    // console.log("Inside thunk, collection>>", collections)
+    // console.log("Inside thunk, room history>>", roomHistory)
+
+    dispatch(getRoomHistory(roomHistory))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default function(state = defaultRoomId, action) {
   switch (action.type) {
     case 'ROOM_TO_USER':
       return state
+    case 'GET_ROOM_HISTORY':
+      return {...state, roomHistory: action.rooms}
     default:
       return state
   }
