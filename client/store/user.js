@@ -11,7 +11,7 @@ const defaultRoomId = ''
 /**
  * ACTION CREATORS
  */
-const roomToUser = () => ({type: 'ROOM_TO_USER', roomId})
+const roomToUser = () => ({type: 'ROOM_TO_USER'})
 
 /**
  * THUNK CREATORS
@@ -23,14 +23,21 @@ export const roomToUserThunk = (roomId, userId) => async (
 ) => {
   try {
     const firestore = getFirestore()
-    const res = await firestore
+    await firestore
       .collection('users')
       .doc(userId)
       .collection('rooms')
       .doc(roomId)
       .set({timestamps: new Date()})
+
+    await firestore
+      .collection('rooms')
+      .doc(roomId)
+      .collection('users')
+      .doc(userId)
+      .set({timestamp: new Date()})
+
     dispatch(roomToUser())
-    console.log('Added roomId to user collection')
   } catch (err) {
     console.log(err)
   }

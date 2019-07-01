@@ -4,17 +4,14 @@ import {addRoomThunk} from '../store/roomId'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {Link} from 'react-router-dom'
+import history from '../history'
 // Material UI Dependencies
 import {withStyles, createMuiTheme} from '@material-ui/core/styles'
-import {ThemeProvider} from '@material-ui/styles'
-import PropTypes from 'prop-types'
-import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
+import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import {blue} from '@material-ui/core/colors'
-import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import {roomToUserThunk} from '../store/user'
 
@@ -48,10 +45,20 @@ class UserHome extends Component {
     super(props)
   }
 
+  handleJoinRoom = async e => {
+    e.preventDefault()
+    const roomId = e.target.roomId.value
+    const userId = this.props.auth.uid
+    await this.props.addRoomToUser(roomId, userId)
+    history.push(`/rooms/${roomId}`)
+  }
+
   createRoom = async roomInfo => {
     await this.props.createRoom(roomInfo)
-    console.log(this.props.roomId)
-    this.props.addRoomToUser(this.props.roomId, this.props.auth.uid)
+    const roomId = this.props.roomId
+    const userId = this.props.auth.uid
+    await this.props.addRoomToUser(roomId, userId)
+    history.push(`/rooms/${roomId}`)
   }
 
   render() {
@@ -75,16 +82,12 @@ class UserHome extends Component {
                 <Typography component="h5" variant="h5">
                   Available rooms:{' '}
                 </Typography>
-
                 {problems ? (
                   problemsKeys.map(problemName => (
                     <li key={problemName}>
                       <Typography component="h5" variant="h5">
                         <Button
                           onClick={() => this.createRoom(problems[problemName])}
-                          // to={`/rooms/${
-                          //   problems[problemName].name
-                          // }/${problemName}`}
                         >
                           {problems[problemName].name}
                         </Button>
@@ -97,6 +100,22 @@ class UserHome extends Component {
                 )}
               </ul>
             </Card>
+            <form onSubmit={this.handleJoinRoom}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    className={classes.textField}
+                    required
+                    fullWidth
+                    id="roomId"
+                    name="roomId"
+                    label="roomId"
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
+              <Button type="submit">Submit</Button>
+            </form>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>

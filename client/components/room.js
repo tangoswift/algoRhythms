@@ -75,7 +75,6 @@ class Room extends React.Component {
     this.props.rooms
       ? (instructions = this.props.rooms[id].instructions + ':')
       : (instructions = 'loading')
-    console.log('instructions', instructions)
     return (
       <Container>
         <div>

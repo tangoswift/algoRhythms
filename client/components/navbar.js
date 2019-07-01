@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 
 const Navbar = ({auth, signOut}) => (
   <div>
-    <AppBar position="static" color="">
+    <AppBar position="static">
       <Typography component="h1" variant="h3">
         algoRhythms
       </Typography>
