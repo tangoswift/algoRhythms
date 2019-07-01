@@ -2,11 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {signOutThunk} from '../store/auth'
+// Material UI Dependencies
+
+import AppBar from '@material-ui/core/AppBar'
+import Typography from '@material-ui/core/Typography'
 
 const Navbar = ({auth, signOut}) => (
   <div>
-    <h1>algoRhythms</h1>
-    <nav>
+    <AppBar position="static" color="">
+      <Typography component="h1" variant="h3">
+        algoRhythms
+      </Typography>
       {auth.uid ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -23,8 +29,7 @@ const Navbar = ({auth, signOut}) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
-    </nav>
-    <hr />
+    </AppBar>
   </div>
 )
 
