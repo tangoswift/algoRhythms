@@ -25,7 +25,7 @@ export const UserHome = props => {
         {rooms ? (
           roomKeys.map(roomName => (
             <li key={roomName}>
-              <Link to={`/rooms/${rooms[roomName].name}`}>
+              <Link to={`/rooms/${rooms[roomName].name}/${roomName}`}>
                 {rooms[roomName].name}
               </Link>
               <a>{rooms[roomName].instructions}</a>

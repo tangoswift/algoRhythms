@@ -19,7 +19,7 @@ class Routes extends Component {
         <Switch>
           {/* Routes placed here are only available after logging in */}
           <Route path="/home" component={UserHome} />
-          <Route exact path="/rooms/:name" component={Room} />
+          <Route exact path="/rooms/:name/:id" component={Room} />
           //{' '}
         </Switch>
         {/* )} */}

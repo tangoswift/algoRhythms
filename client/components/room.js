@@ -2,21 +2,25 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/twoSumWorker'
-// import db from '../../../server/firebase/fbConfig'
+import {compose} from 'redux'
+import {firestoreConnect} from 'react-redux-firebase'
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 class Room extends React.Component {
   constructor(props) {
     super(props)
     // this.room = db.collection('rooms')
+
     this.state = {
       // worker: twoSumWorker,
-      code:
-        '//Write a function to sum two numbers\nfunction twoSum (a,b){\n \n}',
-      result: 'placeholder'
+      code: '',
+      result: ''
     }
-    // this.handleOnRun = this.handleOnRun.bind(this)
-    // this.onChange = this.onChange.bind(this)
   }
+
+  // this.handleOnRun = this.handleOnRun.bind(this)
+  // this.onChange = this.onChange.bind(this)
 
   // onChange = async newValue => {
   //   await this.room.doc('1').set({
@@ -55,7 +59,14 @@ class Room extends React.Component {
   // }
 
   render() {
-    const name = this.props.match.params.name
+    let name = this.props.match.params.name
+    let id = this.props.match.params.id
+
+    let instructions
+    this.props.rooms
+      ? (instructions = this.props.rooms[id].instructions)
+      : (instructions = 'loading')
+    console.log('instructions', instructions)
     return (
       <div>
         Get Into The Rhythm:
@@ -76,7 +87,7 @@ class Room extends React.Component {
           wrapEnabled={true}
           width="100%"
           height="400px"
-          value={this.state.code}
+          value={instructions}
         />
         <button type="submit" name="action" onClick={this.handleOnRun}>
           RUN
@@ -86,5 +97,14 @@ class Room extends React.Component {
     )
   }
 }
+const mapStateToProps = state => {
+  return {
+    profile: state.firebase.profile,
+    rooms: state.firestore.data.rooms
+  }
+}
 
-export default Room
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{collection: 'rooms'}])
+)(Room)
