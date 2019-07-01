@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
-import {Login, SignUp, UserHome, Homepage} from './components'
+import {Login, SignUp, UserHome, Homepage, Room} from './components'
 
 /**
  * COMPONENT
@@ -15,12 +15,15 @@ class Routes extends Component {
         <Route exact path="/" component={Homepage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        {auth.uid && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-          </Switch>
-        )}
+        {/* {auth.uid && ( */}
+        //{' '}
+        <Switch>
+          {/* Routes placed here are only available after logging in */}
+          <Route path="/home" component={UserHome} />
+          <Route exact path="/rooms/:name/:id" component={Room} />
+          //{' '}
+        </Switch>
+        {/* )} */}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
