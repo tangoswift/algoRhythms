@@ -1,7 +1,8 @@
 import React from 'react'
 import AceEditor from 'react-ace'
 import WebWorker from '../workers/WebWorker'
-import twoSumWorker from '../workers/twoSumWorker'
+import twoSumWorker from '../workers/TwoSumWorker'
+import targetSumWorker from '../workers/TargetSumWorker'
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'
@@ -24,13 +25,24 @@ class Room extends React.Component {
 
   // this.handleOnRun = this.handleOnRun.bind(this)
   // this.onChange = this.onChange.bind(this)
-
+  handleSetWorker = workerName => {
+    switch (workerName) {
+      case 'TwoSum':
+        return twoSumWorker
+      case 'TargetSum':
+        return targetSumWorker
+      default:
+        return null
+    }
+  }
   onChange = async newValue => {
     await this.props.changeCode(this.props.match.params.id, newValue)
   }
 
-  handleOnRun = (e, code) => {
-    this.worker = new WebWorker(twoSumWorker)
+  handleOnRun = (e, code, name) => {
+    let newWorker = this.handleSetWorker(name)
+    console.log(newWorker)
+    this.worker = new WebWorker(newWorker)
     this.worker.addEventListener('message', async e => {
       this.props.updateResult(this.props.match.params.id, e.data)
     })
@@ -50,11 +62,12 @@ class Room extends React.Component {
   }
 
   render() {
-    let name = this.props.match.params.name
     let id = this.props.match.params.id
+    let name = ''
     let results
     let code
     if (this.props.rooms && this.props.rooms[id]) {
+      name = this.props.rooms[id].name
       code = this.props.rooms[id].code
       results = this.props.rooms[id].result
     } else {
@@ -69,7 +82,7 @@ class Room extends React.Component {
             Get Into The Rhythm:
           </Typography>
           <Typography component="h1" variant="h5">
-            {name}
+            This room's id is: {id}
           </Typography>
           <AceEditor
             mode="javascript"
@@ -91,7 +104,7 @@ class Room extends React.Component {
           <Button
             type="submit"
             name="action"
-            onClick={e => this.handleOnRun(e, code)}
+            onClick={e => this.handleOnRun(e, code, name)}
             variant="contained"
             color="primary"
           >
