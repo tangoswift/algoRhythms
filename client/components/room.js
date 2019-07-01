@@ -4,8 +4,13 @@ import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/twoSumWorker'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+// Material UI Dependencies
+import Typography from '@material-ui/core/Typography'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 class Room extends React.Component {
   constructor(props) {
@@ -17,6 +22,7 @@ class Room extends React.Component {
       code: '',
       result: ''
     }
+    this.redirectToTarget = this.redirectToTarget.bind(this)
   }
 
   // this.handleOnRun = this.handleOnRun.bind(this)
@@ -57,6 +63,9 @@ class Room extends React.Component {
   //   //   result: ''
   //   // })
   // }
+  redirectToTarget = () => {
+    this.props.history.push(`/home`)
+  }
 
   render() {
     let name = this.props.match.params.name
@@ -64,36 +73,58 @@ class Room extends React.Component {
 
     let instructions
     this.props.rooms
-      ? (instructions = this.props.rooms[id].instructions)
+      ? (instructions = this.props.rooms[id].instructions + ':')
       : (instructions = 'loading')
     console.log('instructions', instructions)
     return (
-      <div>
-        Get Into The Rhythm:
-        <h2>{name}</h2>
-        <AceEditor
-          mode="javascript"
-          // theme="solarized_dark"
-          // onChange={this.onChange}
-          name="UNIQUE_ID_OF_DIV"
-          editorProps={{$blockScrolling: true}}
-          enableLiveAutocompletion={true}
-          enableBasicAutocompletion={true}
-          defaultValue={this.state.code}
-          fontSize={14}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          wrapEnabled={true}
-          width="100%"
-          height="400px"
-          value={instructions}
-        />
-        <button type="submit" name="action" onClick={this.handleOnRun}>
-          RUN
-        </button>
-        <text>{this.state.result}</text>
-      </div>
+      <Container>
+        <div>
+          <Typography component="h2" variant="h5">
+            Get Into The Rhythm:
+          </Typography>
+          <Typography component="h1" variant="h5">
+            {name}
+          </Typography>
+          <AceEditor
+            mode="javascript"
+            // theme="solarized_dark"
+            // onChange={this.onChange}
+            name="UNIQUE_ID_OF_DIV"
+            editorProps={{$blockScrolling: true}}
+            enableLiveAutocompletion={true}
+            enableBasicAutocompletion={true}
+            defaultValue={this.state.code}
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            wrapEnabled={true}
+            width="100%"
+            height="200px"
+            value={instructions}
+          />
+          <Button
+            type="submit"
+            name="action"
+            onClick={this.handleOnRun}
+            variant="contained"
+            color="primary"
+          >
+            RUN
+          </Button>
+          <Button
+            type="button"
+            onClick={this.redirectToTarget}
+            variant="contained"
+            color="primary"
+          >
+            BAIL
+          </Button>
+          <Typography component="h5" variant="h5">
+            Results: {this.state.result}
+          </Typography>
+        </div>
+      </Container>
     )
   }
 }
