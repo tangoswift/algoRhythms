@@ -21,7 +21,7 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import {roomToUserThunk} from '../store/user'
+
 import Loading from './Loading'
 
 /**
