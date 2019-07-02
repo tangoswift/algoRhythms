@@ -13,7 +13,8 @@ body {
   min-height: 100%;
 }
 
-a {
+a:hover {
+  color: red;
   text-decoration: none;
 }
 

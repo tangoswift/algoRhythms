@@ -26,7 +26,14 @@ const Navbar = ({auth, signOut}) => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            algoRhythms
+            <Link
+              component={RouterLink}
+              underline="none"
+              color="inherit"
+              to="/"
+            >
+              algoRhythms
+            </Link>
           </Typography>
           <div className={classes.grow} />
           <div>
@@ -34,25 +41,36 @@ const Navbar = ({auth, signOut}) => {
               <div>
                 {/* The navbar will show these links after you log in */}
                 <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/home">
+                  <Badge>
+                    <Link
+                      component={RouterLink}
+                      underline="none"
+                      color="inherit"
+                      to="/home"
+                    >
                       Home
                     </Link>
                   </Badge>
                 </IconButton>
                 <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/profile">
+                  <Badge>
+                    <Link
+                      component={RouterLink}
+                      underline="none"
+                      color="inherit"
+                      to="/profile"
+                    >
                       My Profile
                     </Link>
                   </Badge>
                 </IconButton>
                 <IconButton color="inherit">
-                  <Badge color="secondary">
+                  <Badge>
                     <Link
                       onClick={signOut}
                       component={RouterLink}
                       color="inherit"
+                      underline="none"
                       to="/login"
                     >
                       Logout
@@ -64,15 +82,25 @@ const Navbar = ({auth, signOut}) => {
               <div>
                 {/* The navbar will show these links before you log in */}
                 <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/login">
+                  <Badge>
+                    <Link
+                      component={RouterLink}
+                      underline="none"
+                      color="inherit"
+                      to="/login"
+                    >
                       Login
                     </Link>
                   </Badge>
                 </IconButton>
                 <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/signup">
+                  <Badge>
+                    <Link
+                      component={RouterLink}
+                      underline="none"
+                      color="inherit"
+                      to="/signup"
+                    >
                       Sign Up
                     </Link>
                   </Badge>
