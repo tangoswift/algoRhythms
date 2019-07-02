@@ -52,6 +52,10 @@ class Room extends React.Component {
     setTimeout(() => this.worker.terminate(), 10000)
   }
 
+  redirectToTarget = () => {
+    this.props.history.push('/home')
+  }
+
   render() {
     let id = this.props.match.params.id
     let name = ''

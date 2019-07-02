@@ -18,7 +18,7 @@ class UserProfile extends Component {
         {roomHistory && roomHistory.length ? (
           <ProblemsSolved roomHistory={this.props.roomHistory} />
         ) : (
-          'LOADING COMPONENT'
+          'No problems completed'
         )}
         <h1>Total Points</h1>
         <UserInfo />
