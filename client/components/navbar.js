@@ -11,9 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Badge from '@material-ui/core/Badge'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import MailIcon from '@material-ui/icons/Mail'
-import CodeIcon from '@material-ui/icons/Code'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -23,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({auth, signOut}) => {
   const classes = useStyles()
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -50,10 +46,18 @@ const Navbar = ({auth, signOut}) => {
                     </Link>
                   </Badge>
                 </IconButton>
-
-                <a href="#" onClick={signOut}>
-                  Logout
-                </a>
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <Link
+                      onClick={signOut}
+                      component={RouterLink}
+                      color="inherit"
+                      to="/login"
+                    >
+                      Logout
+                    </Link>
+                  </Badge>
+                </IconButton>
               </div>
             ) : (
               <div>
