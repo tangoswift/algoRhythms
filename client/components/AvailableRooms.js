@@ -1,10 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {List, ListItem, makeSelectable} from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
+// import {List, ListItem, makeSelectable} from 'material-ui/List'
+// import Subheader from 'material-ui/Subheader'
 import {connect} from 'react-redux'
 import {roomToUserThunk} from '../store/user'
 import history from '../history'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import {makeStyles} from '@material-ui/core/styles'
 
 // let SelectableList = makeSelectable(List)
 
@@ -69,6 +73,14 @@ import history from '../history'
 //   )
 // }
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    // maxWidth: 400,
+    backgroundColor: theme.palette.background.paper
+  }
+}))
+
 const AvailableRooms = props => {
   const {rooms, userId} = props
   const roomIds = Object.keys(rooms)
@@ -78,15 +90,38 @@ const AvailableRooms = props => {
     history.push(`/rooms/${id}`)
   }
 
+  const classes = useStyles()
+  const [selectedIndex, setSelectedIndex] = React.useState(1)
+  const handleListItemClick = async (event, id, idx) => {
+    await props.addRoomToUser(id, userId)
+    history.push(`/rooms/${id}`)
+    setSelectedIndex(idx)
+  }
+
   return (
-    <div>
-      {roomIds.map((id, idx) => {
-        return rooms[id].result !== 'Thats right!' ? (
-          <button type="button" key={id} onClick={() => onClick(id)}>
-            {rooms[id].name}
-          </button>
-        ) : null
-      })}
+    // <div>
+    //   {roomIds.map((id, idx) => {
+    //     return rooms[id].result !== 'Thats right!' ? (
+    //       <button type="button" key={id} onClick={() => onClick(id)}>
+    //         {rooms[id].name}
+    //       </button>
+    //     ) : null
+    //   })}
+    // </div>
+    <div className={classes.root}>
+      <List component="nav">
+        {roomIds.map((id, idx) => {
+          return rooms[id].result !== 'Thats right!' ? (
+            <ListItem
+              button
+              selected={selectedIndex === idx}
+              onClick={event => handleListItemClick(event, id, idx)}
+            >
+              <ListItemText primary={rooms[id].name} />
+            </ListItem>
+          ) : null
+        })}
+      </List>
     </div>
   )
 }
