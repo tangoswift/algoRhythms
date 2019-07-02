@@ -6,6 +6,7 @@ import {firestoreConnect} from 'react-redux-firebase'
 import {Link} from 'react-router-dom'
 import history from '../history'
 import {roomToUserThunk, getRoomHistoryThunk} from '../store/user'
+import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
 import {withStyles, createMuiTheme} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
@@ -67,7 +68,7 @@ class UserHome extends Component {
 
   render() {
     console.log(this.props.profile)
-    const {problems, roomHistory} = this.props
+    const {problems, roomHistory, userId, rooms} = this.props
     let problemsKeys = null
     if (problems) {
       problemsKeys = Object.keys(problems)
@@ -121,24 +122,30 @@ class UserHome extends Component {
               </Grid>
               <Button type="submit">Submit</Button>
             </form>
+            <Grid item xs={12} sm={6}>
+              <Card className={classes.card}>
+                <Typography component="h5" variant="h5">
+                  USER STATS:
+                  <li>
+                    Name: {this.props.profile.firstName}{' '}
+                    {this.props.profile.lastName}
+                  </li>
+                  <li>
+                    Problems solved:{' '}
+                    {roomHistory
+                      ? roomHistory.filter(
+                          room => room.result === 'Thats right!'
+                        ).length
+                      : 'Loading'}
+                  </li>
+                  <li>Points earned: 0</li>
+                </Typography>
+              </Card>
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>
-              <Typography component="h5" variant="h5">
-                USER STATS:
-                <li>
-                  Name: {this.props.profile.firstName}{' '}
-                  {this.props.profile.lastName}
-                </li>
-                <li>
-                  Problems solved:{' '}
-                  {roomHistory
-                    ? roomHistory.filter(room => room.result === 'Thats right!')
-                        .length
-                    : 'Loading'}
-                </li>
-                <li>Points earned: 0</li>
-              </Typography>
+              <AvailableRooms userId={userId} rooms={rooms || {}} />
             </Card>
           </Grid>
         </Grid>
@@ -155,6 +162,7 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
     problems: state.firestore.data.problems,
+    rooms: state.firestore.data.rooms,
     roomId: state.roomId,
     roomHistory: state.user.roomHistory,
     userId: state.firebase.auth.uid
@@ -173,6 +181,6 @@ const mapDispatchToProps = dispatch => {
 export default withStyles(styles)(
   compose(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect([{collection: 'problems'}])
+    firestoreConnect([{collection: 'problems'}, {collection: 'rooms'}])
   )(UserHome)
 )
