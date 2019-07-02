@@ -5,7 +5,7 @@ import Link from '@material-ui/core/Link'
 import {signOutThunk} from '../store/auth'
 
 // Material UI Dependencies
-import {makeStyles} from '@material-ui/core/styles'
+import {fade, makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({auth, signOut}) => {
   const classes = useStyles()
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">

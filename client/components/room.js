@@ -58,7 +58,7 @@ class Room extends React.Component {
   handleOnRun = (e, code, name) => {
     let newWorker = this.handleSetWorker(name)
     this.worker = new WebWorker(newWorker)
-    this.worker.addEventListener('message', async e => {
+    this.worker.addEventListener('message', e => {
       this.props.updateResult(this.props.match.params.id, e.data)
     })
     this.worker.postMessage(code)
