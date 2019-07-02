@@ -41,22 +41,15 @@ class Room extends React.Component {
 
   handleOnRun = (e, code, name) => {
     let newWorker = this.handleSetWorker(name)
-    console.log(newWorker)
     this.worker = new WebWorker(newWorker)
     this.worker.addEventListener('message', async e => {
       this.props.updateResult(this.props.match.params.id, e.data)
     })
     this.worker.postMessage(code)
-
     //Terminate worker after 10s
     setTimeout(() => this.worker.terminate(), 10000)
-    // this.setState({
-    //   worker: twoSumWorker,
-    //   code:
-    //     '//Write a function to sum two numbers\nfunction twoSum (a,b){\n \n}',
-    //   result: ''
-    // })
   }
+
   redirectToTarget = () => {
     this.props.history.push(`/home`)
   }
@@ -76,8 +69,8 @@ class Room extends React.Component {
     }
 
     return (
-      <Container>
-        <div>
+      <Grid Container spacing={3}>
+        <Grid item xs={9}>
           <Typography component="h2" variant="h5">
             Get Into The Rhythm:
           </Typography>
@@ -98,7 +91,7 @@ class Room extends React.Component {
             highlightActiveLine={true}
             wrapEnabled={true}
             width="100%"
-            height="200px"
+            height="400px"
             value={code}
           />
           <Button
@@ -121,8 +114,17 @@ class Room extends React.Component {
           <Typography component="h5" variant="h5">
             Results: {results}
           </Typography>
-        </div>
-      </Container>
+        </Grid>
+        <Grid item xs={3}>
+          <iframe
+            src="https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=DEFAULT_ROOM&iframe=true"
+            width="400px"
+            height="320px"
+            scrolling="auto"
+            allow="microphone; camera"
+          />
+        </Grid>
+      </Grid>
     )
   }
 }
