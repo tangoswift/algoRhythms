@@ -14,6 +14,26 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import {changeCodeThunk, updateResultThunk} from '../store/roomId'
+
+
+import {withStyles} from '@material-ui/core/styles'
+import RoomResults from './RoomResults'
+
+/**
+ * MATERIAL UI
+ */
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  }
+
+  // editor: {
+
+  // }
+})
+
+
 class Room extends React.Component {
   constructor(props) {
     super(props)
@@ -39,7 +59,7 @@ class Room extends React.Component {
   handleOnRun = (e, code, name) => {
     let newWorker = this.handleSetWorker(name)
     this.worker = new WebWorker(newWorker)
-    this.worker.addEventListener('message', async e => {
+    this.worker.addEventListener('message', e => {
       this.props.updateResult(this.props.match.params.id, e.data)
     })
     this.worker.postMessage(code)
@@ -56,6 +76,8 @@ class Room extends React.Component {
     let name = ''
     let results
     let code
+    const classes = this.props
+
     if (this.props.rooms && this.props.rooms[id]) {
       name = this.props.rooms[id].name
       code = this.props.rooms[id].code
@@ -66,62 +88,66 @@ class Room extends React.Component {
     }
 
     return (
-      <Grid spacing={2}>
-        <Grid item xs={9}>
-          <Typography component="h2" variant="h5">
-            Get Into The Rhythm:
-          </Typography>
-          <Typography component="h1" variant="h5">
-            This room's id is: {id}
-          </Typography>
-          <AceEditor
-            mode="javascript"
-            theme="solarized_dark"
-            onChange={this.onChange}
-            name="UNIQUE_ID_OF_DIV"
-            editorProps={{$blockScrolling: true}}
-            enableLiveAutocompletion={true}
-            enableBasicAutocompletion={true}
-            fontSize={14}
-            showPrintMargin={true}
-            showGutter={true}
-            highlightActiveLine={true}
-            wrapEnabled={true}
-            width="100%"
-            height="400px"
-            value={code}
-          />
-          <Button
-            type="submit"
-            name="action"
-            onClick={e => this.handleOnRun(e, code, name)}
-            variant="contained"
-            color="primary"
-          >
-            RUN
-          </Button>
-          <Button
-            type="button"
-            onClick={this.redirectToTarget}
-            variant="contained"
-            color="primary"
-          >
-            BAIL
-          </Button>
-          <Typography component="h5" variant="h5">
-            Results: {results}
-          </Typography>
+      <div className={classes.root}>
+        <Typography component="h2" variant="h5">
+          Get Into The Rhythm:
+        </Typography>
+        <Typography component="h1" variant="h5">
+          This room's id is: {id}
+        </Typography>
+
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <AceEditor
+              mode="javascript"
+              theme="solarized_dark"
+              onChange={this.onChange}
+              name="UNIQUE_ID_OF_DIV"
+              editorProps={{$blockScrolling: true}}
+              enableLiveAutocompletion={true}
+              enableBasicAutocompletion={true}
+              fontSize={14}
+              showPrintMargin={true}
+              showGutter={true}
+              highlightActiveLine={true}
+              wrapEnabled={true}
+              width="100%"
+              height="400px"
+              value={code}
+            />
+
+            <Button
+              type="submit"
+              name="action"
+              onClick={e => this.handleOnRun(e, code, name)}
+              variant="contained"
+              color="primary"
+            >
+              RUN
+            </Button>
+            <Button
+              type="button"
+              onClick={this.redirectToTarget}
+              variant="contained"
+              color="primary"
+            >
+              BAIL
+            </Button>
+          </Grid>
+          <Grid item xs={3}>
+            <RoomResults results={results} />
+          </Grid>
+          <Grid item xs={3}>
+            <iframe
+              src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=8325183e-cc46-4df7-8bca-94a1d81b213d&room=${id}&iframe=true`}
+              width="100%"
+              height="100%"
+              scrolling="false"
+              allow="microphone; camera"
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <iframe
-            src="https://tokbox.com/embed/embed/ot-embed.js?embedId=1f8bcf1d-54fd-4ea2-863b-f5892c1864a8&room=DEFAULT_ROOM&iframe=true"
-            width="400px"
-            height="320px"
-            scrolling="auto"
-            allow="microphone; camera"
-          />
-        </Grid>
-      </Grid>
+      </div>
     )
   }
 }
@@ -141,7 +167,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{collection: 'rooms'}])
-)(Room)
+export default withStyles(styles)(
+  compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect([{collection: 'rooms'}])
+  )(Room)
+)
