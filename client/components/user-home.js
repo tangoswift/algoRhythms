@@ -3,19 +3,17 @@ import {connect} from 'react-redux'
 import {addRoomThunk} from '../store/roomId'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
-import {Link} from 'react-router-dom'
 import history from '../history'
 import {roomToUserThunk, getRoomHistoryThunk} from '../store/user'
 import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
-import {withStyles, createMuiTheme} from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -23,6 +21,8 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
+import {roomToUserThunk} from '../store/user'
+import Loading from './Loading'
 
 /**
  * MATERIAL UI
@@ -143,7 +143,7 @@ class UserHome extends Component {
                     </div>
                   ))
                 ) : (
-                  <h5>loading...</h5>
+                  <Loading />
                 )}
               </List>
               {/* <ul> */}

@@ -4,6 +4,7 @@ import {UserInfo} from '.'
 import {getRoomHistoryThunk} from '../store/user'
 import {connect} from 'react-redux'
 import {id} from 'brace/worker/javascript'
+import Loading from './Loading'
 
 class UserProfile extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class UserProfile extends Component {
         {roomHistory && roomHistory.length ? (
           <ProblemsSolved roomHistory={this.props.roomHistory} />
         ) : (
-          'No problems completed'
+          <Loading />
         )}
         <h1>Total Points</h1>
         <UserInfo />

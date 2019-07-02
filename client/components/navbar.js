@@ -8,70 +8,99 @@ import {signOutThunk} from '../store/auth'
 import {fade, makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import Badge from '@material-ui/core/Badge'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import MailIcon from '@material-ui/icons/Mail'
-import CodeIcon from '@material-ui/icons/Code'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
+  },
+  navlinks: {
+    margin: theme.spacing(1)
   }
 }))
 
 const Navbar = ({auth, signOut}) => {
   const classes = useStyles()
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            algoRhythms
+            <Link
+              component={RouterLink}
+              underline="none"
+              color="inherit"
+              to="/"
+            >
+              algoRhythms
+            </Link>
           </Typography>
           <div className={classes.grow} />
           <div>
             {auth.uid ? (
               <div>
                 {/* The navbar will show these links after you log in */}
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/home">
-                      Home
-                    </Link>
-                  </Badge>
-                </IconButton>
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/profile">
-                      My Profile
-                    </Link>
-                  </Badge>
-                </IconButton>
-
-                <a href="#" onClick={signOut}>
-                  Logout
-                </a>
+                <Link
+                  component={RouterLink}
+                  underline="none"
+                  color="inherit"
+                  to="/home"
+                  className={classes.navlinks}
+                >
+                  <Button variant="text" color="inherit">
+                    Home
+                  </Button>
+                </Link>
+                <Link
+                  component={RouterLink}
+                  underline="none"
+                  color="inherit"
+                  to="/profile"
+                  className={classes.navlinks}
+                >
+                  <Button variant="text" color="inherit">
+                    My Profile
+                  </Button>
+                </Link>
+                <Link
+                  onClick={signOut}
+                  component={RouterLink}
+                  color="inherit"
+                  underline="none"
+                  to="/login"
+                  className={classes.navlinks}
+                >
+                  <Button variant="text" color="inherit">
+                    Logout
+                  </Button>
+                </Link>
               </div>
             ) : (
               <div>
                 {/* The navbar will show these links before you log in */}
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/login">
-                      Login
-                    </Link>
-                  </Badge>
-                </IconButton>
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <Link component={RouterLink} color="inherit" to="/signup">
-                      Sign Up
-                    </Link>
-                  </Badge>
-                </IconButton>
+                <Link
+                  component={RouterLink}
+                  underline="none"
+                  color="inherit"
+                  to="/login"
+                  className={classes.navlinks}
+                >
+                  <Button variant="text" color="inherit">
+                    Login
+                  </Button>
+                </Link>
+                <Link
+                  component={RouterLink}
+                  underline="none"
+                  color="inherit"
+                  to="/signup"
+                  className={classes.navlinks}
+                >
+                  <Button variant="text" color="inherit">
+                    Sign Up
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
@@ -97,7 +126,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Navbar)
-
-/**
- * PROP TYPES
- */
