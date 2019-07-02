@@ -9,7 +9,6 @@ const styles = theme => ({
   emptyStateIcon: {
     fontSize: theme.spacing(12)
   },
-
   button: {
     marginTop: theme.spacing(1)
   },

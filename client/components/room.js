@@ -8,15 +8,12 @@ import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
-import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import {changeCodeThunk, updateResultThunk} from '../store/roomId'
-
 class Room extends React.Component {
   constructor(props) {
     super(props)
@@ -69,7 +66,7 @@ class Room extends React.Component {
     }
 
     return (
-      <Grid Container spacing={3}>
+      <Grid spacing={2}>
         <Grid item xs={9}>
           <Typography component="h2" variant="h5">
             Get Into The Rhythm:
@@ -117,7 +114,7 @@ class Room extends React.Component {
         </Grid>
         <Grid item xs={3}>
           <iframe
-            src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
+            src="https://tokbox.com/embed/embed/ot-embed.js?embedId=1f8bcf1d-54fd-4ea2-863b-f5892c1864a8&room=DEFAULT_ROOM&iframe=true"
             width="400px"
             height="320px"
             scrolling="auto"
