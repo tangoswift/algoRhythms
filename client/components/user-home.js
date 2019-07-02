@@ -13,6 +13,7 @@ import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import {roomToUserThunk} from '../store/user'
+import Loading from './Loading'
 
 /**
  * MATERIAL UI
@@ -91,7 +92,7 @@ class UserHome extends Component {
                     </li>
                   ))
                 ) : (
-                  <h5>loading...</h5>
+                  <Loading />
                 )}
               </ul>
             </Card>

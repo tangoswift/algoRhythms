@@ -32,8 +32,8 @@ export default function ProblemsSolved(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {roomHistory.map(row => (
-            <TableRow key={row.id}>
+          {roomHistory.map((row, idx) => (
+            <TableRow key={idx}>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.instructins}</TableCell>
               <TableCell>{row.code}</TableCell>

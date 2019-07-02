@@ -3,36 +3,29 @@ import AceEditor from 'react-ace'
 import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/TwoSumWorker'
 import targetSumWorker from '../workers/TargetSumWorker'
+import RoomResults from './RoomResults'
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux'
+
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import {changeCodeThunk, updateResultThunk} from '../store/roomId'
-
-
 import {withStyles} from '@material-ui/core/styles'
-import RoomResults from './RoomResults'
 
 /**
  * MATERIAL UI
  */
-
 const styles = theme => ({
   root: {
     flexGrow: 1
   }
-
-  // editor: {
-
-  // }
 })
-
 
 class Room extends React.Component {
   constructor(props) {
@@ -40,8 +33,6 @@ class Room extends React.Component {
     this.redirectToTarget = this.redirectToTarget.bind(this)
   }
 
-  // this.handleOnRun = this.handleOnRun.bind(this)
-  // this.onChange = this.onChange.bind(this)
   handleSetWorker = workerName => {
     switch (workerName) {
       case 'TwoSum':
