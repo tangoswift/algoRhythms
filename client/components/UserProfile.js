@@ -11,10 +11,13 @@ class UserProfile extends Component {
   }
 
   render() {
+    const {roomHistory} = this.props
     return (
       <div>
         <h1>Problems Solved</h1>
-        <ProblemsSolved />
+        {roomHistory && roomHistory.length ? (
+          <ProblemsSolved roomHistory={this.props.roomHistory} />
+        ) : null}
         <h1>Total Points</h1>
         <UserInfo />
       </div>
@@ -36,12 +39,5 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
-
-// export default compose(
-//   connect(null, mapDispatchToProps),
-//   firestoreConnect([{ collection: 'rooms' }])
-// )(UserProfile)
-
-// export default UserProfile
 
 /* eslint-disable no-script-url */

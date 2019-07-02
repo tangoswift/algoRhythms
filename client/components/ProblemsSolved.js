@@ -46,87 +46,35 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-// export default function ProblemsSolved(props) {
-//   const classes = useStyles()
-//   console.log("PROPS>>", props.roomHistory[0])
-//   return (
-//     <React.Fragment>
-//       {/* <Title>Recent ProblemsSolved</Title> */}
-//       <Table size="small">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell>Date</TableCell>
-//             <TableCell>Partner</TableCell>
-//             <TableCell>Problem</TableCell>
-//             <TableCell>Completed</TableCell>
-//             <TableCell align="right">Points Earned</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {/* {rows.map(row => (
-//             <TableRow key={row.id}>
-//               <TableCell>{row.date}</TableCell>
-//               <TableCell>{row.partner}</TableCell>
-//               <TableCell>{row.problemType}</TableCell>
-//               <TableCell>{row.status}</TableCell>
-//               <TableCell align="right">{row.pointsEarned}</TableCell>
-//             </TableRow>
-//           ))} */}
-//         </TableBody>
-//       </Table>
-//     </React.Fragment>
-//   )
-// }
+export default function ProblemsSolved(props) {
+  const classes = useStyles()
+  const {roomHistory} = props
 
-class ProblemsSolved extends Component {
-  componentDidMount() {
-    this.props.getRooms(this.props.userId)
-  }
-
-  render() {
-    console.log(this.props.roomHistory)
-    return (
-      <div>
-        {/* <Title>Recent ProblemsSolved</Title> */}
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Partner</TableCell>
-              <TableCell>Problem</TableCell>
-              <TableCell>Completed</TableCell>
-              <TableCell align="right">Points Earned</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* {rows.map(row => (
+  return (
+    <React.Fragment>
+      {/* <Title>Recent ProblemsSolved</Title> */}
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Instructions</TableCell>
+            <TableCell>Code</TableCell>
+            <TableCell>Result</TableCell>
+            <TableCell align="right">Points Earned</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {roomHistory.map(row => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.partner}</TableCell>
-              <TableCell>{row.problemType}</TableCell>
-              <TableCell>{row.status}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.instructins}</TableCell>
+              <TableCell>{row.code}</TableCell>
+              <TableCell>{row.result}</TableCell>
               <TableCell align="right">{row.pointsEarned}</TableCell>
             </TableRow>
-          ))} */}
-          </TableBody>
-        </Table>
-      </div>
-    )
-  }
+          ))}
+        </TableBody>
+      </Table>
+    </React.Fragment>
+  )
 }
-
-const mapStateToProps = state => {
-  console.log('State inside profile>>>', state)
-  return {
-    roomHistory: state.user.roomHistory,
-    userId: state.firebase.auth.uid
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getRooms: userId => dispatch(getRoomHistoryThunk(userId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProblemsSolved)

@@ -62,7 +62,6 @@ export const getRoomHistoryThunk = userId => async (
   try {
     const firestore = getFirestore()
     let collections = []
-    // let roomHistory = {}
     let roomHistory = []
 
     await firestore
@@ -75,21 +74,29 @@ export const getRoomHistoryThunk = userId => async (
           collections.push(doc.id)
         })
       })
-      .catch(error => console.log(error))
 
-    await collections.forEach(async roomId => {
-      console.log('test...')
-      let roomDetail = await firestore
+    /**********************************
+     * THE FOLLOWING CODE WILL NOT WORK
+     **********************************/
+    // collections.forEach(async roomId => {
+    //   const doc = await firestore
+    //     .collection('rooms')
+    //     .doc(roomId)
+    //     .get()
+    //   roomHistory.push(doc.data())
+    // })
+
+    /**********************************
+     * USE THE CODE BELOW INSTEAD
+     **********************************/
+    for (let i = 0; i < collections.length; i++) {
+      const roomId = collections[i]
+      const doc = await firestore
         .collection('rooms')
         .doc(roomId)
         .get()
-
-      // roomHistory[roomId] = roomDetail.data()
-      roomHistory.push(roomDetail.data())
-    })
-
-    // console.log("Inside thunk, collection>>", collections)
-    // console.log("Inside thunk, room history>>", roomHistory)
+      roomHistory.push(doc.data())
+    }
 
     dispatch(getRoomHistory(roomHistory))
   } catch (err) {
