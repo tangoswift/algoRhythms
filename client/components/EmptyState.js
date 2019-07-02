@@ -1,16 +1,13 @@
 import React, {Component} from 'react'
-
 import PropTypes from 'prop-types'
-
 import {withStyles} from '@material-ui/core/styles'
-
 import Typography from '@material-ui/core/Typography'
 
 const styles = {
   center: {
     position: 'absolute',
     top: '50%',
-    left: '25%',
+    left: '50%',
     transform: 'translate(-50%, -50%)',
     textAlign: 'center'
   }
@@ -49,7 +46,7 @@ EmptyState.propTypes = {
   image: PropTypes.element,
   icon: PropTypes.element,
   title: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.object,
   button: PropTypes.element
 }
 

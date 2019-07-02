@@ -3,10 +3,9 @@ import {connect} from 'react-redux'
 import {addRoomThunk} from '../store/roomId'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
-import {Link} from 'react-router-dom'
 import history from '../history'
 // Material UI Dependencies
-import {withStyles, createMuiTheme} from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
@@ -41,10 +40,6 @@ const styles = theme => ({
  */
 
 class UserHome extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   handleJoinRoom = async e => {
     e.preventDefault()
     const roomId = e.target.roomId.value

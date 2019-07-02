@@ -4,8 +4,7 @@ import {connect} from 'react-redux'
 import {signInThunk} from '../store/auth'
 
 // Material UI Dependencies
-import {withStyles, createMuiTheme} from '@material-ui/core/styles'
-import {ThemeProvider} from '@material-ui/styles'
+import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
@@ -42,14 +41,6 @@ const styles = theme => ({
   }
 })
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#01579b'
-    }
-  }
-})
-
 /**
  * COMPONENT
  */
@@ -76,58 +67,56 @@ class Login extends React.Component {
     const {classes} = this.props
     const {authError} = this.props
     return (
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              Login
-            </Typography>
-            <form onSubmit={this.handleOnSubmit} className={classes.form}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    className={classes.textField}
-                    required
-                    fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    value={this.state.email}
-                    onChange={this.handleOnChange}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
-                    value={this.state.password}
-                    onChange={this.handleOnChange}
-                    variant="outlined"
-                  />
-                </Grid>
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          <form onSubmit={this.handleOnSubmit} className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  className={classes.textField}
+                  required
+                  fullWidth
+                  id="email"
+                  name="email"
+                  label="Email"
+                  value={this.state.email}
+                  onChange={this.handleOnChange}
+                  variant="outlined"
+                />
               </Grid>
-              {authError && (
-                <FormHelperText id="component-error-text">
-                  {authError}
-                </FormHelperText>
-              )}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Login
-              </Button>
-            </form>
-          </div>
-        </Container>
-      </ThemeProvider>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="password"
+                  name="password"
+                  label="Password"
+                  value={this.state.password}
+                  onChange={this.handleOnChange}
+                  variant="outlined"
+                />
+              </Grid>
+            </Grid>
+            {authError && (
+              <FormHelperText id="component-error-text">
+                {authError}
+              </FormHelperText>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Login
+            </Button>
+          </form>
+        </div>
+      </Container>
     )
   }
 }
