@@ -2,6 +2,7 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/TwoSumWorker'
+import targetSumWorker from '../workers/TargetSumWorker'
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'
@@ -14,61 +15,64 @@ import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import {changeCodeThunk} from '../store/roomId'
+import {changeCodeThunk, updateResultThunk} from '../store/roomId'
 
 class Room extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      // worker: twoSumWorker,
-      code: '',
-      result: ''
-    }
     this.redirectToTarget = this.redirectToTarget.bind(this)
   }
 
   // this.handleOnRun = this.handleOnRun.bind(this)
   // this.onChange = this.onChange.bind(this)
-
+  handleSetWorker = workerName => {
+    switch (workerName) {
+      case 'TwoSum':
+        return twoSumWorker
+      case 'TargetSum':
+        return targetSumWorker
+      default:
+        return null
+    }
+  }
   onChange = async newValue => {
     await this.props.changeCode(this.props.match.params.id, newValue)
   }
 
-  // handleOnRun = () => {
-  //   this.worker = new WebWorker(this.state.worker)
-  //   this.worker.addEventListener('message', async e => {
-  //     await this.room.doc('1').set({
-  //       result: e.data + ''
-  //     })
-  //     this.setState({...this.state, result: e.data})
-  //   })
+  handleOnRun = (e, code, name) => {
+    let newWorker = this.handleSetWorker(name)
+    console.log(newWorker)
+    this.worker = new WebWorker(newWorker)
+    this.worker.addEventListener('message', async e => {
+      this.props.updateResult(this.props.match.params.id, e.data)
+    })
+    this.worker.postMessage(code)
 
-  //   this.worker.postMessage({code: this.state.code})
-
-  //   //Terminate worker after 10s
-  //   setTimeout(() => this.worker.terminate(), 10000)
-  //   // this.setState({
-  //   //   worker: twoSumWorker,
-  //   //   code:
-  //   //     '//Write a function to sum two numbers\nfunction twoSum (a,b){\n \n}',
-  //   //   result: ''
-  //   // })
-  // }
+    //Terminate worker after 10s
+    setTimeout(() => this.worker.terminate(), 10000)
+    // this.setState({
+    //   worker: twoSumWorker,
+    //   code:
+    //     '//Write a function to sum two numbers\nfunction twoSum (a,b){\n \n}',
+    //   result: ''
+    // })
+  }
   redirectToTarget = () => {
     this.props.history.push(`/home`)
   }
 
   render() {
-    let name = this.props.match.params.name
     let id = this.props.match.params.id
-
-    let instructions
+    let name = ''
+    let results
     let code
-    if (this.props.rooms) {
-      instructions = this.props.rooms[id].instructions + ':'
+    if (this.props.rooms && this.props.rooms[id]) {
+      name = this.props.rooms[id].name
       code = this.props.rooms[id].code
+      results = this.props.rooms[id].result
     } else {
-      instructions = 'loading'
+      code = 'loading'
+      results = 'waiting... '
     }
 
     return (
@@ -78,7 +82,7 @@ class Room extends React.Component {
             Get Into The Rhythm:
           </Typography>
           <Typography component="h1" variant="h5">
-            {name}
+            This room's id is: {id}
           </Typography>
           <AceEditor
             mode="javascript"
@@ -88,7 +92,6 @@ class Room extends React.Component {
             editorProps={{$blockScrolling: true}}
             enableLiveAutocompletion={true}
             enableBasicAutocompletion={true}
-            defaultValue={this.state.code}
             fontSize={14}
             showPrintMargin={true}
             showGutter={true}
@@ -101,7 +104,7 @@ class Room extends React.Component {
           <Button
             type="submit"
             name="action"
-            onClick={this.handleOnRun}
+            onClick={e => this.handleOnRun(e, code, name)}
             variant="contained"
             color="primary"
           >
@@ -116,7 +119,7 @@ class Room extends React.Component {
             BAIL
           </Button>
           <Typography component="h5" variant="h5">
-            Results: {this.state.result}
+            Results: {results}
           </Typography>
         </div>
       </Container>
@@ -133,7 +136,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeCode: (roomId, code) => dispatch(changeCodeThunk(roomId, code))
+    changeCode: (roomId, code) => dispatch(changeCodeThunk(roomId, code)),
+    updateResult: (roomId, result) =>
+      dispatch(updateResultThunk(roomId, result))
   }
 }
 

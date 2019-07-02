@@ -39,15 +39,6 @@ export const roomToUserThunk = (roomId, userId) => async (
       .doc(userId)
       .set({timestamp: new Date()})
 
-    let roomuser = firestore
-      .collection('users')
-      .doc(userId)
-      .collection('rooms')
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => console.log(doc.data(), doc.id))
-      })
-
     dispatch(roomToUser())
   } catch (err) {
     console.log(err)

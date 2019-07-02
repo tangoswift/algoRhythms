@@ -17,7 +17,9 @@ class UserProfile extends Component {
         <h1>Problems Solved</h1>
         {roomHistory && roomHistory.length ? (
           <ProblemsSolved roomHistory={this.props.roomHistory} />
-        ) : null}
+        ) : (
+          'LOADING COMPONENT'
+        )}
         <h1>Total Points</h1>
         <UserInfo />
       </div>
