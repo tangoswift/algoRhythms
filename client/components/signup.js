@@ -1,7 +1,6 @@
 import React from 'react'
-import history from '../history'
 import {connect} from 'react-redux'
-import {signUpThunk} from '../store/auth'
+import {signUpThunk, clearAuthMessageThunk} from '../store/auth'
 
 // Material UI Dependencies
 import {withStyles} from '@material-ui/core/styles'
@@ -11,7 +10,6 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import {blue} from '@material-ui/core/colors'
 
 /**
  * MATERIAL UI
@@ -33,10 +31,7 @@ const styles = theme => ({
     verticalAlign: 'middle'
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-    palette: {
-      primary: blue
-    }
+    margin: theme.spacing(3, 0, 2)
   }
 })
 
@@ -50,15 +45,25 @@ class SignUp extends React.Component {
       email: '',
       password: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      passwordError: ''
     }
+  }
+
+  componentWillUnmount = () => {
+    //Reset the Auth Error when navigating away from SignUp Component
+    this.props.clearAuthMessage()
   }
 
   handleOnSubmit = event => {
     event.preventDefault()
-
-    this.props.signUp(this.state)
-    history.push('/home')
+    if (this.state.password.length >= 6) {
+      this.props.signUp(this.state)
+    } else {
+      this.setState({
+        passwordError: 'The password needs to be at least 6 characters'
+      })
+    }
   }
 
   handleOnChange = event => {
@@ -66,8 +71,8 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const {classes} = this.props
-    const {authError} = this.props
+    const {classes, authError} = this.props
+    const {passwordError} = this.state
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
@@ -122,6 +127,7 @@ class SignUp extends React.Component {
                   id="password"
                   name="password"
                   label="Password"
+                  type="password"
                   value={this.state.password}
                   onChange={this.handleOnChange}
                   variant="outlined"
@@ -138,7 +144,15 @@ class SignUp extends React.Component {
               Sign Up
             </Button>
           </form>
-          {authError}
+          {authError ? (
+            <Typography color="error" variant="caption">
+              {authError}
+            </Typography>
+          ) : (
+            <Typography color="error" variant="caption">
+              {passwordError}
+            </Typography>
+          )}
         </div>
       </Container>
     )
@@ -157,7 +171,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    signUp: user => dispatch(signUpThunk(user))
+    signUp: user => dispatch(signUpThunk(user)),
+    clearAuthMessage: () => dispatch(clearAuthMessageThunk())
   }
 }
 

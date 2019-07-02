@@ -130,7 +130,7 @@ class Room extends React.Component {
           </Grid>
           <Grid item xs={3}>
             <iframe
-              src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=8325183e-cc46-4df7-8bca-94a1d81b213d&room=${id}&iframe=true`}
+              src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
               width="100%"
               height="100%"
               scrolling="false"

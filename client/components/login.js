@@ -1,7 +1,7 @@
 import React from 'react'
 import history from '../history'
 import {connect} from 'react-redux'
-import {signInThunk} from '../store/auth'
+import {signInThunk, clearAuthMessageThunk} from '../store/auth'
 
 // Material UI Dependencies
 import {withStyles} from '@material-ui/core/styles'
@@ -11,8 +11,6 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import {blue} from '@material-ui/core/colors'
-import FormHelperText from '@material-ui/core/FormHelperText'
 
 /**
  * MATERIAL UI
@@ -34,10 +32,7 @@ const styles = theme => ({
     verticalAlign: 'middle'
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-    palette: {
-      primary: blue
-    }
+    margin: theme.spacing(3, 0, 2)
   }
 })
 
@@ -51,6 +46,11 @@ class Login extends React.Component {
       email: '',
       password: ''
     }
+  }
+
+  componentWillUnmount = () => {
+    //Reset the Auth Error when navigating away from Login Component
+    this.props.clearAuthMessage()
   }
 
   handleOnSubmit = event => {
@@ -94,17 +94,13 @@ class Login extends React.Component {
                   id="password"
                   name="password"
                   label="Password"
+                  type="password"
                   value={this.state.password}
                   onChange={this.handleOnChange}
                   variant="outlined"
                 />
               </Grid>
             </Grid>
-            {authError && (
-              <FormHelperText id="component-error-text">
-                {authError}
-              </FormHelperText>
-            )}
             <Button
               type="submit"
               fullWidth
@@ -115,6 +111,11 @@ class Login extends React.Component {
               Login
             </Button>
           </form>
+          {authError && (
+            <Typography color="error" variant="caption">
+              {authError}
+            </Typography>
+          )}
         </div>
       </Container>
     )
@@ -133,7 +134,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    signIn: cred => dispatch(signInThunk(cred))
+    signIn: cred => dispatch(signInThunk(cred)),
+    clearAuthMessage: () => dispatch(clearAuthMessageThunk())
   }
 }
 
