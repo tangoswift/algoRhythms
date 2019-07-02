@@ -4,6 +4,8 @@ import {addRoomThunk} from '../store/roomId'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import history from '../history'
+import {roomToUserThunk, getRoomHistoryThunk} from '../store/user'
+import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
 import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
@@ -12,7 +14,14 @@ import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import {roomToUserThunk} from '../store/user'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListSubheader from '@material-ui/core/ListSubheader'
+import Collapse from '@material-ui/core/Collapse'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
+
 import Loading from './Loading'
 
 /**
@@ -41,6 +50,16 @@ const styles = theme => ({
  */
 
 class UserHome extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {selectedIndex: null, open: {}}
+    this.handleOpen = this.handleOpen.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.getRooms(this.props.userId)
+  }
+
   handleJoinRoom = async e => {
     e.preventDefault()
     const roomId = e.target.roomId.value
@@ -57,8 +76,18 @@ class UserHome extends Component {
     history.push(`/rooms/${roomId}`)
   }
 
+  handleOpen = index => {
+    this.setState({
+      open: {
+        ...this.state.open,
+        [index]: this.state.open[index] ? !this.state.open[index] : true
+      }
+    })
+  }
+
   render() {
-    const {problems} = this.props
+    console.log(this.props.profile)
+    const {problems, roomHistory, userId, rooms} = this.props
     let problemsKeys = null
     if (problems) {
       problemsKeys = Object.keys(problems)
@@ -74,11 +103,54 @@ class UserHome extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card} color="primary">
-              <ul>
-                <Typography component="h5" variant="h5">
-                  Available rooms:{' '}
-                </Typography>
+              <List
+                component="nav"
+                subheader={
+                  <ListSubheader component="div" id="nested-list-subheader">
+                    Choose a Problem:
+                  </ListSubheader>
+                }
+              >
                 {problems ? (
+                  problemsKeys.map((problemName, idx) => (
+                    <div key={idx}>
+                      <ListItem
+                        selected={this.state.selectedIndex === idx}
+                        button
+                        onClick={() => this.handleOpen(idx)}
+                      >
+                        <ListItemText primary={problems[problemName].name} />
+                        {this.state.open[idx] ? <ExpandLess /> : <ExpandMore />}
+                      </ListItem>
+                      <Collapse
+                        in={this.state.open[idx]}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <List component="div" disablePadding>
+                          <ListItem
+                            button
+                            onClick={() =>
+                              this.createRoom(problems[problemName])
+                            }
+                          >
+                            <ListItemText
+                              primary={problems[problemName].instructions}
+                            />
+                          </ListItem>
+                        </List>
+                      </Collapse>
+                    </div>
+                  ))
+                ) : (
+                  <Loading />
+                )}
+              </List>
+              {/* <ul> */}
+              {/* <Typography component="h5" variant="h5">
+                  Choose a problem:
+                </Typography> */}
+              {/* {problems ? (
                   problemsKeys.map(problemName => (
                     <li key={problemName}>
                       <Typography component="h5" variant="h5">
@@ -92,11 +164,11 @@ class UserHome extends Component {
                     </li>
                   ))
                 ) : (
-                  <Loading />
-                )}
-              </ul>
+                  <h5>loading...</h5>
+                )} */}
+              {/* </ul> */}
             </Card>
-            <form onSubmit={this.handleJoinRoom}>
+            {/* <form onSubmit={this.handleJoinRoom}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -110,20 +182,33 @@ class UserHome extends Component {
                   />
                 </Grid>
               </Grid>
-              <Button type="submit">Submit</Button>
-            </form>
+              <Button type="submit">Submit</Button> */}
+            {/* </form> */}
+            <Grid item xs={12} sm={6}>
+              <Card className={classes.card}>
+                <ListSubheader component="div">User Stats:</ListSubheader>
+                <Typography component="h5" variant="h5">
+                  {/* USER STATS: */}
+                  <li>
+                    Name: {this.props.profile.firstName}{' '}
+                    {this.props.profile.lastName}
+                  </li>
+                  <li>
+                    Problems solved:{' '}
+                    {roomHistory
+                      ? roomHistory.filter(
+                          room => room.result === 'Thats right!'
+                        ).length
+                      : 'Loading'}
+                  </li>
+                  <li>Points earned: 0</li>
+                </Typography>
+              </Card>
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>
-              <Typography component="h5" variant="h5">
-                USER STATS:
-                <li>
-                  Name: {this.props.profile.firstName}{' '}
-                  {this.props.profile.lastName}
-                </li>
-                <li>Problems solved: 0</li>
-                <li>Points earned: 0</li>
-              </Typography>
+              <AvailableRooms userId={userId} rooms={rooms || {}} />
             </Card>
           </Grid>
         </Grid>
@@ -140,20 +225,25 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
     problems: state.firestore.data.problems,
-    roomId: state.roomId
+    rooms: state.firestore.data.rooms,
+    roomId: state.roomId,
+    roomHistory: state.user.roomHistory,
+    userId: state.firebase.auth.uid
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     createRoom: roomInfo => dispatch(addRoomThunk(roomInfo)),
-    addRoomToUser: (roomId, userId) => dispatch(roomToUserThunk(roomId, userId))
+    addRoomToUser: (roomId, userId) =>
+      dispatch(roomToUserThunk(roomId, userId)),
+    getRooms: userId => dispatch(getRoomHistoryThunk(userId))
   }
 }
 
 export default withStyles(styles)(
   compose(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect([{collection: 'problems'}])
+    firestoreConnect([{collection: 'problems'}, {collection: 'rooms'}])
   )(UserHome)
 )
