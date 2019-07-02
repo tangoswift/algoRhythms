@@ -49,6 +49,7 @@ const styles = theme => ({
 class UserHome extends Component {
   constructor(props) {
     super(props)
+    this.state = {selectedIndex: null}
   }
 
   componentDidMount() {
@@ -89,12 +90,34 @@ class UserHome extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card} color="primary">
-              <ListSubheader component="div">Choose a Problem:</ListSubheader>
-              <ul>
-                {/* <Typography component="h5" variant="h5">
+              <List
+                component="nav"
+                subheader={
+                  <ListSubheader component="div" id="nested-list-subheader">
+                    Choose a Problem:
+                  </ListSubheader>
+                }
+              >
+                {problems ? (
+                  problemsKeys.map((problemName, idx) => (
+                    <ListItem
+                      key={idx}
+                      button
+                      selected={this.state.selectedIndex === idx}
+                      onClick={() => this.createRoom(problems[problemName])}
+                    >
+                      <ListItemText primary={problems[problemName].name} />
+                    </ListItem>
+                  ))
+                ) : (
+                  <h5>loading...</h5>
+                )}
+              </List>
+              {/* <ul> */}
+              {/* <Typography component="h5" variant="h5">
                   Choose a problem:
                 </Typography> */}
-                {problems ? (
+              {/* {problems ? (
                   problemsKeys.map(problemName => (
                     <li key={problemName}>
                       <Typography component="h5" variant="h5">
@@ -109,8 +132,8 @@ class UserHome extends Component {
                   ))
                 ) : (
                   <h5>loading...</h5>
-                )}
-              </ul>
+                )} */}
+              {/* </ul> */}
             </Card>
             <form onSubmit={this.handleJoinRoom}>
               <Grid container spacing={2}>
