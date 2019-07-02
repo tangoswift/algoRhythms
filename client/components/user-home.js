@@ -20,6 +20,9 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import Collapse from '@material-ui/core/Collapse'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 
 /**
  * MATERIAL UI
@@ -49,7 +52,8 @@ const styles = theme => ({
 class UserHome extends Component {
   constructor(props) {
     super(props)
-    this.state = {selectedIndex: null}
+    this.state = {selectedIndex: null, open: {}}
+    this.handleOpen = this.handleOpen.bind(this)
   }
 
   componentDidMount() {
@@ -70,6 +74,15 @@ class UserHome extends Component {
     const userId = this.props.auth.uid
     await this.props.addRoomToUser(roomId, userId)
     history.push(`/rooms/${roomId}`)
+  }
+
+  handleOpen = index => {
+    this.setState({
+      open: {
+        ...this.state.open,
+        [index]: this.state.open[index] ? !this.state.open[index] : true
+      }
+    })
   }
 
   render() {
@@ -100,14 +113,34 @@ class UserHome extends Component {
               >
                 {problems ? (
                   problemsKeys.map((problemName, idx) => (
-                    <ListItem
-                      key={idx}
-                      button
-                      selected={this.state.selectedIndex === idx}
-                      onClick={() => this.createRoom(problems[problemName])}
-                    >
-                      <ListItemText primary={problems[problemName].name} />
-                    </ListItem>
+                    <div key={idx}>
+                      <ListItem
+                        selected={this.state.selectedIndex === idx}
+                        button
+                        onClick={() => this.handleOpen(idx)}
+                      >
+                        <ListItemText primary={problems[problemName].name} />
+                        {this.state.open[idx] ? <ExpandLess /> : <ExpandMore />}
+                      </ListItem>
+                      <Collapse
+                        in={this.state.open[idx]}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <List component="div" disablePadding>
+                          <ListItem
+                            button
+                            onClick={() =>
+                              this.createRoom(problems[problemName])
+                            }
+                          >
+                            <ListItemText
+                              primary={problems[problemName].instructions}
+                            />
+                          </ListItem>
+                        </List>
+                      </Collapse>
+                    </div>
                   ))
                 ) : (
                   <h5>loading...</h5>
@@ -135,7 +168,7 @@ class UserHome extends Component {
                 )} */}
               {/* </ul> */}
             </Card>
-            <form onSubmit={this.handleJoinRoom}>
+            {/* <form onSubmit={this.handleJoinRoom}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -149,8 +182,8 @@ class UserHome extends Component {
                   />
                 </Grid>
               </Grid>
-              <Button type="submit">Submit</Button>
-            </form>
+              <Button type="submit">Submit</Button> */}
+            {/* </form> */}
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
                 <ListSubheader component="div">User Stats:</ListSubheader>

@@ -37,6 +37,7 @@ const AvailableRooms = props => {
     .map((id, idx) => {
       return rooms[id].visible ? (
         <ListItem
+          key={idx}
           button
           selected={selectedIndex === idx}
           onClick={event => handleListItemClick(event, id, idx)}
