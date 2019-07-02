@@ -33,6 +33,20 @@ const AvailableRooms = props => {
     setSelectedIndex(idx)
   }
 
+  const roomList = roomIds
+    .map((id, idx) => {
+      return rooms[id].visible ? (
+        <ListItem
+          button
+          selected={selectedIndex === idx}
+          onClick={event => handleListItemClick(event, id, idx)}
+        >
+          <ListItemText primary={rooms[id].name} />
+        </ListItem>
+      ) : null
+    })
+    .filter(component => component !== null)
+
   return (
     <div className={classes.root}>
       <List
@@ -43,17 +57,7 @@ const AvailableRooms = props => {
           </ListSubheader>
         }
       >
-        {roomIds.map((id, idx) => {
-          return rooms[id].visible ? (
-            <ListItem
-              button
-              selected={selectedIndex === idx}
-              onClick={event => handleListItemClick(event, id, idx)}
-            >
-              <ListItemText primary={rooms[id].name} />
-            </ListItem>
-          ) : null
-        })}
+        {roomList.length ? roomList : 'No rooms available.'}
       </List>
     </div>
   )
