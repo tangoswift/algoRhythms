@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // import Subheader from 'material-ui/Subheader'
 import {connect} from 'react-redux'
 import {roomToUserThunk} from '../store/user'
+import {updateVisibilityThunk} from '../store/roomId'
 import history from '../history'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AvailableRooms = props => {
-  const {rooms, userId} = props
+  const {rooms, userId, updateVisibility} = props
   const roomIds = Object.keys(rooms)
 
   const classes = useStyles()
@@ -27,6 +28,7 @@ const AvailableRooms = props => {
   const handleListItemClick = async (event, id, idx) => {
     event.preventDefault()
     await props.addRoomToUser(id, userId)
+    await updateVisibility(id, false)
     history.push(`/rooms/${id}`)
     setSelectedIndex(idx)
   }
@@ -42,7 +44,7 @@ const AvailableRooms = props => {
         }
       >
         {roomIds.map((id, idx) => {
-          return rooms[id].result !== 'Thats right!' ? (
+          return rooms[id].visible ? (
             <ListItem
               button
               selected={selectedIndex === idx}
@@ -59,7 +61,12 @@ const AvailableRooms = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addRoomToUser: (roomId, userId) => dispatch(roomToUserThunk(roomId, userId))
+    addRoomToUser: (roomId, userId) =>
+      dispatch(roomToUserThunk(roomId, userId)),
+    updateVisibility: (roomId, visibility) => {
+      console.log('ID', roomId)
+      dispatch(updateVisibilityThunk(roomId, visibility))
+    }
   }
 }
 
