@@ -43,22 +43,13 @@ class Room extends React.Component {
     let newWorker = this.handleSetWorker(name)
     console.log(newWorker)
     this.worker = new WebWorker(newWorker)
-    this.worker.addEventListener('message', async e => {
+    this.worker.addEventListener('message', e => {
       this.props.updateResult(this.props.match.params.id, e.data)
     })
     this.worker.postMessage(code)
 
     //Terminate worker after 10s
     setTimeout(() => this.worker.terminate(), 10000)
-    // this.setState({
-    //   worker: twoSumWorker,
-    //   code:
-    //     '//Write a function to sum two numbers\nfunction twoSum (a,b){\n \n}',
-    //   result: ''
-    // })
-  }
-  redirectToTarget = () => {
-    this.props.history.push(`/home`)
   }
 
   render() {
