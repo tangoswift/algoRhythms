@@ -16,6 +16,11 @@ import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListSubheader from '@material-ui/core/ListSubheader'
+
 /**
  * MATERIAL UI
  */
@@ -84,10 +89,11 @@ class UserHome extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card} color="primary">
+              <ListSubheader component="div">Choose a Problem:</ListSubheader>
               <ul>
-                <Typography component="h5" variant="h5">
+                {/* <Typography component="h5" variant="h5">
                   Choose a problem:
-                </Typography>
+                </Typography> */}
                 {problems ? (
                   problemsKeys.map(problemName => (
                     <li key={problemName}>
@@ -124,8 +130,9 @@ class UserHome extends Component {
             </form>
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
+                <ListSubheader component="div">User Stats:</ListSubheader>
                 <Typography component="h5" variant="h5">
-                  USER STATS:
+                  {/* USER STATS: */}
                   <li>
                     Name: {this.props.profile.firstName}{' '}
                     {this.props.profile.lastName}

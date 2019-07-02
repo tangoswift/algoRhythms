@@ -9,107 +9,38 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import {makeStyles} from '@material-ui/core/styles'
-
-// let SelectableList = makeSelectable(List)
-
-// function wrapState(ComposedComponent) {
-//   return class SelectableList extends Component {
-//     static propTypes = {
-//       children: PropTypes.node.isRequired,
-//       defaultValue: PropTypes.number.isRequired
-//     }
-
-//     componentWillMount() {
-//       this.setState({
-//         selectedIndex: this.props.defaultValue
-//       })
-//     }
-
-//     handleRequestChange = (event, index) => {
-//       this.setState({
-//         selectedIndex: index
-//       })
-//     }
-
-//     render() {
-//       return (
-//         <ComposedComponent
-//           value={this.state.selectedIndex}
-//           onChange={this.handleRequestChange}
-//         >
-//           {this.props.children}
-//         </ComposedComponent>
-//       )
-//     }
-//   }
-// }
-
-// SelectableList = wrapState(SelectableList)
-
-// const AvailableRooms = props => {
-//   const {rooms, userId} = props
-//   const roomIds = Object.keys(rooms)
-
-//   const onClick = id => {
-//     props.addRoomToUser(id, userId)
-//     history.push(`/rooms/${id}`)
-//   }
-
-//   return (
-//     <SelectableList defaultValue={3}>
-//       <Subheader>Availble Rooms</Subheader>
-//       {roomIds.map((id, idx) => {
-//         return rooms[id].result !== 'Thats right!' ? (
-//           <ListItem
-//             key={id}
-//             button={true}
-//             value={idx + 1}
-//             primaryText={rooms[id].name}
-//             action={onClick(id)}
-//           />
-//         ) : null
-//       })}
-//     </SelectableList>
-//   )
-// }
+import ListSubheader from '@material-ui/core/ListSubheader'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    // maxWidth: 400,
-    backgroundColor: theme.palette.background.paper
+    width: '100%'
+    // backgroundColor: theme.palette.background.paper
   }
 }))
 
 const AvailableRooms = props => {
   const {rooms, userId} = props
   const roomIds = Object.keys(rooms)
-  const onClick = async id => {
-    await props.addRoomToUser(id, userId)
-    console.log(id)
-    history.push(`/rooms/${id}`)
-  }
 
   const classes = useStyles()
   const [selectedIndex, setSelectedIndex] = React.useState(1)
   const handleListItemClick = async (event, id, idx) => {
+    event.preventDefault()
     await props.addRoomToUser(id, userId)
     history.push(`/rooms/${id}`)
     setSelectedIndex(idx)
   }
 
   return (
-    // <div>
-    //   {roomIds.map((id, idx) => {
-    //     return rooms[id].result !== 'Thats right!' ? (
-    //       <button type="button" key={id} onClick={() => onClick(id)}>
-    //         {rooms[id].name}
-    //       </button>
-    //     ) : null
-    //   })}
-    // </div>
     <div className={classes.root}>
-      <List component="nav">
+      <List
+        component="nav"
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            Available Rooms:
+          </ListSubheader>
+        }
+      >
         {roomIds.map((id, idx) => {
           return rooms[id].result !== 'Thats right!' ? (
             <ListItem
