@@ -38,6 +38,7 @@ class Timer extends React.Component {
   resetTimer() {
     this.setState({time: 0})
   }
+
   render() {
     let start =
       this.state.time === 0 ? (

@@ -59,6 +59,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-ace": "^7.0.2",
+
     "react-dom": "^16.8.6",
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.6",
