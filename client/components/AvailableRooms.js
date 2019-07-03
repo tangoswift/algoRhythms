@@ -28,7 +28,7 @@ const AvailableRooms = props => {
   const handleListItemClick = async (event, id, idx) => {
     event.preventDefault()
     await props.addRoomToUser(id, userId)
-    await updateVisibility(id, false)
+    await updateVisibility(id)
     history.push(`/rooms/${id}`)
     setSelectedIndex(idx)
   }
@@ -68,9 +68,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addRoomToUser: (roomId, userId) =>
       dispatch(roomToUserThunk(roomId, userId)),
-    updateVisibility: (roomId, visibility) => {
+    updateVisibility: roomId => {
       console.log('ID', roomId)
-      dispatch(updateVisibilityThunk(roomId, visibility))
+      dispatch(updateVisibilityThunk(roomId))
     }
   }
 }

@@ -146,44 +146,7 @@ class UserHome extends Component {
                   <Loading />
                 )}
               </List>
-              {/* <ul> */}
-              {/* <Typography component="h5" variant="h5">
-                  Choose a problem:
-                </Typography> */}
-              {/* {problems ? (
-                  problemsKeys.map(problemName => (
-                    <li key={problemName}>
-                      <Typography component="h5" variant="h5">
-                        <Button
-                          onClick={() => this.createRoom(problems[problemName])}
-                        >
-                          {problems[problemName].name}
-                        </Button>
-                        <a> {problems[problemName].instructions}</a>
-                      </Typography>
-                    </li>
-                  ))
-                ) : (
-                  <h5>loading...</h5>
-                )} */}
-              {/* </ul> */}
             </Card>
-            {/* <form onSubmit={this.handleJoinRoom}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    className={classes.textField}
-                    required
-                    fullWidth
-                    id="roomId"
-                    name="roomId"
-                    label="roomId"
-                    variant="outlined"
-                  />
-                </Grid>
-              </Grid>
-              <Button type="submit">Submit</Button> */}
-            {/* </form> */}
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
                 <ListSubheader component="div">User Stats:</ListSubheader>

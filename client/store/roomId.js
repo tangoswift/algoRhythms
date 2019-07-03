@@ -83,19 +83,31 @@ export const updateResultThunk = (roomId, result) => async (
     console.error('TCL: updateResultThunk -> error', error)
   }
 }
-export const updateVisibilityThunk = (roomId, visibility) => async (
+export const updateVisibilityThunk = roomId => async (
   dispatch,
   getState,
   {getFirestore}
 ) => {
   try {
-    console.log(roomId, visibility)
     const firestore = getFirestore()
-    const res = await firestore
+    const users = []
+    
+    await firestore
+      .collection('rooms')
+      .doc(roomId)
+      .collection('users')
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          users.push(doc.id)
+        })
+      })
+    
+    await firestore
       .collection('rooms')
       .doc(roomId)
       .update({
-        visible: visibility
+        visible: users.length < 2
       })
     dispatch(updateVisibility())
   } catch (error) {
