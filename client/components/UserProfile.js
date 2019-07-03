@@ -5,6 +5,7 @@ import {getRoomHistoryThunk} from '../store/user'
 import {connect} from 'react-redux'
 import {id} from 'brace/worker/javascript'
 import Loading from './Loading'
+import Typography from '@material-ui/core/Typography'
 
 class UserProfile extends Component {
   componentDidMount() {
@@ -16,13 +17,19 @@ class UserProfile extends Component {
     const {roomHistory} = this.props
     return (
       <div>
-        <h1>Problems History</h1>
-        {roomHistory && roomHistory.length ? (
+        <Typography component="h2" variant="h5">
+          Problems History
+        </Typography>
+        {roomHistory && roomHistory.length === 0 ? (
+          <Typography>0 Problems Solved</Typography>
+        ) : roomHistory && roomHistory.length !== 0 ? (
           <ProblemsSolved roomHistory={this.props.roomHistory} />
         ) : (
           <Loading />
         )}
-        <h1>Total Points</h1>
+        <Typography component="h2" variant="h5">
+          Total Points
+        </Typography>
         <UserInfo />
       </div>
     )

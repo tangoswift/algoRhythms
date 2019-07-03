@@ -10,6 +10,7 @@ import 'brace/theme/solarized_dark'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux'
+import ReactDOM from 'react-dom'
 
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
