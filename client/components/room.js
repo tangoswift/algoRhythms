@@ -43,6 +43,7 @@ class Room extends React.Component {
         return null
     }
   }
+
   onChange = async newValue => {
     await this.props.changeCode(this.props.match.params.id, newValue)
   }
@@ -65,17 +66,16 @@ class Room extends React.Component {
   render() {
     let id = this.props.match.params.id
     let name = ''
-    let results
-    let code
+    let results = []
+    let code = ''
+    let instructions = ''
     const classes = this.props
 
     if (this.props.rooms && this.props.rooms[id]) {
       name = this.props.rooms[id].name
       code = this.props.rooms[id].code
+      instructions = this.props.rooms[id].instructions
       results = this.props.rooms[id].result
-    } else {
-      code = 'loading'
-      results = 'waiting... '
     }
 
     return (
@@ -86,9 +86,9 @@ class Room extends React.Component {
         <Typography component="h1" variant="h5">
           This room's id is: {id}
         </Typography>
-
         <Grid container spacing={3}>
           <Grid item xs={6}>
+            <Typography variant="h6">Instructions: {instructions}</Typography>
             <AceEditor
               mode="javascript"
               theme="solarized_dark"
@@ -126,6 +126,7 @@ class Room extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={3}>
+            <Typography variant="h6">Test Results:</Typography>
             <RoomResults results={results} />
           </Grid>
           <Grid item xs={3}>
