@@ -34,8 +34,8 @@ export const addRoomThunk = roomInfo => async (
     const res = await firestore.collection('rooms').add({
       name: roomInfo.name,
       instructions: roomInfo.instructions,
-      code: roomInfo.instructions,
-      result: 'waiting...',
+      code: roomInfo.code,
+      result: [],
       visible: true,
       points: roomInfo.points
     })

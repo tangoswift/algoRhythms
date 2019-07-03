@@ -9,11 +9,9 @@ import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
 import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -86,16 +84,12 @@ class UserHome extends Component {
   }
 
   render() {
-    console.log(this.props.profile)
     const {problems, roomHistory, userId, rooms} = this.props
     let problemsKeys = null
     if (problems) {
       problemsKeys = Object.keys(problems)
     }
-
     const classes = this.props
-    const bull = <span className={classes.bullet}>•</span>
-
     return (
       <Container>
         <Typography className="greeting" component="h2" variant="h5">
