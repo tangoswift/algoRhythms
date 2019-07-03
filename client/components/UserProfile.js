@@ -9,13 +9,14 @@ import Loading from './Loading'
 class UserProfile extends Component {
   componentDidMount() {
     this.props.getRooms(this.props.userId)
+    console.log(this.props)
   }
 
   render() {
     const {roomHistory} = this.props
     return (
       <div>
-        <h1>Problems Solved</h1>
+        <h1>Problems History</h1>
         {roomHistory && roomHistory.length ? (
           <ProblemsSolved roomHistory={this.props.roomHistory} />
         ) : (

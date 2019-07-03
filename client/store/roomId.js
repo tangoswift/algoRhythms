@@ -36,7 +36,8 @@ export const addRoomThunk = roomInfo => async (
       instructions: roomInfo.instructions,
       code: roomInfo.code,
       result: [],
-      visible: true
+      visible: true,
+      points: roomInfo.points
     })
     dispatch(addRoom(res.id))
   } catch (err) {
