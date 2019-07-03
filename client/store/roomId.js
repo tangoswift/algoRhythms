@@ -36,7 +36,8 @@ export const addRoomThunk = roomInfo => async (
       instructions: roomInfo.instructions,
       code: roomInfo.instructions,
       result: 'waiting...',
-      visible: true
+      visible: true,
+      points: roomInfo.points
     })
     dispatch(addRoom(res.id))
   } catch (err) {
@@ -91,7 +92,7 @@ export const updateVisibilityThunk = roomId => async (
   try {
     const firestore = getFirestore()
     const users = []
-    
+
     await firestore
       .collection('rooms')
       .doc(roomId)
@@ -102,7 +103,7 @@ export const updateVisibilityThunk = roomId => async (
           users.push(doc.id)
         })
       })
-    
+
     await firestore
       .collection('rooms')
       .doc(roomId)

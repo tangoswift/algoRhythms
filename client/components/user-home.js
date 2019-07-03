@@ -95,6 +95,7 @@ class UserHome extends Component {
 
     const classes = this.props
     const bull = <span className={classes.bullet}>•</span>
+
     return (
       <Container>
         <Typography component="h2" variant="h5">
@@ -164,7 +165,18 @@ class UserHome extends Component {
                         ).length
                       : 'Loading'}
                   </li>
-                  <li>Points earned: 0</li>
+                  <li>
+                    {' '}
+                    Points earned:{' '}
+                    {roomHistory
+                      ? roomHistory
+                          .filter(room => room.result === 'Thats right!')
+                          .reduce(
+                            (accum, curVal) => (accum += curVal.points),
+                            0
+                          )
+                      : 'Loading'}
+                  </li>
                 </Typography>
               </Card>
             </Grid>

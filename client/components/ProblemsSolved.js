@@ -38,7 +38,9 @@ export default function ProblemsSolved(props) {
               <TableCell>{row.instructins}</TableCell>
               <TableCell>{row.code}</TableCell>
               <TableCell>{row.result}</TableCell>
-              <TableCell align="right">{row.pointsEarned}</TableCell>
+              <TableCell align="right">
+                {row.result === 'Thats right!' ? row.points : 0}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
