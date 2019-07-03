@@ -1,3 +1,5 @@
+import history from '../history'
+
 /**
  * ACTION TYPE
  */
@@ -6,6 +8,7 @@ const LOGIN_FAIL = 'LOGIN_FAIL'
 const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS'
 const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
 const SIGN_UP_FAIL = 'SIGN_UP_FAIL'
+const CLEAR_AUTH_MESSAGE = 'CLEAR_AUTH_MESSAGE'
 
 /**
  * INITIAL STATE
@@ -20,6 +23,7 @@ const loginFail = err => ({type: LOGIN_FAIL, err})
 const signOutSuccess = () => ({type: SIGN_OUT_SUCCESS})
 const signUpSuccess = () => ({type: SIGN_UP_SUCCESS})
 const signUpFail = err => ({type: SIGN_UP_FAIL, err})
+const clearAuthMessage = () => ({type: CLEAR_AUTH_MESSAGE})
 
 /**
  * THUNK CREATOR
@@ -36,7 +40,6 @@ export const signInThunk = credentials => async (
       .signInWithEmailAndPassword(credentials.email, credentials.password)
     dispatch(loginSuccess())
   } catch (err) {
-    console.error('TCL: err', err)
     dispatch(loginFail(err))
   }
 }
@@ -63,7 +66,6 @@ export const signUpThunk = user => async (
     const newUser = await firebase
       .auth()
       .createUserWithEmailAndPassword(user.email, user.password)
-    console.log(newUser, 'new user')
     await firestore
       .collection('users')
       .doc(newUser.user.uid)
@@ -72,9 +74,18 @@ export const signUpThunk = user => async (
         lastName: user.lastName
       })
     dispatch(signUpSuccess())
+    //Redirect to home after successful sign up
+    history.push('/home')
   } catch (err) {
-    console.log('TCL: signUpThunk -> error', err)
     dispatch(signUpFail(err))
+  }
+}
+
+export const clearAuthMessageThunk = () => async dispatch => {
+  try {
+    dispatch(clearAuthMessage())
+  } catch (error) {
+    console.log('TCL: clearAuthMessageThunk -> error', error)
   }
 }
 
@@ -93,6 +104,8 @@ export default function(state = initialState, action) {
       return {...state, authError: null}
     case SIGN_UP_FAIL:
       return {...state, authError: action.err.message}
+    case CLEAR_AUTH_MESSAGE:
+      return initialState
     default:
       return state
   }
