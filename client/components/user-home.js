@@ -151,33 +151,27 @@ class UserHome extends Component {
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
                 <ListSubheader component="div">User Stats:</ListSubheader>
-                <Typography component="h5" variant="h5">
-                  {/* USER STATS: */}
-                  <li>
-                    Name: {this.props.profile.firstName}{' '}
-                    {this.props.profile.lastName}
-                  </li>
-                  <li>
-                    Problems solved:{' '}
-                    {roomHistory
-                      ? roomHistory.filter(
-                          room => room.result === 'Thats right!'
-                        ).length
-                      : 'Loading'}
-                  </li>
-                  <li>
-                    {' '}
-                    Points earned:{' '}
-                    {roomHistory
-                      ? roomHistory
-                          .filter(room => room.result === 'Thats right!')
-                          .reduce(
-                            (accum, curVal) => (accum += curVal.points),
-                            0
-                          )
-                      : 'Loading'}
-                  </li>
-                </Typography>
+                {/* USER STATS: */}
+                <ListItemText>
+                  Name: {this.props.profile.firstName}{' '}
+                  {this.props.profile.lastName}
+                </ListItemText>
+                <ListItemText>
+                  Problems solved:{' '}
+                  {roomHistory
+                    ? roomHistory.filter(room => room.result === 'Thats right!')
+                        .length
+                    : 'Loading'}
+                </ListItemText>
+                <ListItemText>
+                  {' '}
+                  Points earned:{' '}
+                  {roomHistory
+                    ? roomHistory
+                        .filter(room => room.result === 'Thats right!')
+                        .reduce((accum, curVal) => (accum += curVal.points), 0)
+                    : 'Loading'}
+                </ListItemText>
               </Card>
             </Grid>
           </Grid>
