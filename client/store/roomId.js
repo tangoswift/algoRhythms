@@ -91,8 +91,7 @@ export const updateVisibilityThunk = roomId => async (
   try {
     const firestore = getFirestore()
     const users = []
-    console.log('ROOM ID', roomId)
-
+    
     await firestore
       .collection('rooms')
       .doc(roomId)
@@ -103,9 +102,7 @@ export const updateVisibilityThunk = roomId => async (
           users.push(doc.id)
         })
       })
-
-    console.log('users length:', users)
-    console.log('users.length < 2:', users.length < 2)
+    
     await firestore
       .collection('rooms')
       .doc(roomId)
