@@ -98,6 +98,7 @@ class UserHome extends Component {
 
     return (
       <Container>
+        <Timer />
         <Typography component="h2" variant="h5">
           Welcome, {this.props.profile.firstName} {this.props.profile.lastName}
         </Typography>

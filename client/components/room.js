@@ -10,6 +10,7 @@ import 'brace/theme/solarized_dark'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux'
+import Timer from './Timer'
 
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
@@ -126,6 +127,7 @@ class Room extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={3}>
+            <Timer />
             <RoomResults results={results} />
           </Grid>
           <Grid item xs={3}>
