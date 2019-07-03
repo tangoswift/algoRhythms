@@ -92,7 +92,7 @@ class UserHome extends Component {
     const classes = this.props
     return (
       <Container>
-        <Typography component="h2" variant="h5">
+        <Typography className="greeting" component="h2" variant="h5">
           Welcome, {this.props.profile.firstName} {this.props.profile.lastName}
         </Typography>
         <Grid container spacing={2}>
@@ -146,19 +146,18 @@ class UserHome extends Component {
               <Card className={classes.card}>
                 <ListSubheader component="div">User Stats:</ListSubheader>
                 {/* USER STATS: */}
-                <ListItemText>
+                <ListItemText className="stats-name">
                   Name: {this.props.profile.firstName}{' '}
                   {this.props.profile.lastName}
                 </ListItemText>
-                <ListItemText>
+                <ListItemText className="stats-solved">
                   Problems solved:{' '}
                   {roomHistory
                     ? roomHistory.filter(room => room.result === 'Thats right!')
                         .length
                     : 'Loading'}
                 </ListItemText>
-                <ListItemText>
-                  {' '}
+                <ListItemText className="stats-points">
                   Points earned:{' '}
                   {roomHistory
                     ? roomHistory

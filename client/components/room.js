@@ -7,6 +7,7 @@ import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux'
 import {AceCodeEditor} from './AceCodeEditor'
+import ReactDOM from 'react-dom'
 
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
