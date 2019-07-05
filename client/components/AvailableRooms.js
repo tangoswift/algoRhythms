@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const AvailableRooms = props => {
+export const AvailableRooms = props => {
   const {rooms, userId, updateVisibility} = props
   const roomIds = Object.keys(rooms)
 
