@@ -38,7 +38,7 @@ const styles = theme => ({
 /**
  * COMPONENT
  */
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -145,11 +145,19 @@ class SignUp extends React.Component {
             </Button>
           </form>
           {authError ? (
-            <Typography color="error" variant="caption">
+            <Typography
+              className="error-message"
+              color="error"
+              variant="caption"
+            >
               {authError}
             </Typography>
           ) : (
-            <Typography color="error" variant="caption">
+            <Typography
+              className="error-message"
+              color="error"
+              variant="caption"
+            >
               {passwordError}
             </Typography>
           )}
