@@ -18,8 +18,8 @@ describe('Login', () => {
   }
 
   it('lists firebase authentication error messages', () => {
-    login = shallow(<Login classes={classes} authError={authError} />)
     const authError = 'Firebase Error Message'
+    login = shallow(<Login classes={classes} authError={authError} />)
 
     expect(login.find('.error-message').text()).to.equal(authError)
   })
