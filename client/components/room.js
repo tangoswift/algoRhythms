@@ -8,7 +8,7 @@ import {firestoreConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux'
 import {AceCodeEditor} from './AceCodeEditor'
 import ReactDOM from 'react-dom'
-
+import Countdown from './CountDown'
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -70,6 +70,7 @@ class Room extends React.Component {
     let results = []
     let code = ''
     let instructions = ''
+    let visible = true
     const classes = this.props
 
     if (this.props.rooms && this.props.rooms[id]) {
@@ -77,6 +78,7 @@ class Room extends React.Component {
       code = this.props.rooms[id].code
       instructions = this.props.rooms[id].instructions
       results = this.props.rooms[id].result
+      visible = this.props.rooms[id].visible
     }
 
     return (
@@ -84,6 +86,7 @@ class Room extends React.Component {
         <Box bgcolor="text.hint" color="background.paper">
           <Typography align="center" component="div" variant="body1">
             Get Into The Rhythm: {id}
+            {visible && <Countdown />}
           </Typography>
         </Box>
         <Grid container spacing={2} className="room">

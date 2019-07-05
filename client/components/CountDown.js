@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import {render} from 'react-dom'
-import Button from '@material-ui/core/Button'
+
 import Typography from '@material-ui/core/Typography'
 
 export default class Countdown extends Component {
   constructor() {
     super()
     this.tick = this.tick.bind(this)
-    this.state = {seconds: 12, message: ''}
+    this.state = {seconds: 30, message: ''}
   }
 
   componentDidMount() {
@@ -21,7 +20,7 @@ export default class Countdown extends Component {
         this.setState({message: `seconds to switch`})
     } else {
       this.setState({message: ''})
-      this.setState({seconds: 12})
+      this.setState({seconds: 30})
     }
   }
   render() {

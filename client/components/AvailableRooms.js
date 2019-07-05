@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import {makeStyles} from '@material-ui/core/styles'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import {JoinSpecificRoom} from './JoinSpecificRoom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,6 +50,8 @@ export const AvailableRooms = props => {
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
             Most Recent Available Rooms:
+            <br />
+            <JoinSpecificRoom handleListItemClick={handleListItemClick} />
           </ListSubheader>
         }
       >
