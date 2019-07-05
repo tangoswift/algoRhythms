@@ -16,26 +16,26 @@ enzyme.configure({adapter})
 
 describe('UserHome', () => {
   let userHome, userHomeSpy, solvedRooms
-  const correctResult = 'Thats right!'
-  const otherResult = 'Waiting...'
+  const correctResult = false
+  const otherResult = true
   const profile = {firstName: 'Cody', lastName: 'Dog'}
   const roomHistory = [
-    {result: correctResult, points: 1},
-    {result: otherResult, points: 2},
-    {result: correctResult, points: 3}
+    {visible: correctResult, points: 1},
+    {visible: otherResult, points: 2},
+    {visible: correctResult, points: 3}
   ]
-  const rooms = {
-    r1: {name: 'r1', visible: true},
-    r2: {name: 'r2', visible: true},
-    r3: {name: 'r3', visible: true},
-    r4: {name: 'r4', visible: false},
-    r5: {name: 'r5', visible: true}
-  }
-  const problems = {
-    p1: {name: 'p1', instructions: 'p1-instructions'},
-    p2: {name: 'p2', instructions: 'p2-instructions'},
-    p3: {name: 'p3', instructions: 'p3-instructions'}
-  }
+  const rooms = [
+    {name: 'r1', visible: true},
+    {name: 'r2', visible: true},
+    {name: 'r3', visible: true},
+    {name: 'r4', visible: false},
+    {name: 'r5', visible: true}
+  ]
+  const problems = [
+    {name: 'p1', instructions: 'p1-instructions'},
+    {name: 'p2', instructions: 'p2-instructions'},
+    {name: 'p3', instructions: 'p3-instructions'}
+  ]
 
   beforeEach(() => {
     userHomeSpy = spy() // Use for the life cycle method
@@ -47,7 +47,7 @@ describe('UserHome', () => {
         getRooms={userHomeSpy}
       />
     )
-    solvedRooms = roomHistory.filter(obj => obj.result === correctResult)
+    solvedRooms = roomHistory.filter(obj => obj.visible === correctResult)
   })
 
   it('renders the a greeting in an h2', () => {
@@ -86,15 +86,6 @@ describe('UserHome', () => {
           .text()
       ).to.equal('p3-instructions')
     })
-
-    // it('test', () => {
-    //   expect(
-    //     userHome
-    //       .find('.problem-instruction')
-    //       .at(0)
-    //       .text()
-    //   ).to.exist
-    // })
   })
 
   /**
