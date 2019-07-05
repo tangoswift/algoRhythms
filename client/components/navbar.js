@@ -38,6 +38,7 @@ const Navbar = ({auth, signOut}) => {
           </Typography>
           <div className={classes.grow} />
           <div>
+            {console.log('auth is>>>', auth)}
             {auth.uid ? (
               <div>
                 {/* The navbar will show these links after you log in */}
@@ -79,6 +80,7 @@ const Navbar = ({auth, signOut}) => {
             ) : (
               <div>
                 {/* The navbar will show these links before you log in */}
+                {console.log('in here><><><<')}
                 <Link
                   component={RouterLink}
                   underline="none"

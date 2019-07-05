@@ -1,0 +1,12 @@
+{
+  "name": "algorhythms",
+  "description": "Some boilerplate code to get you started - get shakin'!",
+  "main": "index.js",
+  "authors": ["Fullstack Academy of Code"],
+  "license": "MIT",
+  "homepage": "https://github.com/tangoswift/algoRythms",
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
+  "dependencies": {
+    "firebaseui": "^4.0.0"
+  }
+}

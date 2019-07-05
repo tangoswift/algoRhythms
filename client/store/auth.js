@@ -48,7 +48,9 @@ export const signOutThunk = () => async (dispatch, getState, {getFirebase}) => {
   try {
     const firebase = getFirebase()
     await firebase.auth().signOut()
+
     dispatch(signOutSuccess())
+    history.push('/')
   } catch (err) {
     console.error('TCL: signOutThunk -> error', err)
   }

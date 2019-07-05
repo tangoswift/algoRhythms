@@ -12,6 +12,10 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import firebase from 'firebase'
+import {uiConfig} from '../../server/firebase/fbConfig'
+
 /**
  * MATERIAL UI
  */
@@ -110,6 +114,11 @@ class Login extends React.Component {
             >
               Login
             </Button>
+
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
           </form>
           {authError && (
             <Typography color="error" variant="caption">
