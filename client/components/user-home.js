@@ -47,7 +47,7 @@ const styles = theme => ({
  * COMPONENT
  */
 
-class UserHome extends Component {
+export class UserHome extends Component {
   constructor(props) {
     super(props)
     this.state = {selectedIndex: null, open: {}}
@@ -114,7 +114,10 @@ class UserHome extends Component {
                         button
                         onClick={() => this.handleOpen(idx)}
                       >
-                        <ListItemText primary={problems[problemName].name} />
+                        <ListItemText
+                          className="problem-name"
+                          primary={problems[problemName].name}
+                        />
                         {this.state.open[idx] ? <ExpandLess /> : <ExpandMore />}
                       </ListItem>
                       <Collapse
@@ -130,8 +133,11 @@ class UserHome extends Component {
                             }
                           >
                             <ListItemText
+                              className="problem-instruction"
                               primary={problems[problemName].instructions}
-                            />
+                            >
+                              {problems[problemName].instructions}
+                            </ListItemText>
                           </ListItem>
                         </List>
                       </Collapse>
