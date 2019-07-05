@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 export default function ProblemsSolved(props) {
   const classes = useStyles()
   const {roomHistory} = props
-  console.log(roomHistory)
 
   return (
     <React.Fragment>

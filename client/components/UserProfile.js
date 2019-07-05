@@ -34,7 +34,6 @@ class UserProfile extends Component {
                 .filter(room => !room.visible)
                 .reduce((accum, curVal) => (accum += curVal.points), 0)
             : 'Loading'}{' '}
-          on 15 March, 2019
         </Typography>
       </div>
     )

@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-// import {List, ListItem, makeSelectable} from 'material-ui/List'
-// import Subheader from 'material-ui/Subheader'
 import {connect} from 'react-redux'
 import {roomToUserThunk} from '../store/user'
 import {updateVisibilityThunk} from '../store/roomId'
@@ -15,34 +12,31 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%'
-    // backgroundColor: theme.palette.background.paper
   }
 }))
 
 export const AvailableRooms = props => {
   const {rooms, userId, updateVisibility} = props
-  const roomIds = Object.keys(rooms)
 
   const classes = useStyles()
-  const [selectedIndex, setSelectedIndex] = React.useState(1)
-  const handleListItemClick = async (event, id, idx) => {
+  const handleListItemClick = async (event, id) => {
     event.preventDefault()
     await props.addRoomToUser(id, userId)
     await updateVisibility(id)
     history.push(`/rooms/${id}`)
-    setSelectedIndex(idx)
   }
 
-  const roomList = roomIds
-    .map((id, idx) => {
-      return rooms[id].visible ? (
+  const roomList = rooms
+    .map(room => {
+      return room.visible ? (
         <ListItem
-          key={idx}
+          key={room.id}
           button
-          selected={selectedIndex === idx}
-          onClick={event => handleListItemClick(event, id, idx)}
+          onClick={event => handleListItemClick(event, room.id)}
         >
-          <ListItemText primary={rooms[id].name} />
+          <ListItemText
+            primary={`${room.id} - ${room.name} - ${room.points} Points`}
+          />
         </ListItem>
       ) : null
     })
@@ -54,7 +48,7 @@ export const AvailableRooms = props => {
         component="nav"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            Available Rooms:
+            Most Recent Available Rooms:
           </ListSubheader>
         }
       >
@@ -69,7 +63,6 @@ const mapDispatchToProps = dispatch => {
     addRoomToUser: (roomId, userId) =>
       dispatch(roomToUserThunk(roomId, userId)),
     updateVisibility: roomId => {
-      console.log('ID', roomId)
       dispatch(updateVisibilityThunk(roomId))
     }
   }

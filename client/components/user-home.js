@@ -159,15 +159,14 @@ export class UserHome extends Component {
                 <ListItemText className="stats-solved">
                   Problems solved:{' '}
                   {roomHistory
-                    ? //visible false is equal to solved room problem
-                      roomHistory.filter(room => !room.visible).length
+                    ? roomHistory.filter(room => room.visible === false).length
                     : 'Loading'}
                 </ListItemText>
                 <ListItemText className="stats-points">
                   Points earned:{' '}
                   {roomHistory
                     ? roomHistory
-                        .filter(room => !room.visible)
+                        .filter(room => room.visible === false)
                         .reduce((accum, curVal) => (accum += curVal.points), 0)
                     : 'Loading'}
                 </ListItemText>
@@ -176,7 +175,7 @@ export class UserHome extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>
-              <AvailableRooms userId={userId} rooms={rooms || {}} />
+              <AvailableRooms userId={userId} rooms={rooms || []} />
             </Card>
           </Grid>
         </Grid>
@@ -193,7 +192,7 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
     problems: state.firestore.data.problems,
-    rooms: state.firestore.data.rooms,
+    rooms: state.firestore.ordered.rooms,
     roomId: state.roomId,
     roomHistory: state.user.roomHistory,
     userId: state.firebase.auth.uid
@@ -212,6 +211,9 @@ const mapDispatchToProps = dispatch => {
 export default withStyles(styles)(
   compose(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect([{collection: 'problems'}, {collection: 'rooms'}])
+    firestoreConnect([
+      {collection: 'problems'},
+      {collection: 'rooms', limit: 10, orderBy: ['timestamp', 'desc']}
+    ])
   )(UserHome)
 )
