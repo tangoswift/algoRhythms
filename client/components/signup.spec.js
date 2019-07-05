@@ -30,11 +30,9 @@ describe('SignUp', () => {
 
   it('lists firebase authentication error message', () => {
     const authError = 'Firebase Error Message'
-    const fakeEvent = {preventDefault: () => {}}
 
     signUp = shallow(<SignUp classes={classes} authError={authError} />)
 
-    signUp.find('form').simulate('submit', fakeEvent)
     expect(signUp.find('.error-message').text()).to.equal(authError)
   })
 })
