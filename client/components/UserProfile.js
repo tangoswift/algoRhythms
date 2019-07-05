@@ -27,10 +27,15 @@ class UserProfile extends Component {
         ) : (
           <Loading />
         )}
-        <Typography component="h2" variant="h5">
-          Total Points
+        <Typography color="textSecondary">
+          Total Points=
+          {roomHistory
+            ? roomHistory
+                .filter(room => !room.visible)
+                .reduce((accum, curVal) => (accum += curVal.points), 0)
+            : 'Loading'}{' '}
+          on 15 March, 2019
         </Typography>
-        <UserInfo />
       </div>
     )
   }

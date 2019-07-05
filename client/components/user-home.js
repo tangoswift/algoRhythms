@@ -159,15 +159,15 @@ export class UserHome extends Component {
                 <ListItemText className="stats-solved">
                   Problems solved:{' '}
                   {roomHistory
-                    ? roomHistory.filter(room => room.result === 'Thats right!')
-                        .length
+                    ? //visible false is equal to solved room problem
+                      roomHistory.filter(room => !room.visible).length
                     : 'Loading'}
                 </ListItemText>
                 <ListItemText className="stats-points">
                   Points earned:{' '}
                   {roomHistory
                     ? roomHistory
-                        .filter(room => room.result === 'Thats right!')
+                        .filter(room => !room.visible)
                         .reduce((accum, curVal) => (accum += curVal.points), 0)
                     : 'Loading'}
                 </ListItemText>

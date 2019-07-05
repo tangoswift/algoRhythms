@@ -86,7 +86,8 @@ export const getRoomHistoryThunk = userId => async (
         .collection('rooms')
         .doc(roomId)
         .get()
-      roomHistory.push(doc.data())
+      const id = doc.id
+      roomHistory.push({...doc.data(), id: id})
     }
 
     dispatch(getRoomHistory(roomHistory))

@@ -70,7 +70,8 @@ export const updateResultThunk = (roomId, result) => async (
   {getFirestore}
 ) => {
   try {
-    let visibility = result !== 'Thats right!'
+    let visibility = result.every(res => res.match('false'))
+    console.log('Vis', visibility)
     const firestore = getFirestore()
     const res = await firestore
       .collection('rooms')
