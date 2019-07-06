@@ -52,6 +52,8 @@ export class Login extends React.Component {
     }
   }
 
+  componentDidMount
+
   componentWillUnmount = () => {
     //Reset the Auth Error when navigating away from Login Component
     this.props.clearAuthMessage()
@@ -70,6 +72,7 @@ export class Login extends React.Component {
   render() {
     const {classes} = this.props
     const {authError} = this.props
+    const {auth} = this.props
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
@@ -114,11 +117,13 @@ export class Login extends React.Component {
             >
               Login
             </Button>
-
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
+            {/* Renders Google sign in option */}
+            {auth.isEmpty ? (
+              <StyledFirebaseAuth
+                uiConfig={uiConfig}
+                firebaseAuth={firebase.auth()}
+              />
+            ) : null}
           </form>
           {authError && (
             <Typography
@@ -140,8 +145,10 @@ Login.propTypes = {
 }
 
 const mapState = state => {
+  console.log('state in login', state)
   return {
-    authError: state.auth.authError
+    authError: state.auth.authError,
+    auth: state.firebase.auth
   }
 }
 
