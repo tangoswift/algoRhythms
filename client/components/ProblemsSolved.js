@@ -7,6 +7,9 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import {Link as RouterLink} from 'react-router-dom'
+import Link from '@material-ui/core/Link'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -25,21 +28,30 @@ export default function ProblemsSolved(props) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Instructions</TableCell>
-            <TableCell>Code</TableCell>
             <TableCell>Result</TableCell>
             <TableCell align="right">Points Earned</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {roomHistory.map((row, idx) => (
-            <TableRow key={idx}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.instructins}</TableCell>
-              <TableCell>{row.code}</TableCell>
-              <TableCell>{row.result}</TableCell>
-              <TableCell align="right">{row.pointsEarned}</TableCell>
-            </TableRow>
+          {roomHistory.map((problem, idx) => (
+            <Link
+              key={idx}
+              component={RouterLink}
+              underline="none"
+              color="inherit"
+              to={`/rooms/${problem.id}`}
+              className={classes.navlinks}
+            >
+              <Button variant="text" color="inherit">
+                <TableRow>
+                  <TableCell>{problem.name}</TableCell>
+                  <TableCell>{problem.result}</TableCell>
+                  <TableCell align="right">
+                    {problem.visible === false ? problem.points : 0}
+                  </TableCell>
+                </TableRow>
+              </Button>
+            </Link>
           ))}
         </TableBody>
       </Table>

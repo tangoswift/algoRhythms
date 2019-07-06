@@ -9,11 +9,9 @@ import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
 import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -49,7 +47,7 @@ const styles = theme => ({
  * COMPONENT
  */
 
-class UserHome extends Component {
+export class UserHome extends Component {
   constructor(props) {
     super(props)
     this.state = {selectedIndex: null, open: {}}
@@ -91,12 +89,10 @@ class UserHome extends Component {
     if (problems) {
       problemsKeys = Object.keys(problems)
     }
-
     const classes = this.props
-    const bull = <span className={classes.bullet}>•</span>
     return (
       <Container>
-        <Typography component="h2" variant="h5">
+        <Typography className="greeting" component="h2" variant="h5">
           Welcome, {this.props.profile.firstName} {this.props.profile.lastName}
         </Typography>
         <Grid container spacing={2}>
@@ -118,7 +114,10 @@ class UserHome extends Component {
                         button
                         onClick={() => this.handleOpen(idx)}
                       >
-                        <ListItemText primary={problems[problemName].name} />
+                        <ListItemText
+                          className="problem-name"
+                          primary={problems[problemName].name}
+                        />
                         {this.state.open[idx] ? <ExpandLess /> : <ExpandMore />}
                       </ListItem>
                       <Collapse
@@ -134,8 +133,11 @@ class UserHome extends Component {
                             }
                           >
                             <ListItemText
+                              className="problem-instruction"
                               primary={problems[problemName].instructions}
-                            />
+                            >
+                              {problems[problemName].instructions}
+                            </ListItemText>
                           </ListItem>
                         </List>
                       </Collapse>
@@ -149,28 +151,31 @@ class UserHome extends Component {
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
                 <ListSubheader component="div">User Stats:</ListSubheader>
-                <Typography component="h5" variant="h5">
-                  {/* USER STATS: */}
-                  <li>
-                    Name: {this.props.profile.firstName}{' '}
-                    {this.props.profile.lastName}
-                  </li>
-                  <li>
-                    Problems solved:{' '}
-                    {roomHistory
-                      ? roomHistory.filter(
-                          room => room.result === 'Thats right!'
-                        ).length
-                      : 'Loading'}
-                  </li>
-                  <li>Points earned: 0</li>
-                </Typography>
+                {/* USER STATS: */}
+                <ListItemText className="stats-name">
+                  Name: {this.props.profile.firstName}{' '}
+                  {this.props.profile.lastName}
+                </ListItemText>
+                <ListItemText className="stats-solved">
+                  Problems solved:{' '}
+                  {roomHistory
+                    ? roomHistory.filter(room => room.visible === false).length
+                    : 'Loading'}
+                </ListItemText>
+                <ListItemText className="stats-points">
+                  Points earned:{' '}
+                  {roomHistory
+                    ? roomHistory
+                        .filter(room => room.visible === false)
+                        .reduce((accum, curVal) => (accum += curVal.points), 0)
+                    : 'Loading'}
+                </ListItemText>
               </Card>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>
-              <AvailableRooms userId={userId} rooms={rooms || {}} />
+              <AvailableRooms userId={userId} rooms={rooms || []} />
             </Card>
           </Grid>
         </Grid>
@@ -187,7 +192,7 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
     problems: state.firestore.data.problems,
-    rooms: state.firestore.data.rooms,
+    rooms: state.firestore.ordered.rooms,
     roomId: state.roomId,
     roomHistory: state.user.roomHistory,
     userId: state.firebase.auth.uid
@@ -206,6 +211,9 @@ const mapDispatchToProps = dispatch => {
 export default withStyles(styles)(
   compose(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect([{collection: 'problems'}, {collection: 'rooms'}])
+    firestoreConnect([
+      {collection: 'problems'},
+      {collection: 'rooms', limit: 10, orderBy: ['timestamp', 'desc']}
+    ])
   )(UserHome)
 )

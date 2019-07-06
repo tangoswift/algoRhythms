@@ -56,6 +56,7 @@
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
+    "pretty-ms": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-ace": "^7.0.2",
@@ -64,11 +65,13 @@
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.6",
     "react-router-dom": "^5.0.0",
+    "react-window": "^1.8.4",
     "redux": "^4.0.1",
     "redux-firestore": "^0.8.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.0.0",
+    "sinon": "^7.3.2",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
