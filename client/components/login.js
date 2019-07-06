@@ -76,10 +76,10 @@ export class Login extends React.Component {
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          {/* <Typography component="h1" variant="h5">
             Login
-          </Typography>
-          <form onSubmit={this.handleOnSubmit} className={classes.form}>
+          </Typography> */}
+          {/* <form onSubmit={this.handleOnSubmit} className={classes.form}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -117,14 +117,16 @@ export class Login extends React.Component {
             >
               Login
             </Button>
-            {/* Renders Google sign in option */}
-            {auth.isEmpty ? (
-              <StyledFirebaseAuth
-                uiConfig={uiConfig}
-                firebaseAuth={firebase.auth()}
-              />
-            ) : null}
-          </form>
+          </form> */}
+
+          {/* Renders Google sign in option */}
+          {auth.isEmpty ? (
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          ) : null}
+
           {authError && (
             <Typography
               className="error-message"
@@ -145,7 +147,6 @@ Login.propTypes = {
 }
 
 const mapState = state => {
-  console.log('state in login', state)
   return {
     authError: state.auth.authError,
     auth: state.firebase.auth

@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography'
 class UserProfile extends Component {
   componentDidMount() {
     this.props.getRooms(this.props.userId)
-    console.log(this.props)
   }
 
   render() {

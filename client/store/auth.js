@@ -9,6 +9,8 @@ const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS'
 const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
 const SIGN_UP_FAIL = 'SIGN_UP_FAIL'
 const CLEAR_AUTH_MESSAGE = 'CLEAR_AUTH_MESSAGE'
+const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE'
+const UPDATE_USER_PROFILE_FAIL = 'UPDATE_USER_PROFILE_FAIL'
 
 /**
  * INITIAL STATE
@@ -23,6 +25,8 @@ const loginFail = err => ({type: LOGIN_FAIL, err})
 const signOutSuccess = () => ({type: SIGN_OUT_SUCCESS})
 const signUpSuccess = () => ({type: SIGN_UP_SUCCESS})
 const signUpFail = err => ({type: SIGN_UP_FAIL, err})
+const profileUpdateFail = () => ({type: UPDATE_USER_PROFILE_FAIL})
+const profileUpdateSuccess = () => ({type: UPDATE_USER_PROFILE})
 const clearAuthMessage = () => ({type: CLEAR_AUTH_MESSAGE})
 
 /**
@@ -83,6 +87,30 @@ export const signUpThunk = user => async (
   }
 }
 
+export const updateProfileThunk = user => async (
+  dispatch,
+  getState,
+  {getFirebase, getFirestore}
+) => {
+  console.log('inside update profile thunk')
+  try {
+    const firestore = getFirestore()
+
+    await firestore
+      .collection('users')
+      .doc(user.id)
+      .set({
+        firstName: user.firstName,
+        lastName: user.lastName
+      })
+    dispatch(profileUpdateSuccess())
+    //Redirect to home after successful sign up
+    history.push('/home')
+  } catch (err) {
+    dispatch(profileUpdateFail(err))
+  }
+}
+
 export const clearAuthMessageThunk = () => async dispatch => {
   try {
     dispatch(clearAuthMessage())
@@ -105,6 +133,10 @@ export default function(state = initialState, action) {
     case SIGN_UP_SUCCESS:
       return {...state, authError: null}
     case SIGN_UP_FAIL:
+      return {...state, authError: action.err.message}
+    case UPDATE_USER_PROFILE:
+      return {...state, authError: null}
+    case UPDATE_USER_PROFILE_FAIL:
       return {...state, authError: action.err.message}
     case CLEAR_AUTH_MESSAGE:
       return initialState

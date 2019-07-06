@@ -23,8 +23,6 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({auth, signOut}) => {
   const classes = useStyles()
-  const user = firebase.auth().currentUser
-  console.log('the user is', user)
 
   return (
     <div className={classes.grow}>
@@ -42,7 +40,6 @@ const Navbar = ({auth, signOut}) => {
           </Typography>
           <div className={classes.grow} />
           <div>
-            {console.log('auth is>>>', auth)}
             {auth.uid ? (
               <div>
                 {/* The navbar will show these links after you log in */}
@@ -84,7 +81,6 @@ const Navbar = ({auth, signOut}) => {
             ) : (
               <div>
                 {/* The navbar will show these links before you log in */}
-                {console.log('in here><><><<')}
                 <Link
                   component={RouterLink}
                   underline="none"
