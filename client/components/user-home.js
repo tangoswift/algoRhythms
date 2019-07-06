@@ -86,7 +86,6 @@ class UserHome extends Component {
   }
 
   render() {
-    console.log(this.props.profile)
     const {problems, roomHistory, userId, rooms} = this.props
     let problemsKeys = null
     if (problems) {

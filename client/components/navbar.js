@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import firebase from 'firebase'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -22,6 +23,9 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({auth, signOut}) => {
   const classes = useStyles()
+  const user = firebase.auth().currentUser
+  console.log('the user is', user)
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">
