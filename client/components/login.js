@@ -52,8 +52,6 @@ export class Login extends React.Component {
     }
   }
 
-  componentDidMount
-
   componentWillUnmount = () => {
     //Reset the Auth Error when navigating away from Login Component
     this.props.clearAuthMessage()
