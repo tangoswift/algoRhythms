@@ -95,11 +95,12 @@ export class UserHome extends Component {
       user.lastName = auth.displayName.split(' ')[1]
       updateProfile(user)
     }
+
     let problemsKeys = null
     if (problems) {
       problemsKeys = Object.keys(problems)
     }
-    
+
     const classes = this.props
     return (
       <Container>
