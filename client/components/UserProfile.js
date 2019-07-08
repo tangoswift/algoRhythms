@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {id} from 'brace/worker/javascript'
 import Loading from './Loading'
 import Typography from '@material-ui/core/Typography'
+import Container from '@material-ui/core/Container'
 
 class UserProfile extends Component {
   componentDidMount() {
@@ -15,9 +16,17 @@ class UserProfile extends Component {
   render() {
     const {roomHistory} = this.props
     return (
-      <div>
+      <Container>
         <Typography component="h2" variant="h5">
           Problems History
+        </Typography>
+        <Typography color="textSecondary" align="right">
+          Total Points{' = '}
+          {roomHistory
+            ? roomHistory
+                .filter(room => !room.visible)
+                .reduce((accum, curVal) => (accum += curVal.points), 0)
+            : 'Loading'}{' '}
         </Typography>
         {roomHistory && roomHistory.length === 0 ? (
           <Typography>0 Problems Solved</Typography>
@@ -26,15 +35,7 @@ class UserProfile extends Component {
         ) : (
           <Loading />
         )}
-        <Typography color="textSecondary">
-          Total Points=
-          {roomHistory
-            ? roomHistory
-                .filter(room => !room.visible)
-                .reduce((accum, curVal) => (accum += curVal.points), 0)
-            : 'Loading'}{' '}
-        </Typography>
-      </div>
+      </Container>
     )
   }
 }

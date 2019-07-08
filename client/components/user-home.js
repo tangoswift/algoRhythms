@@ -85,7 +85,7 @@ export class UserHome extends Component {
   }
 
   render() {
-    const {problems, roomHistory, userId, rooms} = this.props
+    const {problems, roomHistory, userId, rooms, firestore} = this.props
     const {auth, profile, updateProfile} = this.props
     const user = {}
 
@@ -95,11 +95,11 @@ export class UserHome extends Component {
       user.lastName = auth.displayName.split(' ')[1]
       updateProfile(user)
     }
-
     let problemsKeys = null
     if (problems) {
       problemsKeys = Object.keys(problems)
     }
+    
     const classes = this.props
     return (
       <Container>
@@ -186,7 +186,11 @@ export class UserHome extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>
-              <AvailableRooms userId={userId} rooms={rooms || []} />
+              <AvailableRooms
+                userId={userId}
+                firestore={firestore}
+                rooms={rooms || []}
+              />
             </Card>
           </Grid>
         </Grid>
@@ -206,7 +210,8 @@ const mapStateToProps = state => {
     rooms: state.firestore.ordered.rooms,
     roomId: state.roomId,
     roomHistory: state.user.roomHistory,
-    userId: state.firebase.auth.uid
+    userId: state.firebase.auth.uid,
+    firebase: state.firebase
   }
 }
 

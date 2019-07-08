@@ -10,10 +10,16 @@ import TableRow from '@material-ui/core/TableRow'
 import {Link as RouterLink} from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3)
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: 'auto'
+  },
+  table: {
+    minWidth: 700
   }
 }))
 
@@ -22,39 +28,39 @@ export default function ProblemsSolved(props) {
   const {roomHistory} = props
 
   return (
-    <React.Fragment>
-      {/* <Title>Recent ProblemsSolved</Title> */}
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Result</TableCell>
-            <TableCell align="right">Points Earned</TableCell>
-          </TableRow>
-        </TableHead>
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell>Room Id</TableCell>
+          <TableCell>Instructions</TableCell>
+          <TableCell>Result</TableCell>
+          <TableCell>Points Earned</TableCell>
+        </TableRow>
+
         <TableBody>
-          {roomHistory.map((problem, idx) => (
-            <Link
-              key={idx}
-              component={RouterLink}
-              underline="none"
-              color="inherit"
-              to={`/rooms/${problem.id}`}
-              className={classes.navlinks}
-            >
-              <Button variant="text" color="inherit">
-                <TableRow>
-                  <TableCell>{problem.name}</TableCell>
-                  <TableCell>{problem.result}</TableCell>
-                  <TableCell align="right">
-                    {problem.visible === false ? problem.points : 0}
-                  </TableCell>
-                </TableRow>
-              </Button>
-            </Link>
+          {roomHistory.map(problem => (
+            <TableRow key={problem.id}>
+              <TableCell>{problem.name}</TableCell>
+              <TableCell
+                align="left"
+                numeric
+                component="a"
+                href={`/rooms/${problem.id}`}
+              >
+                {problem.id}
+              </TableCell>
+              <TableCell>{problem.instructions}</TableCell>
+              <TableCell>
+                {problem.visible === false ? 'Solved' : 'Pending'}
+              </TableCell>
+              <TableCell>
+                {problem.visible === false ? problem.points : 0}
+              </TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </Paper>
   )
 }
