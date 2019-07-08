@@ -5,6 +5,7 @@ import React from 'react'
 import enzyme, {shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import {UserHome} from './user-home'
+import {updateProfileThunk} from '../store/auth'
 import {spy} from 'sinon'
 
 // Components
@@ -18,12 +19,14 @@ describe('UserHome', () => {
   let userHome, userHomeSpy, solvedRooms
   const correctResult = false
   const otherResult = true
-  const profile = {firstName: 'Cody', lastName: 'Dog'}
+  const profile = {firstName: 'Cody', lastName: 'Dog', displayName: 'Cody Dog'}
+
   const roomHistory = [
     {visible: correctResult, points: 1},
     {visible: otherResult, points: 2},
     {visible: correctResult, points: 3}
   ]
+
   const rooms = [
     {name: 'r1', visible: true},
     {name: 'r2', visible: true},
@@ -31,6 +34,7 @@ describe('UserHome', () => {
     {name: 'r4', visible: false},
     {name: 'r5', visible: true}
   ]
+
   const problems = [
     {name: 'p1', instructions: 'p1-instructions'},
     {name: 'p2', instructions: 'p2-instructions'},
@@ -45,6 +49,8 @@ describe('UserHome', () => {
         roomHistory={roomHistory}
         problems={problems}
         getRooms={userHomeSpy}
+        auth={profile}
+        updateProfile={updateProfileThunk}
       />
     )
     solvedRooms = roomHistory.filter(obj => obj.visible === correctResult)

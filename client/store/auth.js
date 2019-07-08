@@ -92,7 +92,6 @@ export const updateProfileThunk = user => async (
   getState,
   {getFirebase, getFirestore}
 ) => {
-  console.log('inside update profile thunk')
   try {
     const firestore = getFirestore()
 

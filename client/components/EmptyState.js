@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
+import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 
 const styles = {
@@ -19,8 +20,7 @@ class EmptyState extends Component {
     const {classes} = this.props
 
     // Properties
-    const {icon, title, description, button, image} = this.props
-
+    const {icon, title, description, button, image, auth} = this.props
     return (
       <div className={classes.center}>
         {image}
@@ -35,7 +35,7 @@ class EmptyState extends Component {
             {description}
           </Typography>
         )}
-        {button}
+        {auth.isEmpty && button}
       </div>
     )
   }
@@ -50,4 +50,10 @@ EmptyState.propTypes = {
   button: PropTypes.element
 }
 
-export default withStyles(styles)(EmptyState)
+const mapState = state => {
+  return {
+    auth: state.firebase.auth
+  }
+}
+
+export default withStyles(styles)(connect(mapState)(EmptyState))
