@@ -2,6 +2,7 @@ import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/TwoSumWorker'
 import React from 'react'
 import targetSumWorker from '../workers/TargetSumWorker'
+import returnNegative from '../workers/ReturnNegative'
 import palindromeWorker from '../workers/PalindromeWorker'
 import reverseWordsWorker from '../workers/ReverseWordsWorker'
 import RoomResults from './RoomResults'
@@ -42,6 +43,8 @@ class Room extends React.Component {
         return twoSumWorker
       case 'TargetSum':
         return targetSumWorker
+      case 'ReturnNegative':
+        return returnNegative
       case 'Palindrome':
         return palindromeWorker
       case 'ReverseWords':
@@ -63,7 +66,7 @@ class Room extends React.Component {
     })
     this.worker.postMessage(code)
     //Terminate worker after 10s
-    setTimeout(() => this.worker.terminate(), 10000)
+    setTimeout(() => this.worker.terminate(), 5000)
   }
 
   redirectToTarget = () => {
