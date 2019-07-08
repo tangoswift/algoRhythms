@@ -2,6 +2,7 @@ import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/TwoSumWorker'
 import React from 'react'
 import targetSumWorker from '../workers/TargetSumWorker'
+import palindromeWorker from '../workers/PalindromeWorker'
 import reverseWordsWorker from '../workers/ReverseWordsWorker'
 import RoomResults from './RoomResults'
 import {compose} from 'redux'
@@ -41,6 +42,8 @@ class Room extends React.Component {
         return twoSumWorker
       case 'TargetSum':
         return targetSumWorker
+      case 'Palindrome':
+        return palindromeWorker
       case 'ReverseWords':
         return reverseWordsWorker
       default:
