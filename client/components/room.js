@@ -84,6 +84,7 @@ class Room extends React.Component {
     let instructions = ''
     let visible = true
     const classes = this.props
+    const {profile} = this.props
 
     if (this.props.rooms && this.props.rooms[id]) {
       name = this.props.rooms[id].name
@@ -98,13 +99,17 @@ class Room extends React.Component {
         <Box bgcolor="text.hint" color="background.paper">
           <Typography align="center" component="div" variant="body1">
             Get Into The Rhythm: {id}
-            {visible && <Countdown />}
+            {!visible && <Countdown />}
           </Typography>
         </Box>
         <Grid container spacing={2} className="room">
           <Grid item xs={8} pr={0}>
             <Typography variant="h6">Instructions: {instructions}</Typography>
-            <AceCodeEditor code={code} onChange={this.onChange} />
+            <AceCodeEditor
+              code={code}
+              onChange={this.onChange}
+              role={profile.role}
+            />
             <Grid container justify="space-between">
               <Button
                 type="submit"
