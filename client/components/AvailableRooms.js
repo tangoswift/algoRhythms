@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const AvailableRooms = props => {
-  const {rooms, userId, updateVisibility} = props
+  const {rooms, userId, updateVisibility, firestore} = props
 
   const classes = useStyles()
   const handleListItemClick = async (event, id) => {
@@ -49,9 +49,12 @@ export const AvailableRooms = props => {
         component="nav"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
+            <JoinSpecificRoom
+              firestore={firestore}
+              handleListItemClick={handleListItemClick}
+            />
+            {/* <br /> */}
             Most Recent Available Rooms:
-            <br />
-            <JoinSpecificRoom handleListItemClick={handleListItemClick} />
           </ListSubheader>
         }
       >

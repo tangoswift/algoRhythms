@@ -57,7 +57,7 @@ class Room extends React.Component {
     })
     this.worker.postMessage(code)
     //Terminate worker after 10s
-    setTimeout(() => this.worker.terminate(), 10000)
+    setTimeout(() => this.worker.terminate(), 5000)
   }
 
   redirectToTarget = () => {
