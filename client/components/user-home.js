@@ -162,7 +162,7 @@ export class UserHome extends Component {
                     ? roomHistory.filter(room => room.visible === false).length
                     : 'Loading'}
                 </ListItemText>
-                <ListItemText className="stats-pointds">
+                <ListItemText className="stats-points">
                   Points earned:{' '}
                   {roomHistory
                     ? roomHistory
