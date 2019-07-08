@@ -2,6 +2,7 @@ import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/TwoSumWorker'
 import React from 'react'
 import targetSumWorker from '../workers/TargetSumWorker'
+import intersection from '../workers/Intersection'
 import returnNegative from '../workers/ReturnNegative'
 import palindromeWorker from '../workers/PalindromeWorker'
 import reverseWordsWorker from '../workers/ReverseWordsWorker'
@@ -43,6 +44,8 @@ class Room extends React.Component {
         return twoSumWorker
       case 'TargetSum':
         return targetSumWorker
+      case 'Intersection':
+        return intersection
       case 'ReturnNegative':
         return returnNegative
       case 'Palindrome':
