@@ -53,7 +53,6 @@ export const signOutThunk = () => async (dispatch, getState, {getFirebase}) => {
     const firebase = getFirebase()
     await firebase.auth().signOut()
     await firebase.logout()
-
     dispatch(signOutSuccess())
     history.push('/')
   } catch (err) {
