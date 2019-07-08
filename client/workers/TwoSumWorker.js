@@ -16,9 +16,9 @@ export default () => {
         //Check if input matches output after calling the fn
         let sum = fn(arr[0], arr[1])
         let correct = sum === output[index]
-        let res = `Expected ${arr[0]} + ${arr[1]} to equal ${
-          output[index]
-        }: ${correct}`
+        let res = `Expected ${arr[0]} + ${arr[1]} to equal ${output[index]}: ${
+          correct ? 'Pass' : 'Fail'
+        }`
         results[index] = res
       })
 

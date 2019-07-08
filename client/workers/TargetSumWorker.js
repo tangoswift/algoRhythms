@@ -8,7 +8,7 @@ export default () => {
         [[2, 6, 3, 4, 20, 11, 22, 43], 31],
         [[3, 9, 4, 5], 8]
       ]
-      const output = [[7, 12], [20, 11], [3, 5]]
+      const output = [[7, 12], [11, 20], [3, 5]]
 
       let code = e.data
       let bodyCode = code.slice(code.indexOf('{') + 1)
@@ -22,7 +22,9 @@ export default () => {
         let correct =
           targetArr[0] === output[index][0] && targetArr[1] === output[index][1]
 
-        let res = `Expected ${arr[0]} to equal ${output[index]}: ${correct}`
+        let res = `Expected ${arr[0]} to equal ${output[index]}: ${
+          correct ? 'Pass' : 'Fail'
+        }`
         results[index] = res
       })
 
