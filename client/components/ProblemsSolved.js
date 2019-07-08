@@ -52,10 +52,10 @@ export default function ProblemsSolved(props) {
               </TableCell>
               <TableCell>{problem.instructions}</TableCell>
               <TableCell>
-                {problem.visible === false ? 'Solved' : 'Pending'}
+                {problem.solved === true ? 'Solved' : 'Pending'}
               </TableCell>
               <TableCell>
-                {problem.visible === false ? problem.points : 0}
+                {problem.solved === true ? problem.points : 0}
               </TableCell>
             </TableRow>
           ))}

@@ -38,7 +38,8 @@ export const addRoomThunk = roomInfo => async (
       result: [],
       visible: true,
       points: roomInfo.points,
-      timestamp: new Date()
+      timestamp: new Date(),
+      solved: false
     })
     dispatch(addRoom(res.id))
   } catch (err) {
@@ -71,14 +72,15 @@ export const updateResultThunk = (roomId, result) => async (
   {getFirestore}
 ) => {
   try {
-    let visibility = result.every(res => res.match('false'))
+    let testsPassed = result.every(res => res.match(true))
     const firestore = getFirestore()
+    console.log('firestore')
     const res = await firestore
       .collection('rooms')
       .doc(roomId)
       .update({
         result: result,
-        visible: visibility
+        solved: testsPassed
       })
     dispatch(updateResult())
   } catch (error) {
