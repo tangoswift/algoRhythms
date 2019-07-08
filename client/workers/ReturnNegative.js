@@ -20,7 +20,9 @@ export default () => {
       returnArr.forEach((num, index) => {
         //Check if input matches output after calling the fn
         let correct = num === output[index]
-        let res = `Expected ${num} to equal ${output[index]}: ${correct}`
+        let res = `Expected ${num} to equal ${output[index]}: ${
+          correct ? 'Pass' : 'Fail'
+        }`
         results[index] = res
       })
 

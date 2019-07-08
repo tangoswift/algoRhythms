@@ -25,7 +25,9 @@ export default () => {
         let targetStr = fn(str)
         let correct = targetStr === output[index]
 
-        let res = `Expected ${targetStr} to equal ${output[index]}: ${correct}`
+        let res = `Expected ${targetStr} to equal ${output[index]}: ${
+          correct ? 'Pass' : 'Fail'
+        }`
         results[index] = res
       })
 

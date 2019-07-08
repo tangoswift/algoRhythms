@@ -16,20 +16,20 @@ export default () => {
       const results = []
       inputs.forEach((input, idx) => {
         let intersectionArr = intersection(input[0], input[1])
-        let isCorrect = true
+        let correct = true
         if (intersectionArr.length !== outputs[idx].length) {
-          isCorrect = false
+          correct = false
         } else {
           for (let i = 0; i < outputs[idx].length; i++) {
             if (intersectionArr[i] !== outputs[idx][i]) {
-              isCorrect = false
+              correct = false
               break
             }
           }
         }
         let res = `Expected [${input[0]}] and [${input[1]}] to return [${
           outputs[idx]
-        }]: ${isCorrect}`
+        }]: ${correct ? 'Pass' : 'Fail'}`
         results[idx] = res
       })
 
