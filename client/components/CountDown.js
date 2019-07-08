@@ -13,6 +13,10 @@ export default class Countdown extends Component {
     this.timer = setInterval(this.tick, 1000)
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
   tick() {
     if (this.state.seconds > 0) {
       this.setState({seconds: this.state.seconds - 1})

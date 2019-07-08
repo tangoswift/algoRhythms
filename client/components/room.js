@@ -2,6 +2,7 @@ import WebWorker from '../workers/WebWorker'
 import twoSumWorker from '../workers/TwoSumWorker'
 import React from 'react'
 import targetSumWorker from '../workers/TargetSumWorker'
+import returnNegative from '../workers/ReturnNegative'
 import RoomResults from './RoomResults'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
@@ -40,6 +41,8 @@ class Room extends React.Component {
         return twoSumWorker
       case 'TargetSum':
         return targetSumWorker
+      case 'ReturnNegative':
+        return returnNegative
       default:
         return null
     }

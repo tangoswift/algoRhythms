@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {roomToUserThunk} from '../store/user'
 import {updateVisibilityThunk} from '../store/roomId'
@@ -53,7 +53,6 @@ export const AvailableRooms = props => {
               firestore={firestore}
               handleListItemClick={handleListItemClick}
             />
-            {/* <br /> */}
             Most Recent Available Rooms:
           </ListSubheader>
         }
