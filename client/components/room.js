@@ -50,7 +50,7 @@ class Room extends React.Component {
         return returnNegative
       case 'Palindrome':
         return palindromeWorker
-      case 'ReverseWord':
+      case 'ReverseWords':
         return reverseWordsWorker
       default:
         return null
