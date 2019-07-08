@@ -36,12 +36,12 @@ export default class Countdown extends Component {
   render() {
     return (
       <div style={{width: '100%', textAlign: 'center'}}>
-        <text id="timer" fontSize="50">
+        <span id="timer" fontSize="50">
           {this.state.seconds}
-        </text>
-        <text id="timerMessage" fontSize="50">
+        </span>
+        <span id="timerMessage" fontSize="50">
           {this.state.message}
-        </text>
+        </span>
       </div>
     )
   }
