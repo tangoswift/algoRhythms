@@ -74,6 +74,7 @@ export const updateResultThunk = (roomId, result) => async (
   try {
     let testsPassed = result.every(res => res.match(true))
     const firestore = getFirestore()
+    console.log('firestore')
     const res = await firestore
       .collection('rooms')
       .doc(roomId)

@@ -24,7 +24,7 @@ class UserProfile extends Component {
           Total Points{' = '}
           {roomHistory
             ? roomHistory
-                .filter(room => !room.visible)
+                .filter(room => room.solved)
                 .reduce((accum, curVal) => (accum += curVal.points), 0)
             : 'Loading'}{' '}
         </Typography>
