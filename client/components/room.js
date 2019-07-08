@@ -3,6 +3,8 @@ import twoSumWorker from '../workers/TwoSumWorker'
 import React from 'react'
 import targetSumWorker from '../workers/TargetSumWorker'
 import returnNegative from '../workers/ReturnNegative'
+import palindromeWorker from '../workers/PalindromeWorker'
+import reverseWordsWorker from '../workers/ReverseWordsWorker'
 import RoomResults from './RoomResults'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
@@ -43,6 +45,10 @@ class Room extends React.Component {
         return targetSumWorker
       case 'ReturnNegative':
         return returnNegative
+      case 'Palindrome':
+        return palindromeWorker
+      case 'ReverseWords':
+        return reverseWordsWorker
       default:
         return null
     }
