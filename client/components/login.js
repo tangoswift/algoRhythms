@@ -12,6 +12,10 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import firebase from 'firebase'
+import {uiConfig} from '../../server/firebase/fbConfig'
+
 /**
  * MATERIAL UI
  */
@@ -66,13 +70,14 @@ export class Login extends React.Component {
   render() {
     const {classes} = this.props
     const {authError} = this.props
+    const {auth} = this.props
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          {/* <Typography component="h1" variant="h5">
             Login
-          </Typography>
-          <form onSubmit={this.handleOnSubmit} className={classes.form}>
+          </Typography> */}
+          {/* <form onSubmit={this.handleOnSubmit} className={classes.form}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -110,7 +115,16 @@ export class Login extends React.Component {
             >
               Login
             </Button>
-          </form>
+          </form> */}
+
+          {/* Renders Google sign in option */}
+          {auth.isEmpty ? (
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          ) : null}
+
           {authError && (
             <Typography
               className="error-message"
@@ -132,7 +146,8 @@ Login.propTypes = {
 
 const mapState = state => {
   return {
-    authError: state.auth.authError
+    authError: state.auth.authError,
+    auth: state.firebase.auth
   }
 }
 

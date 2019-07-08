@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({auth, signOut}) => {
   const classes = useStyles()
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">

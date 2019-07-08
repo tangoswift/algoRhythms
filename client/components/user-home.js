@@ -5,6 +5,7 @@ import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import history from '../history'
 import {roomToUserThunk, getRoomHistoryThunk} from '../store/user'
+import {updateProfileThunk} from '../store/auth'
 import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
 import {withStyles} from '@material-ui/core/styles'
@@ -85,10 +86,20 @@ export class UserHome extends Component {
 
   render() {
     const {problems, roomHistory, userId, rooms, firestore} = this.props
+    const {auth, profile, updateProfile} = this.props
+    const user = {}
+
+    if (!profile.isLoaded && auth.displayName) {
+      user.id = auth.uid
+      user.firstName = auth.displayName.split(' ')[0]
+      user.lastName = auth.displayName.split(' ')[1]
+      updateProfile(user)
+    }
     let problemsKeys = null
     if (problems) {
       problemsKeys = Object.keys(problems)
     }
+    
     const classes = this.props
     return (
       <Container>
@@ -209,7 +220,8 @@ const mapDispatchToProps = dispatch => {
     createRoom: roomInfo => dispatch(addRoomThunk(roomInfo)),
     addRoomToUser: (roomId, userId) =>
       dispatch(roomToUserThunk(roomId, userId)),
-    getRooms: userId => dispatch(getRoomHistoryThunk(userId))
+    getRooms: userId => dispatch(getRoomHistoryThunk(userId)),
+    updateProfile: user => dispatch(updateProfileThunk(user))
   }
 }
 
