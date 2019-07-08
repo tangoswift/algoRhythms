@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
+import {startProblemThunk} from '../store/roomId'
 
 import Typography from '@material-ui/core/Typography'
+import {connect} from 'tls'
 
-export default class Countdown extends Component {
+class Countdown extends Component {
   constructor() {
     super()
     this.tick = this.tick.bind(this)
@@ -46,3 +48,13 @@ export default class Countdown extends Component {
     )
   }
 }
+
+// const mapState = state => ({
+//   start: state.firebase.
+// })
+
+const mapDispatch = dispatch => ({
+  startProblem: roomId => dispatch(startProblemThunk(roomId))
+})
+
+export default connect(null, mapDispatch)(Countdown)

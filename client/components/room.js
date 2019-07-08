@@ -97,6 +97,9 @@ class Room extends React.Component {
     return (
       <Container className={classes.root}>
         <Box bgcolor="text.hint" color="background.paper">
+          <Typography align="center">
+            You are currently the {profile.role}
+          </Typography>
           <Typography align="center" component="div" variant="body1">
             Get Into The Rhythm: {id}
             {!visible && <Countdown />}

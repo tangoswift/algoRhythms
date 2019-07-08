@@ -6,6 +6,7 @@ const GET_ROOMS = 'GET_ROOMS'
 const CHANGE_CODE = 'CHANGE_CODE'
 const UPDATE_RESULT = 'UPDATE_RESULT'
 const UPDATE_VISIBILITY = 'UPDATE_VISIBILITY'
+const START_PROBLEM = 'START_PROBLEM'
 
 /**
  * INITIAL STATE
@@ -20,6 +21,7 @@ const getRooms = rooms => ({type: GET_ROOMS, rooms})
 const changeCode = () => ({type: CHANGE_CODE})
 const updateResult = () => ({type: UPDATE_RESULT})
 const updateVisibility = () => ({type: UPDATE_VISIBILITY})
+const startProblem = () => ({type: START_PROBLEM})
 
 /**
  * THUNK CREATORS
@@ -38,6 +40,7 @@ export const addRoomThunk = roomInfo => async (
       result: [],
       visible: true,
       points: roomInfo.points,
+      start: false,
       timestamp: new Date()
     })
     dispatch(addRoom(res.id))
@@ -116,6 +119,25 @@ export const updateVisibilityThunk = roomId => async (
     console.error('TCL: updateVisibilityThunk -> error', error)
   }
 }
+
+export const startProblemThunk = roomId => async (
+  dispatch,
+  getState,
+  {getFirestore}
+) => {
+  try {
+    const firestore = getFirestore()
+
+    await firestore
+      .collection('rooms')
+      .doc(roomId)
+      .update({start: true})
+
+    dispatch(startProblem())
+  } catch (error) {
+    console.log(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -131,6 +153,8 @@ export default function(state = defaultRoomId, action) {
       return state
     case GET_ROOMS:
       return action.rooms
+    case START_PROBLEM:
+      return state
     default:
       return state
   }
