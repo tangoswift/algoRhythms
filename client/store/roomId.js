@@ -72,7 +72,7 @@ export const updateResultThunk = (roomId, result) => async (
   {getFirestore}
 ) => {
   try {
-    let testsPassed = result.every(res => res.match(true))
+    let testsPassed = result.every(res => res.match('Pass'))
     const firestore = getFirestore()
     console.log('firestore')
     const res = await firestore

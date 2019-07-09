@@ -15,6 +15,7 @@ class UserProfile extends Component {
 
   render() {
     const {roomHistory} = this.props
+    console.log(roomHistory)
     return (
       <Container>
         <Typography component="h2" variant="h5">
