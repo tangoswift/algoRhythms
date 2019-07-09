@@ -118,7 +118,7 @@ export class UserHome extends Component {
         <Container>
           <div className={classes.header}>
             <Chip
-              className="stats-name"
+              className="user-name"
               variant="outlined"
               color="primary"
               label={`Welcome ${profile.firstName} ${profile.lastName}`}

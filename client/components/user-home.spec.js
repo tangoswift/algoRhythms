@@ -20,6 +20,7 @@ describe('UserHome', () => {
   const correctResult = true
   const otherResult = false
   const profile = {firstName: 'Cody', lastName: 'Dog', displayName: 'Cody Dog'}
+  const classes = {header: ''}
 
   const roomHistory = [
     {solved: correctResult, points: 1},
@@ -51,15 +52,14 @@ describe('UserHome', () => {
         getRooms={userHomeSpy}
         auth={profile}
         updateProfile={updateProfileThunk}
+        classes={classes}
       />
     )
     solvedRooms = roomHistory.filter(obj => obj.solved === correctResult)
   })
 
   it('renders the a greeting in an h2', () => {
-    expect(userHome.find('.greeting').text()).to.equal(
-      `Welcome, ${profile.firstName} ${profile.lastName}`
-    )
+    expect(userHome.find('.user-name').length).to.equal(1)
   })
 
   /**

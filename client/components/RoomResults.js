@@ -18,7 +18,7 @@ export default function RoomResults(props) {
           ? props.result.map((result, idx) => {
               return (
                 <li key={idx}>
-                  {result.includes('false') ? (
+                  {result.includes('Fail') ? (
                     <Typography color="error">{result}</Typography>
                   ) : (
                     <Typography color="primary">{result}</Typography>
