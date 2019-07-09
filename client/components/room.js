@@ -78,7 +78,6 @@ class Room extends React.Component {
 
   render() {
     let {room} = this.props
-
     /**
      * Check if room exist
      */
