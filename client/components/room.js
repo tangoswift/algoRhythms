@@ -28,7 +28,27 @@ import Container from '@material-ui/core/Container'
  */
 const styles = theme => ({
   root: {
+    dispay: 'flex',
     flexGrow: 1
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 3,
+    border: 0,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    marginTop: '24px',
+    marginBottom: '24px'
+  },
+  font: {
+    marginTop: '0px',
+    marginBottom: '0px'
+  },
+  countdown: {
+    marginTop: '10px',
+    marginBottom: '10px'
   }
 })
 
@@ -98,14 +118,34 @@ class Room extends React.Component {
 
       return (
         <Container className={classes.root}>
-          <Box bgcolor="text.hint" color="background.paper">
-            {start && (
-              <Typography align="center">
+          <Paper className={classes.header}>
+            {start ? (
+              <Typography
+                className={classes.font}
+                align="center"
+                variant="h5"
+                gutterBottom
+              >
                 You are currently the {profile.role}
               </Typography>
+            ) : (
+              <Typography
+                className={classes.font}
+                align="center"
+                variant="h5"
+                gutterBottom
+              >
+                Waiting for coding partner...
+              </Typography>
             )}
-            <Typography align="center" component="div" variant="body1">
-              Get Into The Rhythm: {id}
+            <Typography
+              className={classes.countdown}
+              align="center"
+              variant="h6"
+              component="div"
+              gutterBottom
+            >
+              Room ID: {id}
               {!solved && (
                 <Countdown
                   start={start}
@@ -115,7 +155,7 @@ class Room extends React.Component {
                 />
               )}
             </Typography>
-          </Box>
+          </Paper>
           <Grid container spacing={2} className="room">
             <Grid item xs={8} pr={0}>
               <Typography variant="h6">Instructions: {instructions}</Typography>
