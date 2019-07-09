@@ -41,8 +41,6 @@ export const roomToUserThunk = (roomId, userId) => async (
 ) => {
   try {
     const firestore = getFirestore()
-    console.log('USER ID', userId)
-    console.log('ROOM ID', roomId)
     await firestore
       .collection('users')
       .doc(userId)
@@ -145,7 +143,6 @@ export const setRoleAsNavigatorThunk = (rooomId, userId) => async (
       .collection('users')
       .doc(userId)
       .update({role: 'navigator'})
-
     dispatch(setRoleAsNavigator())
   } catch (error) {
     console.log(error)
