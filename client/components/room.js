@@ -117,6 +117,7 @@ class Room extends React.Component {
               code={code}
               onChange={this.onChange}
               role={profile.role}
+              start={start}
             />
             <Grid container justify="space-between">
               <Button
