@@ -4,6 +4,10 @@ import {setRoleAsDriverThunk, setRoleAsNavigatorThunk} from '../store/user'
 import Typography from '@material-ui/core/Typography'
 import {connect} from 'react-redux'
 
+import Button from '@material-ui/core/Button'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = theme => ({})
 class Countdown extends Component {
   constructor() {
     super()
@@ -68,9 +72,15 @@ class Countdown extends Component {
             </span>
           </div>
         ) : (
-          <button type="submit" onClick={this.start} disabled={visible}>
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            onClick={this.start}
+            disabled={visible}
+          >
             Start
-          </button>
+          </Button>
         )}
       </div>
     )
@@ -88,4 +98,4 @@ const mapDispatch = dispatch => ({
     dispatch(setRoleAsNavigatorThunk(roomId, userId))
 })
 
-export default connect(mapState, mapDispatch)(Countdown)
+export default withStyles(styles)(connect(mapState, mapDispatch)(Countdown))
