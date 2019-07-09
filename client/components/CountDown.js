@@ -48,7 +48,7 @@ class Countdown extends Component {
     /**
      * Start the tick once someone in the room hits start
      */
-    const {start} = this.props
+    const {start, visible} = this.props
     const {seconds, message} = this.state
     if (start && seconds === -1) {
       this.setState({
@@ -56,7 +56,6 @@ class Countdown extends Component {
       })
       this.timer = setInterval(this.tick, 1000)
     }
-
     return (
       <div>
         {start ? (
@@ -69,7 +68,7 @@ class Countdown extends Component {
             </span>
           </div>
         ) : (
-          <button type="submit" onClick={this.start}>
+          <button type="submit" onClick={this.start} disabled={visible}>
             Start
           </button>
         )}

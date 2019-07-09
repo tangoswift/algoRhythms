@@ -14,8 +14,8 @@ export default function RoomResults(props) {
   return (
     <ThemeProvider theme={innerTheme}>
       <ul>
-        {props.results.length
-          ? props.results.map((result, idx) => {
+        {props.result.length
+          ? props.result.map((result, idx) => {
               return (
                 <li key={idx}>
                   {result.includes('false') ? (
