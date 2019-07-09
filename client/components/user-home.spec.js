@@ -108,27 +108,4 @@ describe('UserHome', () => {
       expect(availableRooms.find(ListItem).length).to.equal(4)
     })
   })
-
-  /**
-   * STATISTICS CARD
-   */
-  describe('Stats Card', () => {
-    it('lists users name', () => {
-      let name = `Name: ${profile.firstName} ${profile.lastName}`
-      expect(userHome.find('.stats-name').text()).to.equal(name)
-    })
-
-    it('lists number of problems solved', () => {
-      let solved = `Problems solved: ${solvedRooms.length}`
-      expect(userHome.find('.stats-solved').text()).to.equal(solved)
-    })
-
-    it('lists number of points earned', () => {
-      let points = `Points earned: ${solvedRooms.reduce(
-        (tot, rm) => tot + rm.points,
-        0
-      )}`
-      expect(userHome.find('.stats-points').text()).to.equal(points)
-    })
-  })
 })

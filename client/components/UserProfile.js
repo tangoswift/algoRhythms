@@ -4,13 +4,11 @@ import {getRoomHistoryThunk} from '../store/user'
 import {connect} from 'react-redux'
 import Loading from './Loading'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import {withStyles} from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
 import FaceIcon from '@material-ui/icons/Face'
 import DoneIcon from '@material-ui/icons/Done'
-import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
   root: {
@@ -26,7 +24,7 @@ const styles = theme => ({
   }
 })
 
-class UserProfile extends Component {
+export class UserProfile extends Component {
   componentDidMount() {
     this.props.getRooms(this.props.userId)
   }
@@ -49,6 +47,7 @@ class UserProfile extends Component {
         <Container>
           <div className={classes.root}>
             <Chip
+              className="stats-name"
               variant="outlined"
               color="primary"
               label={`${profile.firstName} ${
