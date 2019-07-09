@@ -133,6 +133,7 @@ class Room extends React.Component {
                 height="50%"
                 allow="microphone; camera"
               />
+
               <Typography variant="h6">Test Results: </Typography>
               <RoomResults results={results} />
             </Box>
