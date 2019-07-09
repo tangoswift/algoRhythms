@@ -128,7 +128,7 @@ class Room extends React.Component {
               >
                 You are currently the {profile.role}
               </Typography>
-            ) : (
+            ) : visible ? (
               <Typography
                 className={classes.font}
                 align="center"
@@ -136,6 +136,15 @@ class Room extends React.Component {
                 gutterBottom
               >
                 Waiting for coding partner...
+              </Typography>
+            ) : (
+              <Typography
+                className={classes.font}
+                align="center"
+                variant="h5"
+                gutterBottom
+              >
+                Click Start
               </Typography>
             )}
             <Typography
