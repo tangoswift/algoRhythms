@@ -3,6 +3,9 @@
  */
 const ROOM_TO_USER = 'ROOM_TO_USER'
 const GET_ROOM_HISTORY = 'GET_ROOM_HISTORY'
+const SET_ROLE_AS_DRIVER = 'SET_ROLE_AS_DRIVER'
+const SET_ROLE_AS_NAVIGATOR = 'SET_ROLE_AS_NAVIGATOR'
+const SWITCH_ROLE = 'SWITCH_ROLE'
 
 /**
  * INITIAL STATE
@@ -12,8 +15,21 @@ const defaultRoomId = {}
 /**
  * ACTION CREATORS
  */
-const roomToUser = () => ({type: 'ROOM_TO_USER'})
-const getRoomHistory = rooms => ({type: 'GET_ROOM_HISTORY', rooms})
+const roomToUser = () => ({
+  type: ROOM_TO_USER
+})
+const getRoomHistory = rooms => ({
+  type: GET_ROOM_HISTORY,
+  rooms
+})
+const setRoleAsDriver = () => ({
+  type: SET_ROLE_AS_DRIVER,
+  role: 'driver'
+})
+const setRoleAsNavigator = () => ({
+  type: SET_ROLE_AS_NAVIGATOR,
+  role: 'navigator'
+})
 
 /**
  * THUNK CREATORS
@@ -96,12 +112,57 @@ export const getRoomHistoryThunk = userId => async (
   }
 }
 
+export const setRoleAsDriverThunk = (rooomId, userId) => async (
+  dispatch,
+  getState,
+  {getFirestore}
+) => {
+  try {
+    const firestore = getFirestore()
+
+    await firestore
+      .collection('users')
+      .doc(userId)
+      .update({role: 'driver'})
+
+    dispatch(setRoleAsDriver())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const setRoleAsNavigatorThunk = (rooomId, userId) => async (
+  dispatch,
+  getState,
+  {getFirestore}
+) => {
+  try {
+    const firestore = getFirestore()
+
+    await firestore
+      .collection('users')
+      .doc(userId)
+      .update({role: 'navigator'})
+    dispatch(setRoleAsNavigator())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+/**
+ * REDUCER
+ */
+
 export default function(state = defaultRoomId, action) {
   switch (action.type) {
-    case 'ROOM_TO_USER':
+    case ROOM_TO_USER:
       return state
-    case 'GET_ROOM_HISTORY':
+    case GET_ROOM_HISTORY:
       return {...state, roomHistory: action.rooms}
+    case SET_ROLE_AS_DRIVER:
+      return {...state, role: action.role}
+    case SET_ROLE_AS_NAVIGATOR:
+      return {...state, role: action.role}
     default:
       return state
   }

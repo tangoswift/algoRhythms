@@ -1,23 +1,26 @@
 import React, {Component} from 'react'
-
+import {startProblemThunk} from '../store/roomId'
+import {setRoleAsDriverThunk, setRoleAsNavigatorThunk} from '../store/user'
 import Typography from '@material-ui/core/Typography'
+import {connect} from 'react-redux'
 
-export default class Countdown extends Component {
+class Countdown extends Component {
   constructor() {
     super()
-    this.tick = this.tick.bind(this)
-    this.state = {seconds: 12, message: ''}
+    this.state = {seconds: -1, message: ''}
   }
 
-  componentDidMount() {
-    this.timer = setInterval(this.tick, 1000)
-  }
-
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     clearInterval(this.timer)
   }
 
-  tick() {
+  start = e => {
+    e.preventDefault()
+    const roomId = this.props.roomId
+    this.props.startProblem(roomId)
+  }
+
+  tick = () => {
     if (this.state.seconds > 0) {
       this.setState({seconds: this.state.seconds - 1})
       if (this.state.seconds > 0 && this.state.seconds < 10) {
@@ -25,24 +28,65 @@ export default class Countdown extends Component {
         document.getElementById('timerMessage').style = 'color:red'
         document.getElementById('timer').style = 'color:red'
       }
+
+      //Reverse the role when timer hits zero
       if (this.state.seconds === 0) {
-        this.setState({seconds: 30})
+        if (this.props.role == 'navigator') {
+          this.props.setDriver(this.props.roomId, this.props.auth.uid)
+        } else {
+          this.props.setNavigator(this.props.roomId, this.props.auth.uid)
+        }
+        this.setState({seconds: 10})
         this.setState({message: ''})
         document.getElementById('timer').style = 'color:white'
         document.getElementById('timerMessage').style = 'color:white'
       }
     }
   }
+
   render() {
+    /**
+     * Start the tick once someone in the room hits start
+     */
+    const {start} = this.props
+    const {seconds, message} = this.state
+    if (start && seconds === -1) {
+      this.setState({
+        seconds: 10
+      })
+      this.timer = setInterval(this.tick, 1000)
+    }
+
     return (
-      <div style={{width: '100%', textAlign: 'center'}}>
-        <text id="timer" fontSize="50">
-          {this.state.seconds}
-        </text>
-        <text id="timerMessage" fontSize="50">
-          {this.state.message}
-        </text>
+      <div>
+        {start ? (
+          <div style={{width: '100%', textAlign: 'center'}}>
+            <span id="timer" fontSize="50">
+              {seconds}
+            </span>
+            <span id="timerMessage" fontSize="50">
+              {message}
+            </span>
+          </div>
+        ) : (
+          <button type="submit" onClick={this.start}>
+            Start
+          </button>
+        )}
       </div>
     )
   }
 }
+
+const mapState = state => ({
+  auth: state.firebase.auth
+})
+
+const mapDispatch = dispatch => ({
+  startProblem: roomId => dispatch(startProblemThunk(roomId)),
+  setDriver: (roomId, userId) => dispatch(setRoleAsDriverThunk(roomId, userId)),
+  setNavigator: (roomId, userId) =>
+    dispatch(setRoleAsNavigatorThunk(roomId, userId))
+})
+
+export default connect(mapState, mapDispatch)(Countdown)

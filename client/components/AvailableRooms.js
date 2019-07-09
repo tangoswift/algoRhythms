@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {roomToUserThunk} from '../store/user'
+import {roomToUserThunk, setRoleAsDriverThunk} from '../store/user'
 import {updateVisibilityThunk} from '../store/roomId'
 import history from '../history'
 import List from '@material-ui/core/List'
@@ -17,14 +17,22 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const AvailableRooms = props => {
-  const {rooms, userId, updateVisibility, firestore} = props
+  const {
+    rooms,
+    userId,
+    updateVisibility,
+    firestore,
+    addRoomToUser,
+    setAsDriver
+  } = props
 
   const classes = useStyles()
-  const handleListItemClick = async (event, id) => {
+  const handleListItemClick = async (event, roomId) => {
     event.preventDefault()
-    await props.addRoomToUser(id, userId)
-    await updateVisibility(id)
-    history.push(`/rooms/${id}`)
+    await setAsDriver(roomId, userId)
+    await addRoomToUser(roomId, userId)
+    await updateVisibility(roomId)
+    history.push(`/rooms/${roomId}`)
   }
 
   const roomList = rooms
@@ -67,9 +75,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addRoomToUser: (roomId, userId) =>
       dispatch(roomToUserThunk(roomId, userId)),
-    updateVisibility: roomId => {
-      dispatch(updateVisibilityThunk(roomId))
-    }
+    updateVisibility: roomId => dispatch(updateVisibilityThunk(roomId)),
+    setAsDriver: (roomId, userId) =>
+      dispatch(setRoleAsDriverThunk(roomId, userId))
   }
 }
 

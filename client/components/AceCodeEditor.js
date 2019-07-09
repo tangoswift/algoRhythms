@@ -5,6 +5,8 @@ import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'
 
 export const AceCodeEditor = props => {
+  const {role} = props
+  let readOnly = role !== 'driver'
   return (
     <AceEditor
       mode="javascript"
@@ -22,6 +24,7 @@ export const AceCodeEditor = props => {
       width="100%"
       height="85%"
       value={props.code}
+      readOnly={readOnly}
     />
   )
 }

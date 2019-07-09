@@ -11,7 +11,6 @@ import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux'
 import {AceCodeEditor} from './AceCodeEditor'
-import ReactDOM from 'react-dom'
 import Countdown from './CountDown'
 // Material UI Dependencies
 import Typography from '@material-ui/core/Typography'
@@ -69,7 +68,7 @@ class Room extends React.Component {
     })
     this.worker.postMessage(code)
     //Terminate worker after 10s
-    setTimeout(() => this.worker.terminate(), 5000)
+    setTimeout(() => this.worker.terminate(), 10000)
   }
 
   redirectToTarget = () => {
@@ -82,29 +81,43 @@ class Room extends React.Component {
     let results = []
     let code = ''
     let instructions = ''
-    let visible = true
+    let start = false
+    let solved = false
     const classes = this.props
+    const {profile} = this.props
 
     if (this.props.rooms && this.props.rooms[id]) {
       name = this.props.rooms[id].name
       code = this.props.rooms[id].code
       instructions = this.props.rooms[id].instructions
       results = this.props.rooms[id].result
-      visible = this.props.rooms[id].visible
+      start = this.props.rooms[id].start
+      solved = this.props.rooms[id].solved
     }
 
     return (
       <Container className={classes.root}>
         <Box bgcolor="text.hint" color="background.paper">
+          {start && (
+            <Typography align="center">
+              You are currently the {profile.role}
+            </Typography>
+          )}
           <Typography align="center" component="div" variant="body1">
             Get Into The Rhythm: {id}
-            {visible && <Countdown />}
+            {!solved && (
+              <Countdown start={start} roomId={id} role={profile.role} />
+            )}
           </Typography>
         </Box>
         <Grid container spacing={2} className="room">
           <Grid item xs={8} pr={0}>
             <Typography variant="h6">Instructions: {instructions}</Typography>
-            <AceCodeEditor code={code} onChange={this.onChange} />
+            <AceCodeEditor
+              code={code}
+              onChange={this.onChange}
+              role={profile.role}
+            />
             <Grid container justify="space-between">
               <Button
                 type="submit"
@@ -142,6 +155,7 @@ class Room extends React.Component {
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     profile: state.firebase.profile,

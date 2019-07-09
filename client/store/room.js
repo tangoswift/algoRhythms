@@ -75,7 +75,7 @@ export const updateResultThunk = (roomId, result) => async (
   {getFirestore}
 ) => {
   try {
-    let testsPassed = result.every(res => res.match('Pass'))
+    let testsPassed = result.every(res => res.match(true))
     const firestore = getFirestore()
     const res = await firestore
       .collection('rooms')
@@ -89,6 +89,7 @@ export const updateResultThunk = (roomId, result) => async (
     console.error('TCL: updateResultThunk -> error', error)
   }
 }
+
 export const updateVisibilityThunk = roomId => async (
   dispatch,
   getState,
