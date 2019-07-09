@@ -20,7 +20,7 @@ const styles = theme => ({
     padding: '0 30px',
     height: '48px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    marginTop: '24px'
+    marginTop: '10px'
   }
 })
 
@@ -58,15 +58,15 @@ export class UserProfile extends Component {
               <Chip
                 variant="outlined"
                 color="primary"
+                deleteIcon={<DoneIcon />}
                 icon={<FaceIcon />}
-                label={`Total Points = ${totalPoints}`}
+                label={`Problems Solved : ${totalProblemsSolved}`}
               />{' '}
               <Chip
                 variant="outlined"
                 color="primary"
-                deleteIcon={<DoneIcon />}
                 icon={<FaceIcon />}
-                label={`Problems Solved : ${totalProblemsSolved}`}
+                label={`Total Points = ${totalPoints}`}
               />
             </div>
           </div>
