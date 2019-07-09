@@ -5,13 +5,18 @@ import 'brace/mode/javascript'
 import 'brace/theme/solarized_dark'
 
 export const AceCodeEditor = props => {
-  const {role, start} = props
+  const {role, start, onChange} = props
   let readOnly = role !== 'driver' || !start
+  let code = props.code.replace(
+    '{}',
+    '{\n\t// please enter your code inside the curly braces\n}'
+  )
+
   return (
     <AceEditor
       mode="javascript"
       theme="solarized_dark"
-      onChange={props.onChange}
+      onChange={onChange}
       name="UNIQUE_ID_OF_DIV"
       editorProps={{$blockScrolling: true}}
       enableLiveAutocompletion={true}
@@ -23,7 +28,7 @@ export const AceCodeEditor = props => {
       wrapEnabled={true}
       width="100%"
       height="85%"
-      value={props.code}
+      value={code}
       readOnly={readOnly}
     />
   )
