@@ -83,6 +83,7 @@ class Room extends React.Component {
     let instructions = ''
     let start = false
     let solved = false
+    let visible = true
     const classes = this.props
     const {profile} = this.props
 
@@ -93,6 +94,7 @@ class Room extends React.Component {
       results = this.props.rooms[id].result
       start = this.props.rooms[id].start
       solved = this.props.rooms[id].solved
+      visible = this.props.rooms[id].visible
     }
 
     return (
@@ -106,7 +108,12 @@ class Room extends React.Component {
           <Typography align="center" component="div" variant="body1">
             Get Into The Rhythm: {id}
             {!solved && (
-              <Countdown start={start} roomId={id} role={profile.role} />
+              <Countdown
+                start={start}
+                roomId={id}
+                role={profile.role}
+                visible={visible}
+              />
             )}
           </Typography>
         </Box>
