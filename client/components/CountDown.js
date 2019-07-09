@@ -7,7 +7,16 @@ import {connect} from 'react-redux'
 import Button from '@material-ui/core/Button'
 import {withStyles} from '@material-ui/core/styles'
 
-const styles = theme => ({})
+const styles = theme => ({
+  font: {
+    marginTop: '0px',
+    marginBottom: '0px'
+  },
+  button: {
+    marginTop: '0px',
+    marginBotton: '20px'
+  }
+})
 class Countdown extends Component {
   constructor() {
     super()
@@ -52,7 +61,7 @@ class Countdown extends Component {
     /**
      * Start the tick once someone in the room hits start
      */
-    const {start, visible} = this.props
+    const {classes, start, visible} = this.props
     const {seconds, message} = this.state
     if (start && seconds === -1) {
       this.setState({
@@ -63,16 +72,22 @@ class Countdown extends Component {
     return (
       <div>
         {start ? (
-          <div style={{width: '100%', textAlign: 'center'}}>
+          <Typography
+            className={classes.font}
+            variant="h6"
+            style={{width: '100%', textAlign: 'center'}}
+            gutterBottom
+          >
             <span id="timer" fontSize="50">
               {seconds}
             </span>
             <span id="timerMessage" fontSize="50">
               {message}
             </span>
-          </div>
+          </Typography>
         ) : (
           <Button
+            className={classes.button}
             color="primary"
             variant="contained"
             type="submit"
