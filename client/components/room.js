@@ -160,7 +160,6 @@ const mapStateToProps = state => {
   return {
     profile: state.firebase.profile,
     rooms: state.firestore.data.rooms,
-    firestore: state.firestore,
     users: state.firestore.data.users
   }
 }
