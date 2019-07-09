@@ -85,8 +85,7 @@ class Room extends React.Component {
       return <Loading />
     } else {
       let id = this.props.match.params.id
-      const classes = this.props
-      const {profile} = this.props
+      const {profile, classes} = this.props
       let {
         name,
         result,

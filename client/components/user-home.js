@@ -165,30 +165,6 @@ export class UserHome extends Component {
                 )}
               </List>
             </Card>
-            <Grid item xs={12} sm={6}>
-              <Card className={classes.card}>
-                <ListSubheader component="div">User Stats:</ListSubheader>
-                {/* USER STATS: */}
-                <ListItemText className="stats-name">
-                  Name: {this.props.profile.firstName}{' '}
-                  {this.props.profile.lastName}
-                </ListItemText>
-                <ListItemText className="stats-solved">
-                  Problems solved:{' '}
-                  {roomHistory
-                    ? roomHistory.filter(room => room.solved === true).length
-                    : 'Loading'}
-                </ListItemText>
-                <ListItemText className="stats-points">
-                  Points earned:{' '}
-                  {roomHistory
-                    ? roomHistory
-                        .filter(room => room.solved === true)
-                        .reduce((accum, curVal) => (accum += curVal.points), 0)
-                    : 'Loading'}
-                </ListItemText>
-              </Card>
-            </Grid>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className={classes.card}>

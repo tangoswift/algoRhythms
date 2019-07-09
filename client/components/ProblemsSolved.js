@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {makeStyles, useTheme} from '@material-ui/core/styles'
+import {makeStyles, useTheme, withStyles} from '@material-ui/core/styles'
+import {Link as RouterLink} from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -92,10 +94,6 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired
 }
 
-function createData(name, calories, fat) {
-  return {name, calories, fat}
-}
-
 const useStyles2 = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -108,6 +106,24 @@ const useStyles2 = makeStyles(theme => ({
     overflowX: 'auto'
   }
 }))
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14
+  }
+}))(TableCell)
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default
+    }
+  }
+}))(TableRow)
 
 export default function ProblemsSolved(props) {
   const classes = useStyles2()
@@ -131,41 +147,43 @@ export default function ProblemsSolved(props) {
     <Paper className={classes.root}>
       <div className={classes.tableWrapper}>
         <Table className={classes.table}>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Room Id</TableCell>
-            <TableCell>Instructions</TableCell>
-            <TableCell>Result</TableCell>
-            <TableCell>Points Earned</TableCell>
-          </TableRow>
           <TableBody>
+            <TableRow>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell>Room Id</StyledTableCell>
+              <StyledTableCell>Instructions</StyledTableCell>
+              <StyledTableCell>Result</StyledTableCell>
+              <StyledTableCell>Points Earned</StyledTableCell>
+            </TableRow>
             {roomHistory
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(problem => (
-                <TableRow key={problem.id}>
-                  <TableCell>{problem.name}</TableCell>
-                  <TableCell
-                    align="left"
-                    numeric
-                    component="a"
-                    href={`/rooms/${problem.id}`}
-                  >
-                    {problem.id}
-                  </TableCell>
-                  <TableCell>{problem.instructions}</TableCell>
-                  <TableCell>
+                <StyledTableRow key={problem.id}>
+                  <StyledTableCell>{problem.name}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    <Link
+                      component={RouterLink}
+                      color="inherit"
+                      to={`/rooms/${problem.id}`}
+                      className={classes.navlinks}
+                    >
+                      {problem.id}
+                    </Link>
+                  </StyledTableCell>
+                  <StyledTableCell>{problem.instructions}</StyledTableCell>
+                  <StyledTableCell>
                     {problem.solved === true ? 'Solved' : 'Pending'}
-                  </TableCell>
-                  <TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell>
                     {problem.solved === true ? problem.points : 0}
-                  </TableCell>
-                </TableRow>
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
 
             {emptyRows > 0 && (
-              <TableRow style={{height: 48 * emptyRows}}>
+              <StyledTableRow style={{height: 48 * emptyRows}}>
                 <TableCell colSpan={6} />
-              </TableRow>
+              </StyledTableRow>
             )}
           </TableBody>
           <TableFooter>
