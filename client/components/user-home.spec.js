@@ -58,7 +58,7 @@ describe('UserHome', () => {
     solvedRooms = roomHistory.filter(obj => obj.solved === correctResult)
   })
 
-  it('renders the a greeting in an h2', () => {
+  it('renders a greeting', () => {
     expect(userHome.find('.user-name').length).to.equal(1)
   })
 
