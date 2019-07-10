@@ -56,7 +56,8 @@ const styles = theme => ({
     boxShadow: '0 3px 5px 2px rgba(25, 15, 15, .3)',
     marginTop: '10px',
     marginBottom: '10px',
-    elevation: '18'
+    elevation: '18',
+    backgroundColor: '#ffffff'
   },
   blue: {
     margin: '3px',
@@ -130,7 +131,7 @@ export class UserHome extends Component {
       return (
         <Container>
           <div className={classes.header}>
-            <Typography variant="outlined" color="primary">
+            <Typography color="primary">
               {`Welcome ${profile.firstName} ${profile.lastName}`}
             </Typography>
           </div>
