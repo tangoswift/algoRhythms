@@ -15,6 +15,7 @@ export class JoinSpecificRoom extends React.Component {
 
   handleJoinRoom = async e => {
     e.preventDefault()
+    e.persist()
     const {firestore} = this.props
     const roomId = e.target.roomId.value
     const room = await firestore
@@ -61,7 +62,6 @@ export class JoinSpecificRoom extends React.Component {
             </Grid>
           </Grid>
         </form>
-
         {joinError && (
           <Typography className="error-message" color="error" variant="caption">
             {joinError}
