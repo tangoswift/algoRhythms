@@ -6,6 +6,17 @@ import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
 
+const styles = theme => ({
+  blueColor: {
+    margin: '3px',
+    border: 0,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
+    marginTop: '24px',
+    marginBottom: '24px'
+  }
+})
+
 export class JoinSpecificRoom extends React.Component {
   constructor(props) {
     super(props)
@@ -40,7 +51,7 @@ export class JoinSpecificRoom extends React.Component {
   }
 
   render() {
-    const {classes} = this.props.classes
+    const {classes} = this.props
 
     const {joinError} = this.state
     return (
@@ -74,4 +85,4 @@ export class JoinSpecificRoom extends React.Component {
 /**
  * Connect Material UI Styles to Component
  */
-export default JoinSpecificRoom
+export default withStyles(styles)(JoinSpecificRoom)
