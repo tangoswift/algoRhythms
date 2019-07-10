@@ -111,16 +111,16 @@ export class UserHome extends Component {
     const user = {}
     let problemsKeys = null
 
+    if (!profile.isLoaded && auth.displayName) {
+      user.id = auth.uid
+      user.firstName = auth.displayName.split(' ')[0]
+      user.lastName = auth.displayName.split(' ')[1]
+      updateProfile(user)
+    }
+
     if (!problems) {
       return <Loading />
     } else {
-      if (!profile.isLoaded && auth.displayName) {
-        user.id = auth.uid
-        user.firstName = auth.displayName.split(' ')[0]
-        user.lastName = auth.displayName.split(' ')[1]
-        updateProfile(user)
-      }
-
       problemsKeys = Object.keys(problems)
       const {classes} = this.props
       return (
