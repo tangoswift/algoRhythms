@@ -40,8 +40,8 @@ export class JoinSpecificRoom extends React.Component {
   }
 
   render() {
-    const {classes} = this.props.classes
-
+    const {classes} = this.props
+    console.log(classes)
     const {joinError} = this.state
     return (
       <Card className={classes.blue}>
@@ -52,11 +52,18 @@ export class JoinSpecificRoom extends React.Component {
                 label="Enter Room ID"
                 name="roomId"
                 id="mui-theme-provider-outlined-input"
+                fullWidth="true"
+                className={classes.textField}
               />
             </form>
           </Grid>
           <Grid item>
-            <Button color="primary" variant="contained" type="submit">
+            <Button
+              color="primary"
+              variant="outlined"
+              type="submit"
+              className={classes.userName}
+            >
               Join Room
             </Button>
           </Grid>
