@@ -40,7 +40,7 @@ export class JoinSpecificRoom extends React.Component {
   }
 
   render() {
-    const {classes} = this.props.classes
+    const {classes} = this.props
 
     const {joinError} = this.state
     return (
