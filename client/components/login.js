@@ -15,6 +15,8 @@ import Typography from '@material-ui/core/Typography'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import {uiConfig} from '../../server/firebase/fbConfig'
+import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
 
 /**
  * MATERIAL UI
@@ -37,6 +39,13 @@ const styles = theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  center: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    textAlign: 'center'
   }
 })
 
@@ -72,12 +81,20 @@ export class Login extends React.Component {
     const {authError} = this.props
     const {auth} = this.props
     return (
-      <Container component="main" maxWidth="xs">
-        <div className={classes.paper}>
-          {/* <Typography component="h1" variant="h5">
+      <React.Fragment>
+        <Card>
+          <CardMedia
+            src="https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/ben-kolde-t9DooibgMEk-unsplash_fade.jpg?alt=media&token=defca4c6-573b-4956-98f1-57f446b9d3c6"
+            component="img"
+            style={{height: '93vh'}}
+          />
+        </Card>
+        <Container component="main" maxWidth="xs" className={classes.center}>
+          <div className={classes.paper}>
+            {/* <Typography component="h1" variant="h5">
             Login
           </Typography> */}
-          {/* <form onSubmit={this.handleOnSubmit} className={classes.form}>
+            {/* <form onSubmit={this.handleOnSubmit} className={classes.form}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -117,25 +134,26 @@ export class Login extends React.Component {
             </Button>
           </form> */}
 
-          {/* Renders Google sign in option */}
-          {auth.isEmpty ? (
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          ) : null}
+            {/* Renders Google sign in option */}
+            {auth.isEmpty ? (
+              <StyledFirebaseAuth
+                uiConfig={uiConfig}
+                firebaseAuth={firebase.auth()}
+              />
+            ) : null}
 
-          {authError && (
-            <Typography
-              className="error-message"
-              color="error"
-              variant="caption"
-            >
-              {authError}
-            </Typography>
-          )}
-        </div>
-      </Container>
+            {authError && (
+              <Typography
+                className="error-message"
+                color="error"
+                variant="caption"
+              >
+                {authError}
+              </Typography>
+            )}
+          </div>
+        </Container>
+      </React.Fragment>
     )
   }
 }
