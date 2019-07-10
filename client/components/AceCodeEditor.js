@@ -7,10 +7,9 @@ import 'brace/theme/monokai'
 export const AceCodeEditor = props => {
   const {role, start, onChange} = props
   let readOnly = role !== 'driver' || !start
-  let code = props.code.replace(
-    '{}',
-    '{\n\t// please enter your code inside the curly braces\n}'
-  )
+  let code = props.code
+  code = code.replace(/\\n/g, '\n')
+  code = code.replace(/\\t/g, '\t')
 
   return (
     <AceEditor
