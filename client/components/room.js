@@ -23,6 +23,12 @@ import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import UserEntrySnackbar from './UserEntrySnackbar'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 /**
  * MATERIAL UI
@@ -39,7 +45,7 @@ const styles = theme => ({
     borderRadius: 3,
     border: 0,
     padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginTop: '24px',
     marginBottom: '24px'
   },
@@ -50,6 +56,30 @@ const styles = theme => ({
   countdown: {
     marginTop: '10px',
     marginBottom: '10px'
+  },
+
+  instruction: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 3,
+    border: 0,
+    padding: '0 30px',
+    marginTop: '24px',
+    marginBottom: '24px'
+  },
+
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+    flexBasis: '33.33%',
+    flexShrink: 0
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary
+  },
+  progress: {
+    margin: theme.spacing(2)
   }
 })
 
@@ -128,17 +158,21 @@ class Room extends React.Component {
                   variant="h5"
                   gutterBottom
                 >
-                  You are currently the {profile.role}
+                  You are the {profile.role.toUpperCase()}
                 </Typography>
               ) : visible ? (
-                <Typography
-                  className={classes.font}
-                  align="center"
-                  variant="h5"
-                  gutterBottom
-                >
-                  Waiting for coding partner...
-                </Typography>
+                <React.Fragment>
+                  <LinearProgress className={classes.root} />
+                  <Typography
+                    className={classes.font}
+                    align="center"
+                    variant="h5"
+                    gutterBottom
+                  >
+                    Waiting for your partner
+                  </Typography>
+                  <LinearProgress variant="query" className={classes.root} />
+                </React.Fragment>
               ) : (
                 <Typography
                   className={classes.font}
@@ -156,7 +190,6 @@ class Room extends React.Component {
                 component="div"
                 gutterBottom
               >
-                Room ID: {id}
                 {!solved && (
                   <Countdown
                     start={start}
@@ -167,11 +200,41 @@ class Room extends React.Component {
                 )}
               </Typography>
             </Paper>
+            <div className={classes.instruction}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography variant="h6" className={classes.heading}>
+                    Shared Room ID
+                  </Typography>
+                  <Typography className={classes.secondaryHeading}>
+                    Your partner must have the same room id
+                  </Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Typography>{id}</Typography>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+              <ExpansionPanel>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography variant="h6" className={classes.heading}>
+                    Coding Instructions
+                  </Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Typography>{instructions}</Typography>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </div>
             <Grid container spacing={2} className="room">
               <Grid item xs={8} pr={0}>
-                <Typography variant="h6">
-                  Instructions: {instructions}
-                </Typography>
                 <AceCodeEditor
                   code={code}
                   onChange={this.onChange}
@@ -192,7 +255,7 @@ class Room extends React.Component {
                     type="button"
                     onClick={this.redirectToTarget}
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                   >
                     BAIL
                   </Button>
@@ -217,7 +280,7 @@ class Room extends React.Component {
               </Grid>
             </Grid>
           </Container>
-          <UserEntrySnackbar visible={visible} />
+          {/* <UserEntrySnackbar visible={visible} /> */}
         </React.Fragment>
       )
     }
