@@ -21,7 +21,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import Loading from './Loading'
-import Typography from '@material-ui/core/Typography'
 
 /**
  * MATERIAL UI
