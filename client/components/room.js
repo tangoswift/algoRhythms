@@ -236,7 +236,7 @@ class Room extends React.Component {
                     name="action"
                     fullWidth
                     onClick={e => this.handleOnRun(e, code, name)}
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     className={classes.btn}
                   >
@@ -262,7 +262,7 @@ class Room extends React.Component {
                   type="button"
                   onClick={this.redirectToTarget}
                   fullWidth
-                  variant="outlined"
+                  variant="contained"
                   color="secondary"
                   className={classes.btn}
                 >

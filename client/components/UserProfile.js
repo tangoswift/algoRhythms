@@ -22,7 +22,8 @@ const styles = theme => ({
     padding: '0 30px',
     height: '48px',
     boxShadow: '0 3px 5px 2px rgba(25, 15, 15, .3)',
-    marginTop: '10px'
+    marginTop: '10px',
+    backgroundColor: '#ffffff'
   },
   badges: {
     margin: theme.spacing(2)
@@ -103,7 +104,11 @@ export class UserProfile extends Component {
           </div>
           {roomHistory.length === 0 ? (
             //Displays when user has no problems history
-            <Typography>0 Problems Solved</Typography>
+            <div className={classes.root}>
+              <Typography>
+                You haven't attempted any problems... yet.
+              </Typography>
+            </div>
           ) : (
             //Displays the room history
             <ProblemsSolved roomHistory={this.props.roomHistory} />
