@@ -19,7 +19,7 @@ const styles = theme => ({
     border: 0,
     padding: '0 30px',
     height: '48px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: '0 3px 5px 2px rgba(25, 15, 15, .3)',
     marginTop: '10px'
   }
 })
@@ -47,25 +47,25 @@ export class UserProfile extends Component {
         <Container>
           <div className={classes.root}>
             <Chip
-              className="stats-name"
-              variant="outlined"
-              color="primary"
+              // className="stats-name"
+              // variant="contained"
+              color="secondary"
               label={`${profile.firstName} ${
                 profile.lastName
               } : Problems History`}
             />
             <div>
               <Chip
-                variant="outlined"
-                color="primary"
-                deleteIcon={<DoneIcon />}
-                icon={<FaceIcon />}
+                // variant="outlined"
+                color="secondary"
+                // deleteIcon={<DoneIcon />}
+                // icon={<FaceIcon />}
                 label={`Problems Solved : ${totalProblemsSolved}`}
               />{' '}
               <Chip
-                variant="outlined"
-                color="primary"
-                icon={<FaceIcon />}
+                // variant="outlined"
+                color="secondary"
+                // icon={<FaceIcon />}
                 label={`Total Points = ${totalPoints}`}
               />
             </div>
