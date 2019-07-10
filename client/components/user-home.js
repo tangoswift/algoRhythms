@@ -47,7 +47,7 @@ const styles = theme => ({
     margin: '3px',
     border: 0,
     padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
     marginTop: '24px',
     marginBottom: '24px'
   }

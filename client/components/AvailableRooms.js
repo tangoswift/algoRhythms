@@ -25,7 +25,7 @@ export const AvailableRooms = props => {
     addRoomToUser,
     setAsDriver
   } = props
-
+  console.log(props)
   const classes = useStyles()
   const handleListItemClick = async (event, roomId) => {
     event.preventDefault()
@@ -37,7 +37,7 @@ export const AvailableRooms = props => {
 
   const roomList = rooms
     .map(room => {
-      return room.visible ? (
+      return !room.solved ? (
         <ListItem
           key={room.id}
           button
