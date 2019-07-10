@@ -17,14 +17,14 @@ enzyme.configure({adapter})
 
 describe('UserHome', () => {
   let userHome, userHomeSpy, solvedRooms
-  const correctResult = false
-  const otherResult = true
+  const correctResult = true
+  const otherResult = false
   const profile = {firstName: 'Cody', lastName: 'Dog', displayName: 'Cody Dog'}
 
   const roomHistory = [
-    {visible: correctResult, points: 1},
-    {visible: otherResult, points: 2},
-    {visible: correctResult, points: 3}
+    {solved: correctResult, points: 1},
+    {solved: otherResult, points: 2},
+    {solved: correctResult, points: 3}
   ]
 
   const rooms = [
@@ -53,7 +53,7 @@ describe('UserHome', () => {
         updateProfile={updateProfileThunk}
       />
     )
-    solvedRooms = roomHistory.filter(obj => obj.visible === correctResult)
+    solvedRooms = roomHistory.filter(obj => obj.solved === correctResult)
   })
 
   it('renders the a greeting in an h2', () => {

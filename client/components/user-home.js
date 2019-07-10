@@ -4,11 +4,7 @@ import {addRoomThunk} from '../store/roomId'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import history from '../history'
-import {
-  roomToUserThunk,
-  getRoomHistoryThunk,
-  setRoleAsNavigatorThunk
-} from '../store/user'
+import {roomToUserThunk, setRoleAsNavigatorThunk} from '../store/user'
 import {updateProfileThunk} from '../store/auth'
 import AvailableRooms from './AvailableRooms'
 // Material UI Dependencies
@@ -59,10 +55,6 @@ export class UserHome extends Component {
     this.handleOpen = this.handleOpen.bind(this)
   }
 
-  componentDidMount() {
-    this.props.getRooms(this.props.userId)
-  }
-
   handleJoinRoom = async e => {
     e.preventDefault()
     const roomId = e.target.roomId.value
@@ -90,118 +82,97 @@ export class UserHome extends Component {
   }
 
   render() {
-    const {problems, roomHistory, userId, rooms, firestore} = this.props
+    const {problems, userId, rooms, firestore} = this.props
     const {auth, profile, updateProfile} = this.props
     const user = {}
-
-    if (!profile.isLoaded && auth.displayName) {
-      user.id = auth.uid
-      user.firstName = auth.displayName.split(' ')[0]
-      user.lastName = auth.displayName.split(' ')[1]
-      updateProfile(user)
-    }
-
     let problemsKeys = null
-    if (problems) {
-      problemsKeys = Object.keys(problems)
-    }
 
-    const classes = this.props
-    return (
-      <Container>
-        <Typography className="greeting" component="h2" variant="h5">
-          Welcome, {this.props.profile.firstName} {this.props.profile.lastName}
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Card className={classes.card} color="primary">
-              <List
-                component="nav"
-                subheader={
-                  <ListSubheader component="div" id="nested-list-subheader">
-                    Choose a Problem:
-                  </ListSubheader>
-                }
-              >
-                {problems ? (
-                  problemsKeys.map((problemName, idx) => (
-                    <div key={idx}>
-                      <ListItem
-                        selected={this.state.selectedIndex === idx}
-                        button
-                        onClick={() => this.handleOpen(idx)}
-                      >
-                        <ListItemText
-                          className="problem-name"
-                          primary={problems[problemName].name}
-                        />
-                        {this.state.open[idx] ? <ExpandLess /> : <ExpandMore />}
-                      </ListItem>
-                      <Collapse
-                        in={this.state.open[idx]}
-                        timeout="auto"
-                        unmountOnExit
-                      >
-                        <List component="div" disablePadding>
-                          <ListItem
-                            button
-                            onClick={() =>
-                              this.createRoom(problems[problemName])
-                            }
-                          >
-                            <ListItemText
-                              className="problem-instruction"
-                              primary={problems[problemName].instructions}
+    if (!problems) {
+      return <Loading />
+    } else {
+      if (!profile.isLoaded && auth.displayName) {
+        user.id = auth.uid
+        user.firstName = auth.displayName.split(' ')[0]
+        user.lastName = auth.displayName.split(' ')[1]
+        updateProfile(user)
+      }
+
+      problemsKeys = Object.keys(problems)
+      const classes = this.props
+      return (
+        <Container>
+          <Typography className="greeting" component="h2" variant="h5">
+            Welcome, {this.props.profile.firstName}{' '}
+            {this.props.profile.lastName}
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Card className={classes.card} color="primary">
+                <List
+                  component="nav"
+                  subheader={
+                    <ListSubheader component="div" id="nested-list-subheader">
+                      Choose a Problem:
+                    </ListSubheader>
+                  }
+                >
+                  {problems &&
+                    problemsKeys.map((problemName, idx) => (
+                      <div key={idx}>
+                        <ListItem
+                          selected={this.state.selectedIndex === idx}
+                          button
+                          onClick={() => this.handleOpen(idx)}
+                        >
+                          <ListItemText
+                            className="problem-name"
+                            primary={problems[problemName].name}
+                          />
+                          {this.state.open[idx] ? (
+                            <ExpandLess />
+                          ) : (
+                            <ExpandMore />
+                          )}
+                        </ListItem>
+                        <Collapse
+                          in={this.state.open[idx]}
+                          timeout="auto"
+                          unmountOnExit
+                        >
+                          <List component="div" disablePadding>
+                            <ListItem
+                              button
+                              onClick={() =>
+                                this.createRoom(problems[problemName])
+                              }
                             >
-                              {problems[problemName].instructions}
-                            </ListItemText>
-                          </ListItem>
-                        </List>
-                      </Collapse>
-                    </div>
-                  ))
-                ) : (
-                  <Loading />
-                )}
-              </List>
-            </Card>
+                              <ListItemText
+                                className="problem-instruction"
+                                primary={problems[problemName].instructions}
+                              >
+                                {problems[problemName].instructions}
+                              </ListItemText>
+                            </ListItem>
+                          </List>
+                        </Collapse>
+                      </div>
+                    ))}
+                </List>
+              </Card>
+            </Grid>
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
-                <ListSubheader component="div">User Stats:</ListSubheader>
-                {/* USER STATS: */}
-                <ListItemText className="stats-name">
-                  Name: {this.props.profile.firstName}{' '}
-                  {this.props.profile.lastName}
-                </ListItemText>
-                <ListItemText className="stats-solved">
-                  Problems solved:{' '}
-                  {roomHistory
-                    ? roomHistory.filter(room => room.solved === true).length
-                    : 'Loading'}
-                </ListItemText>
-                <ListItemText className="stats-points">
-                  Points earned:{' '}
-                  {roomHistory
-                    ? roomHistory
-                        .filter(room => room.solved === true)
-                        .reduce((accum, curVal) => (accum += curVal.points), 0)
-                    : 'Loading'}
-                </ListItemText>
+                <AvailableRooms
+                  userId={userId}
+                  firestore={firestore}
+                  rooms={rooms || []}
+                />
               </Card>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Card className={classes.card}>
-              <AvailableRooms
-                userId={userId}
-                firestore={firestore}
-                rooms={rooms || []}
-              />
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
-    )
+        </Container>
+      )
+    }
   }
 }
 
@@ -215,7 +186,6 @@ const mapStateToProps = state => {
     problems: state.firestore.data.problems,
     rooms: state.firestore.ordered.rooms,
     roomId: state.roomId,
-    roomHistory: state.user.roomHistory,
     userId: state.firebase.auth.uid,
     firebase: state.firebase
   }
@@ -226,7 +196,6 @@ const mapDispatchToProps = dispatch => {
     createRoom: roomInfo => dispatch(addRoomThunk(roomInfo)),
     addRoomToUser: (roomId, userId) =>
       dispatch(roomToUserThunk(roomId, userId)),
-    getRooms: userId => dispatch(getRoomHistoryThunk(userId)),
     updateProfile: user => dispatch(updateProfileThunk(user)),
     setAsNavigator: (roomId, userId) =>
       dispatch(setRoleAsNavigatorThunk(roomId, userId))

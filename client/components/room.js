@@ -6,6 +6,7 @@ import intersection from '../workers/Intersection'
 import returnNegative from '../workers/ReturnNegative'
 import palindromeWorker from '../workers/PalindromeWorker'
 import reverseWordsWorker from '../workers/ReverseWordsWorker'
+import Loading from './Loading'
 import RoomResults from './RoomResults'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
@@ -27,7 +28,27 @@ import Container from '@material-ui/core/Container'
  */
 const styles = theme => ({
   root: {
+    dispay: 'flex',
     flexGrow: 1
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 3,
+    border: 0,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    marginTop: '24px',
+    marginBottom: '24px'
+  },
+  font: {
+    marginTop: '0px',
+    marginBottom: '0px'
+  },
+  countdown: {
+    marginTop: '10px',
+    marginBottom: '10px'
   }
 })
 
@@ -76,91 +97,134 @@ class Room extends React.Component {
   }
 
   render() {
-    let id = this.props.match.params.id
-    let name = ''
-    let results = []
-    let code = ''
-    let instructions = ''
-    let start = false
-    let solved = false
-    const classes = this.props
-    const {profile} = this.props
+    let {room} = this.props
+    /**
+     * Check if room exist
+     */
+    if (!room) {
+      return <Loading />
+    } else {
+      let id = this.props.match.params.id
+      const {profile, classes} = this.props
+      let {
+        name,
+        result,
+        code,
+        instructions,
+        start,
+        solved,
+        visible
+      } = this.props.room
 
-    if (this.props.rooms && this.props.rooms[id]) {
-      name = this.props.rooms[id].name
-      code = this.props.rooms[id].code
-      instructions = this.props.rooms[id].instructions
-      results = this.props.rooms[id].result
-      start = this.props.rooms[id].start
-      solved = this.props.rooms[id].solved
-    }
-
-    return (
-      <Container className={classes.root}>
-        <Box bgcolor="text.hint" color="background.paper">
-          {start && (
-            <Typography align="center">
-              You are currently the {profile.role}
-            </Typography>
-          )}
-          <Typography align="center" component="div" variant="body1">
-            Get Into The Rhythm: {id}
-            {!solved && (
-              <Countdown start={start} roomId={id} role={profile.role} />
+      return (
+        <Container className={classes.root}>
+          <Paper className={classes.header}>
+            {start ? (
+              <Typography
+                className={classes.font}
+                align="center"
+                variant="h5"
+                gutterBottom
+              >
+                You are currently the {profile.role}
+              </Typography>
+            ) : visible ? (
+              <Typography
+                className={classes.font}
+                align="center"
+                variant="h5"
+                gutterBottom
+              >
+                Waiting for coding partner...
+              </Typography>
+            ) : (
+              <Typography
+                className={classes.font}
+                align="center"
+                variant="h5"
+                gutterBottom
+              >
+                Click Start
+              </Typography>
             )}
-          </Typography>
-        </Box>
-        <Grid container spacing={2} className="room">
-          <Grid item xs={8} pr={0}>
-            <Typography variant="h6">Instructions: {instructions}</Typography>
-            <AceCodeEditor
-              code={code}
-              onChange={this.onChange}
-              role={profile.role}
-            />
-            <Grid container justify="space-between">
-              <Button
-                type="submit"
-                name="action"
-                onClick={e => this.handleOnRun(e, code, name)}
-                variant="contained"
-                color="primary"
+            <Typography
+              className={classes.countdown}
+              align="center"
+              variant="h6"
+              component="div"
+              gutterBottom
+            >
+              Room ID: {id}
+              {!solved && (
+                <Countdown
+                  start={start}
+                  roomId={id}
+                  role={profile.role}
+                  visible={visible}
+                />
+              )}
+            </Typography>
+          </Paper>
+          <Grid container spacing={2} className="room">
+            <Grid item xs={8} pr={0}>
+              <Typography variant="h6">Instructions: {instructions}</Typography>
+              <AceCodeEditor
+                code={code}
+                onChange={this.onChange}
+                role={profile.role}
+                start={start}
+              />
+              <Grid container justify="space-between">
+                <Button
+                  type="submit"
+                  name="action"
+                  onClick={e => this.handleOnRun(e, code, name)}
+                  variant="contained"
+                  color="primary"
+                >
+                  RUN
+                </Button>
+                <Button
+                  type="button"
+                  onClick={this.redirectToTarget}
+                  variant="contained"
+                  color="primary"
+                >
+                  BAIL
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid item xs={4}>
+              <Box
+                bgcolor="text.primary"
+                color="background.paper"
+                height="100%"
               >
-                RUN
-              </Button>
-              <Button
-                type="button"
-                onClick={this.redirectToTarget}
-                variant="contained"
-                color="primary"
-              >
-                BAIL
-              </Button>
+                <iframe
+                  src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
+                  width="100%"
+                  height="50%"
+                  allow="microphone; camera"
+                />
+
+                <Typography variant="h6">Test Results: </Typography>
+                <RoomResults result={result} />
+              </Box>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <Box bgcolor="text.primary" color="background.paper" height="100%">
-              <iframe
-                src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
-                width="100%"
-                height="50%"
-                allow="microphone; camera"
-              />
-
-              <Typography variant="h6">Test Results: </Typography>
-              <RoomResults results={results} />
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
-    )
+        </Container>
+      )
+    }
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  const roomId = ownProps.match.params.id
+  const rooms = state.firestore.data.rooms
+  const room = rooms ? rooms[roomId] : null
   return {
     profile: state.firebase.profile,
-    rooms: state.firestore.data.rooms,
+    room: room,
     users: state.firestore.data.users
   }
 }
