@@ -4,13 +4,11 @@ import {getRoomHistoryThunk} from '../store/user'
 import {connect} from 'react-redux'
 import Loading from './Loading'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import {withStyles} from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
 import FaceIcon from '@material-ui/icons/Face'
 import DoneIcon from '@material-ui/icons/Done'
-import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
   root: {
@@ -22,11 +20,11 @@ const styles = theme => ({
     padding: '0 30px',
     height: '48px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    marginTop: '24px'
+    marginTop: '10px'
   }
 })
 
-class UserProfile extends Component {
+export class UserProfile extends Component {
   componentDidMount() {
     this.props.getRooms(this.props.userId)
   }
@@ -49,6 +47,7 @@ class UserProfile extends Component {
         <Container>
           <div className={classes.root}>
             <Chip
+              className="stats-name"
               variant="outlined"
               color="primary"
               label={`${profile.firstName} ${
@@ -59,15 +58,15 @@ class UserProfile extends Component {
               <Chip
                 variant="outlined"
                 color="primary"
+                deleteIcon={<DoneIcon />}
                 icon={<FaceIcon />}
-                label={`Total Points = ${totalPoints}`}
+                label={`Problems Solved : ${totalProblemsSolved}`}
               />{' '}
               <Chip
                 variant="outlined"
                 color="primary"
-                deleteIcon={<DoneIcon />}
                 icon={<FaceIcon />}
-                label={`Problems Solved : ${totalProblemsSolved}`}
+                label={`Total Points = ${totalPoints}`}
               />
             </div>
           </div>

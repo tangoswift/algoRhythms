@@ -20,6 +20,7 @@ describe('UserHome', () => {
   const correctResult = true
   const otherResult = false
   const profile = {firstName: 'Cody', lastName: 'Dog', displayName: 'Cody Dog'}
+  const classes = {header: ''}
 
   const roomHistory = [
     {solved: correctResult, points: 1},
@@ -51,15 +52,14 @@ describe('UserHome', () => {
         getRooms={userHomeSpy}
         auth={profile}
         updateProfile={updateProfileThunk}
+        classes={classes}
       />
     )
     solvedRooms = roomHistory.filter(obj => obj.solved === correctResult)
   })
 
   it('renders the a greeting in an h2', () => {
-    expect(userHome.find('.greeting').text()).to.equal(
-      `Welcome, ${profile.firstName} ${profile.lastName}`
-    )
+    expect(userHome.find('.user-name').length).to.equal(1)
   })
 
   /**
@@ -106,29 +106,6 @@ describe('UserHome', () => {
 
     it('lists all visible rooms', () => {
       expect(availableRooms.find(ListItem).length).to.equal(4)
-    })
-  })
-
-  /**
-   * STATISTICS CARD
-   */
-  describe('Stats Card', () => {
-    it('lists users name', () => {
-      let name = `Name: ${profile.firstName} ${profile.lastName}`
-      expect(userHome.find('.stats-name').text()).to.equal(name)
-    })
-
-    it('lists number of problems solved', () => {
-      let solved = `Problems solved: ${solvedRooms.length}`
-      expect(userHome.find('.stats-solved').text()).to.equal(solved)
-    })
-
-    it('lists number of points earned', () => {
-      let points = `Points earned: ${solvedRooms.reduce(
-        (tot, rm) => tot + rm.points,
-        0
-      )}`
-      expect(userHome.find('.stats-points').text()).to.equal(points)
     })
   })
 })

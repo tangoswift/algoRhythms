@@ -20,6 +20,9 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
+import Chip from '@material-ui/core/Chip'
+import FaceIcon from '@material-ui/icons/Face'
+import DoneIcon from '@material-ui/icons/Done'
 import blue from '@material-ui/core/colors/blue'
 import Loading from './Loading'
 
@@ -41,6 +44,18 @@ const styles = theme => ({
   },
   pos: {
     marginBottom: 12
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 3,
+    border: 0,
+    padding: '0 30px',
+    height: '48px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    marginTop: '10px',
+    marginBottom: '10px'
   },
   blue: {
     backgroundColor: blue[100],
@@ -107,13 +122,17 @@ export class UserHome extends Component {
       }
 
       problemsKeys = Object.keys(problems)
-      const classes = this.props
+      const {classes} = this.props
       return (
         <Container>
-          <Typography className="greeting" component="h2" variant="h5">
-            Welcome, {this.props.profile.firstName}{' '}
-            {this.props.profile.lastName}
-          </Typography>
+          <div className={classes.header}>
+            <Chip
+              className="user-name"
+              variant="outlined"
+              color="primary"
+              label={`Welcome ${profile.firstName} ${profile.lastName}`}
+            />
+          </div>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Card className={classes.card} color="primary">
