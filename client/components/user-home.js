@@ -55,10 +55,8 @@ const styles = theme => ({
     marginBottom: '10px'
   },
   blue: {
-    backgroundColor: blue[100],
-    margin: '3px',
+    backgroundColors: blue[100],
     border: 0,
-    padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
     marginTop: '24px',
     marginBottom: '24px'

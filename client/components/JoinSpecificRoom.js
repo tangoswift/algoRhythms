@@ -1,21 +1,9 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import {withStyles} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
-
-const styles = theme => ({
-  blueColor: {
-    margin: '3px',
-    border: 0,
-    padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
-    marginTop: '24px',
-    marginBottom: '24px'
-  }
-})
 
 export class JoinSpecificRoom extends React.Component {
   constructor(props) {
@@ -56,22 +44,24 @@ export class JoinSpecificRoom extends React.Component {
     const {joinError} = this.state
     return (
       <Card className={classes.blue}>
-        <Grid justify="space-between" container spacing={24}>
-          <Grid item>
-            <form onSubmit={this.handleJoinRoom}>
+        <form onSubmit={this.handleJoinRoom}>
+          <Grid justify="space-between" container spacing={2}>
+            <Grid item xs={8}>
               <TextField
                 label="Enter Room ID"
                 name="roomId"
+                fullWidth
                 id="mui-theme-provider-outlined-input"
               />
-            </form>
+            </Grid>
+            <Grid item xs={4}>
+              <Button color="primary" variant="contained" type="submit">
+                Join Room
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Button color="primary" variant="contained" type="submit">
-              Join Room
-            </Button>
-          </Grid>
-        </Grid>
+        </form>
+
         {joinError && (
           <Typography className="error-message" color="error" variant="caption">
             {joinError}
@@ -85,4 +75,4 @@ export class JoinSpecificRoom extends React.Component {
 /**
  * Connect Material UI Styles to Component
  */
-export default withStyles(styles)(JoinSpecificRoom)
+export default JoinSpecificRoom
