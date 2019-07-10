@@ -53,18 +53,23 @@ const styles = theme => ({
     border: 0,
     padding: '0 30px',
     height: '48px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: '0 3px 5px 2px rgba(25, 15, 15, .3)',
     marginTop: '10px',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    elevation: '18',
+    backgroundColor: '#ffffff'
   },
   blue: {
-    backgroundColor: blue[100],
     margin: '3px',
     border: 0,
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
     marginTop: '24px',
-    marginBottom: '24px'
+    marginBottom: '24px',
+    height: '58px'
+  },
+  textField: {
+    width: '350px'
   }
 })
 
@@ -126,21 +131,28 @@ export class UserHome extends Component {
       return (
         <Container>
           <div className={classes.header}>
-            <Chip
-              className="user-name"
-              variant="outlined"
-              color="primary"
-              label={`Welcome ${profile.firstName} ${profile.lastName}`}
-            />
+            <Typography color="primary">
+              {`Welcome ${profile.firstName} ${profile.lastName}`}
+            </Typography>
           </div>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Card className={classes.card}>
+                <AvailableRooms
+                  userId={userId}
+                  firestore={firestore}
+                  rooms={rooms || []}
+                  classes={classes}
+                />
+              </Card>
+            </Grid>
             <Grid item xs={12} sm={6}>
               <Card className={classes.card} color="primary">
                 <List
                   component="nav"
                   subheader={
                     <ListSubheader component="div" id="nested-list-subheader">
-                      Choose a Problem:
+                      Choose a new Problem:
                     </ListSubheader>
                   }
                 >
@@ -186,16 +198,6 @@ export class UserHome extends Component {
                       </div>
                     ))}
                 </List>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card className={classes.card}>
-                <AvailableRooms
-                  userId={userId}
-                  firestore={firestore}
-                  rooms={rooms || []}
-                  classes={classes}
-                />
               </Card>
             </Grid>
           </Grid>

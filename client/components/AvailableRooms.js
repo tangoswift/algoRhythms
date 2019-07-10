@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import {makeStyles} from '@material-ui/core/styles'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import {JoinSpecificRoom} from './JoinSpecificRoom'
+import {Typography} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +44,7 @@ export const AvailableRooms = props => {
           onClick={event => handleListItemClick(event, room.id)}
         >
           <ListItemText
-            primary={`${room.id} - ${room.name} - ${room.points} Points`}
+            primary={`Problem: ${room.name} - ${room.points} Points`}
           />
         </ListItem>
       ) : null
@@ -55,25 +56,27 @@ export const AvailableRooms = props => {
       <List
         component="nav"
         subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            <JoinSpecificRoom
-              firestore={firestore}
-              handleListItemClick={handleListItemClick}
-              classes={props.classes}
-            />
-            Most Recent Available Rooms:
-          </ListSubheader>
+          roomList.length ? (
+            <ListSubheader
+              component="div"
+              id="nested-list-subheader"
+              align="center"
+            >
+              <JoinSpecificRoom
+                firestore={firestore}
+                handleListItemClick={handleListItemClick}
+                classes={props.classes}
+              />
+              Or choose from the available rooms:
+            </ListSubheader>
+          ) : (
+            <ListSubheader align="center">
+              Please click on a problem to start a room
+            </ListSubheader>
+          )
         }
       >
-        {roomList.length ? (
-          roomList
-        ) : (
-          <ListItem>
-            <ListItemText
-              primary="No rooms available. Select a problem to create a new room!"
-            />
-          </ListItem>
-        )}
+        {roomList}
       </List>
     </div>
   )

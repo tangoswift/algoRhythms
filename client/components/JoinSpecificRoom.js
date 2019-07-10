@@ -45,18 +45,25 @@ export class JoinSpecificRoom extends React.Component {
     const {joinError} = this.state
     return (
       <Card className={classes.blue}>
-        <Grid justify="space-between" container spacing={24}>
+        <Grid justify="space-between" container>
           <Grid item>
             <form onSubmit={this.handleJoinRoom}>
               <TextField
                 label="Enter Room ID"
                 name="roomId"
                 id="mui-theme-provider-outlined-input"
+                // fullWidth="true"
+                className={classes.textField}
               />
             </form>
           </Grid>
           <Grid item>
-            <Button color="primary" variant="contained" type="submit">
+            <Button
+              color="primary"
+              variant="outlined"
+              type="submit"
+              className={classes.userName}
+            >
               Join Room
             </Button>
           </Grid>
