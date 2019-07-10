@@ -65,7 +65,15 @@ export const AvailableRooms = props => {
           </ListSubheader>
         }
       >
-        {roomList.length ? roomList : 'No rooms available.'}
+        {roomList.length ? (
+          roomList
+        ) : (
+          <ListItem>
+            <ListItemText
+              primary="No rooms available. Select a problem to create a new room!"
+            />
+          </ListItem>
+        )}
       </List>
     </div>
   )
