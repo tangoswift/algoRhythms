@@ -19,8 +19,7 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import Chip from '@material-ui/core/Chip'
-import blue from '@material-ui/core/colors/blue'
+import Typography from '@material-ui/core/Typography'
 import Loading from './Loading'
 
 /**
@@ -56,16 +55,16 @@ const styles = theme => ({
     elevation: '18',
     backgroundColor: '#ffffff'
   },
-  blue: {
-    margin: '3px',
+  joinRoom: {
+    paddingRight: '10px',
     border: 0,
     boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
-    marginTop: '24px',
-    marginBottom: '24px',
-    height: '58px'
+    marginTop: '10px',
+    marginBottom: '10px'
   },
   textField: {
-    width: '350px'
+    padding: '5px 5px',
+    width: '75%'
   }
 })
 
@@ -127,7 +126,7 @@ export class UserHome extends Component {
       return (
         <Container>
           <div className={classes.header}>
-            <Typography color="primary">
+            <Typography color="primary" className="user-name">
               {`Welcome ${profile.firstName} ${profile.lastName}`}
             </Typography>
           </div>

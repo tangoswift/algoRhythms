@@ -7,8 +7,9 @@ import Adapter from 'enzyme-adapter-react-16'
 import {UserProfile} from './UserProfile'
 import {getRoomHistoryThunk} from '../store/user'
 import {spy} from 'sinon'
-import Chip from '@material-ui/core/Chip'
 import ProblemsSolved from './ProblemsSolved'
+import Badge from '@material-ui/core/Badge'
+import Avatar from '@material-ui/core/Avatar'
 
 const adapter = new Adapter()
 enzyme.configure({adapter})
@@ -48,12 +49,12 @@ describe('UserProfile', () => {
    * STATISTICS CARD
    */
   describe('User Profile Card', () => {
-    it('has 3 chips associated with user profile', () => {
-      expect(userProfile.find(Chip).length).to.equal(3)
+    it('has an avatar associated with user profile', () => {
+      expect(userProfile.find(Avatar).length).to.equal(1)
     })
 
     it('lists number of problems solved/ problemssolved component', () => {
-      expect(userProfile.find(ProblemsSolved).length).to.equal(1)
+      expect(userProfile.find(Badge).length).to.equal(2)
     })
   })
 })
