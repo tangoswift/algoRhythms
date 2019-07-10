@@ -4,7 +4,8 @@ import Link from '@material-ui/core/Link'
 import {withStyles} from '@material-ui/core/styles'
 import CodeIcon from '@material-ui/icons/Code'
 import Button from '@material-ui/core/Button'
-
+import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
 import EmptyState from './EmptyState'
 
 const styles = theme => ({
@@ -25,6 +26,13 @@ class Homepage extends Component {
 
     return (
       <React.Fragment>
+        <Card>
+          <CardMedia
+            src="https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/danial-ricaros-FCHlYvR5gJI-unsplash_fade.jpg?alt=media&token=c2c40a3f-6861-4135-a3e0-84681fe33e5d"
+            component="img"
+            style={{height: '100vh'}}
+          />
+        </Card>
         <EmptyState
           icon={<CodeIcon className={classes.emptyStateIcon} color="action" />}
           title="Practice Pair-Programing"
