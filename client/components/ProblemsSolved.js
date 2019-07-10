@@ -99,6 +99,12 @@ const useStyles2 = makeStyles(theme => ({
     width: '100%',
     marginTop: theme.spacing(3)
   },
+  head: {
+    backgroundColor: '#212121'
+  },
+  text: {
+    color: '#ffffff'
+  },
   table: {
     minWidth: 700
   },
@@ -148,12 +154,18 @@ export default function ProblemsSolved(props) {
       <div className={classes.tableWrapper}>
         <Table className={classes.table}>
           <TableBody>
-            <TableRow>
-              <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell>Room Id</StyledTableCell>
-              <StyledTableCell>Instructions</StyledTableCell>
-              <StyledTableCell>Result</StyledTableCell>
-              <StyledTableCell>Points Earned</StyledTableCell>
+            <TableRow className={classes.head}>
+              <StyledTableCell className={classes.text}>Name</StyledTableCell>
+              <StyledTableCell className={classes.text}>
+                Room Id
+              </StyledTableCell>
+              <StyledTableCell className={classes.text}>
+                Instructions
+              </StyledTableCell>
+              <StyledTableCell className={classes.text}>Result</StyledTableCell>
+              <StyledTableCell className={classes.text}>
+                Points Earned
+              </StyledTableCell>
             </TableRow>
             {roomHistory
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

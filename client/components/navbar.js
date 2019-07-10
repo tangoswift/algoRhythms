@@ -51,7 +51,7 @@ const Navbar = ({auth, signOut}) => {
                   className={classes.navlinks}
                 >
                   <Button variant="text" color="inherit">
-                    Home
+                    Join a room
                   </Button>
                 </Link>
                 <Link
@@ -62,7 +62,7 @@ const Navbar = ({auth, signOut}) => {
                   className={classes.navlinks}
                 >
                   <Button variant="text" color="inherit">
-                    My Profile
+                    My Stats
                   </Button>
                 </Link>
                 <Link
