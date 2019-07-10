@@ -13,31 +13,32 @@ const useStyles = makeStyles(theme => ({
 
 export default function UserEntrySnackbar(props) {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
-  let {visible} = props
-  let openState = visible
+  let [open, setOpen] = React.useState(false)
+  // let snackbarState = props.visible
 
   function handleClick() {
     setOpen(true)
   }
 
   function handleClose(event, reason) {
-    // if (reason === 'clickaway') {
-    //   return;
-    // }
-    console.log('close has been clicked')
-    openState = true
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(false)
   }
 
   return (
     <div>
-      {console.log(openState)}
+      {console.log(props.visible)}
+      {/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
+      {/* {props.visible ? null : setOpen(true)} */}
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
+          vertical: 'top',
+          horizontal: 'right'
         }}
-        open={!openState}
+        open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         ContentProps={{

@@ -22,6 +22,7 @@ import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
+import UserEntrySnackbar from './UserEntrySnackbar'
 
 /**
  * MATERIAL UI
@@ -117,102 +118,107 @@ class Room extends React.Component {
       } = this.props.room
 
       return (
-        <Container className={classes.root}>
-          <Paper className={classes.header}>
-            {start ? (
-              <Typography
-                className={classes.font}
-                align="center"
-                variant="h5"
-                gutterBottom
-              >
-                You are currently the {profile.role}
-              </Typography>
-            ) : visible ? (
-              <Typography
-                className={classes.font}
-                align="center"
-                variant="h5"
-                gutterBottom
-              >
-                Waiting for coding partner...
-              </Typography>
-            ) : (
-              <Typography
-                className={classes.font}
-                align="center"
-                variant="h5"
-                gutterBottom
-              >
-                Click Start
-              </Typography>
-            )}
-            <Typography
-              className={classes.countdown}
-              align="center"
-              variant="h6"
-              component="div"
-              gutterBottom
-            >
-              Room ID: {id}
-              {!solved && (
-                <Countdown
-                  start={start}
-                  roomId={id}
-                  role={profile.role}
-                  visible={visible}
-                />
+        <React.Fragment>
+          <Container className={classes.root}>
+            <Paper className={classes.header}>
+              {start ? (
+                <Typography
+                  className={classes.font}
+                  align="center"
+                  variant="h5"
+                  gutterBottom
+                >
+                  You are currently the {profile.role}
+                </Typography>
+              ) : visible ? (
+                <Typography
+                  className={classes.font}
+                  align="center"
+                  variant="h5"
+                  gutterBottom
+                >
+                  Waiting for coding partner...
+                </Typography>
+              ) : (
+                <Typography
+                  className={classes.font}
+                  align="center"
+                  variant="h5"
+                  gutterBottom
+                >
+                  Click Start
+                </Typography>
               )}
-            </Typography>
-          </Paper>
-          <Grid container spacing={2} className="room">
-            <Grid item xs={8} pr={0}>
-              <Typography variant="h6">Instructions: {instructions}</Typography>
-              <AceCodeEditor
-                code={code}
-                onChange={this.onChange}
-                role={profile.role}
-                start={start}
-              />
-              <Grid container justify="space-between">
-                <Button
-                  type="submit"
-                  name="action"
-                  onClick={e => this.handleOnRun(e, code, name)}
-                  variant="contained"
-                  color="primary"
+              <Typography
+                className={classes.countdown}
+                align="center"
+                variant="h6"
+                component="div"
+                gutterBottom
+              >
+                Room ID: {id}
+                {!solved && (
+                  <Countdown
+                    start={start}
+                    roomId={id}
+                    role={profile.role}
+                    visible={visible}
+                  />
+                )}
+              </Typography>
+            </Paper>
+            <Grid container spacing={2} className="room">
+              <Grid item xs={8} pr={0}>
+                <Typography variant="h6">
+                  Instructions: {instructions}
+                </Typography>
+                <AceCodeEditor
+                  code={code}
+                  onChange={this.onChange}
+                  role={profile.role}
+                  start={start}
+                />
+                <Grid container justify="space-between">
+                  <Button
+                    type="submit"
+                    name="action"
+                    onClick={e => this.handleOnRun(e, code, name)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    RUN
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={this.redirectToTarget}
+                    variant="contained"
+                    color="primary"
+                  >
+                    BAIL
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid item xs={4}>
+                <Box
+                  bgcolor="text.primary"
+                  color="background.paper"
+                  height="100%"
                 >
-                  RUN
-                </Button>
-                <Button
-                  type="button"
-                  onClick={this.redirectToTarget}
-                  variant="contained"
-                  color="primary"
-                >
-                  BAIL
-                </Button>
+                  <iframe
+                    src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
+                    width="100%"
+                    height="50%"
+                    allow="microphone; camera"
+                  />
+
+                  <Typography variant="h6">Test Results: </Typography>
+                  <RoomResults result={result} />
+                </Box>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Box
-                bgcolor="text.primary"
-                color="background.paper"
-                height="100%"
-              >
-                <iframe
-                  src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
-                  width="100%"
-                  height="50%"
-                  allow="microphone; camera"
-                />
-
-                <Typography variant="h6">Test Results: </Typography>
-                <RoomResults result={result} />
-              </Box>
-            </Grid>
-          </Grid>
-        </Container>
+          </Container>
+          <UserEntrySnackbar visible={visible} />
+        </React.Fragment>
       )
     }
   }
