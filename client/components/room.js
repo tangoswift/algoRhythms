@@ -223,31 +223,26 @@ class Room extends React.Component {
             </Grid>
             <Grid container spacing={2} className="room">
               <Grid item xs={8} pr={0}>
-                <AceCodeEditor
-                  code={code}
-                  onChange={this.onChange}
-                  role={profile.role}
-                  start={start}
-                />
-                <Grid container className={classes.btn} justify="space-around">
+                <React.Fragment>
+                  <AceCodeEditor
+                    code={code}
+                    onChange={this.onChange}
+                    role={profile.role}
+                    start={start}
+                  />
+
                   <Button
                     type="submit"
                     name="action"
+                    fullWidth
                     onClick={e => this.handleOnRun(e, code, name)}
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
+                    className={classes.btn}
                   >
                     RUN
                   </Button>
-                  <Button
-                    type="button"
-                    onClick={this.redirectToTarget}
-                    variant="contained"
-                    color="secondary"
-                  >
-                    BAIL
-                  </Button>
-                </Grid>
+                </React.Fragment>
               </Grid>
               <Grid item xs={4}>
                 <Box
@@ -263,6 +258,16 @@ class Room extends React.Component {
                   />
                   <RoomResults result={result} />
                 </Box>
+                <Button
+                  type="button"
+                  onClick={this.redirectToTarget}
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.btn}
+                >
+                  BAIL
+                </Button>
               </Grid>
             </Grid>
           </Container>
