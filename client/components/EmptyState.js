@@ -26,12 +26,12 @@ class EmptyState extends Component {
         {image}
         {icon}
         {title && (
-          <Typography color="textSecondary" variant="h4">
+          <Typography color="textPrimary" variant="h4">
             {title}
           </Typography>
         )}
         {description && (
-          <Typography color="textSecondary" variant="h5">
+          <Typography color="textPrimary" variant="h5">
             {description}
           </Typography>
         )}
