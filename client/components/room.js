@@ -98,6 +98,7 @@ class Room extends React.Component {
 
   render() {
     let {room} = this.props
+
     /**
      * Check if room exist
      */
@@ -106,6 +107,7 @@ class Room extends React.Component {
     } else {
       let id = this.props.match.params.id
       const {profile, classes} = this.props
+
       let {
         name,
         result,

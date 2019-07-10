@@ -60,6 +60,7 @@ export const AvailableRooms = props => {
             <JoinSpecificRoom
               firestore={firestore}
               handleListItemClick={handleListItemClick}
+              classes={props.classes}
             />
             Most Recent Available Rooms:
           </ListSubheader>
