@@ -22,6 +22,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import Chip from '@material-ui/core/Chip'
 import blue from '@material-ui/core/colors/blue'
 import Loading from './Loading'
+import Typography from '@material-ui/core/Typography'
 
 /**
  * MATERIAL UI
