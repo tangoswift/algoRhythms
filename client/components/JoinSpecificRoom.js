@@ -1,6 +1,5 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import {withStyles} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -16,6 +15,7 @@ export class JoinSpecificRoom extends React.Component {
 
   handleJoinRoom = async e => {
     e.preventDefault()
+    e.persist()
     const {firestore} = this.props
     const roomId = e.target.roomId.value
     const room = await firestore
@@ -45,18 +45,23 @@ export class JoinSpecificRoom extends React.Component {
     const {joinError} = this.state
     return (
       <Card className={classes.blue}>
+      <form onSubmit={this.handleJoinRoom}>
         <Grid justify="space-between" container>
           <Grid item>
-            <form onSubmit={this.handleJoinRoom}>
               <TextField
                 label="Enter Room ID"
                 name="roomId"
+                fullWidth
                 id="mui-theme-provider-outlined-input"
                 // fullWidth="true"
                 className={classes.textField}
               />
-            </form>
-          </Grid>
+            </Grid>
+            <Grid item xs={4}>
+              <Button color="primary" variant="contained" type="submit">
+                Join Room
+              </Button>
+            </Grid>
           <Grid item>
             <Button
               color="primary"
@@ -68,6 +73,7 @@ export class JoinSpecificRoom extends React.Component {
             </Button>
           </Grid>
         </Grid>
+         </form>
         {joinError && (
           <Typography className="error-message" color="error" variant="caption">
             {joinError}

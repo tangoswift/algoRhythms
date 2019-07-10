@@ -40,34 +40,25 @@ const styles = theme => ({
   },
   header: {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 3,
     border: 0,
     padding: '0 30px',
     // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    marginTop: '24px',
-    marginBottom: '24px'
-  },
-  font: {
-    marginTop: '0px',
-    marginBottom: '0px'
-  },
-  countdown: {
     marginTop: '10px',
     marginBottom: '10px'
   },
-
-  instruction: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: 3,
-    border: 0,
-    padding: '0 30px',
-    marginTop: '24px',
-    marginBottom: '24px'
+  btn: {
+    marginTop: '10px',
+    marginBottom: '10px'
   },
-
+  countdown: {
+    marginTop: '10px',
+    marginBottom: '10px',
+    marginLeft: '10px',
+    marginRight: '10px'
+  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
@@ -153,115 +144,105 @@ class Room extends React.Component {
         <React.Fragment>
           <Container className={classes.root}>
             <Paper className={classes.header}>
-              {start ? (
-                <Typography
-                  className={classes.font}
-                  align="center"
-                  variant="h5"
-                  gutterBottom
-                >
-                  You are the {profile.role.toUpperCase()}
-                </Typography>
-              ) : visible ? (
+              {!solved ? (
                 <React.Fragment>
                   <LinearProgress className={classes.root} />
                   <Typography
-                    className={classes.font}
+                    className={classes.countdown}
                     align="center"
-                    variant="h5"
+                    variant="h6"
                     gutterBottom
                   >
-                    Waiting for your partner
+                    {visible ? (
+                      'Waiting For Your Partner'
+                    ) : (
+                      <React.Fragment>
+                        {start && (
+                          <React.Fragment>
+                            You are the {profile.role.toUpperCase()}
+                          </React.Fragment>
+                        )}
+                        <Countdown
+                          start={start}
+                          roomId={id}
+                          role={profile.role}
+                        />
+                      </React.Fragment>
+                    )}
                   </Typography>
                   <LinearProgress variant="query" className={classes.root} />
                 </React.Fragment>
               ) : (
                 <Typography
-                  className={classes.font}
+                  className={classes.countdown}
                   align="center"
-                  variant="h5"
+                  variant="h6"
+                  component="div"
                   gutterBottom
                 >
-                  Click Start
+                  You Solved The Problem
                 </Typography>
               )}
-              <Typography
-                className={classes.countdown}
-                align="center"
-                variant="h6"
-                component="div"
-                gutterBottom
-              >
-                {!solved && (
-                  <Countdown
-                    start={start}
-                    roomId={id}
-                    role={profile.role}
-                    visible={visible}
-                  />
-                )}
-              </Typography>
             </Paper>
-            <div className={classes.instruction}>
-              <ExpansionPanel>
-                <ExpansionPanelSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography variant="h6" className={classes.heading}>
-                    Shared Room ID
-                  </Typography>
-                  <Typography className={classes.secondaryHeading}>
-                    Your partner must have the same room id
-                  </Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <Typography>{id}</Typography>
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-              <ExpansionPanel>
-                <ExpansionPanelSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography variant="h6" className={classes.heading}>
-                    Coding Instructions
-                  </Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <Typography>{instructions}</Typography>
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            </div>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <ExpansionPanel>
+                  <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography variant="h6" className={classes.heading}>
+                      Coding Instructions
+                    </Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>{instructions}</Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              </Grid>
+              <Grid item xs={6}>
+                <ExpansionPanel>
+                  <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography variant="h6" className={classes.heading}>
+                      Shared Room ID
+                    </Typography>
+                    <Typography className={classes.secondaryHeading}>
+                      Your Partner Must Have The Same Room ID
+                    </Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>{id}</Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              </Grid>
+            </Grid>
             <Grid container spacing={2} className="room">
               <Grid item xs={8} pr={0}>
-                <AceCodeEditor
-                  code={code}
-                  onChange={this.onChange}
-                  role={profile.role}
-                  start={start}
-                />
-                <Grid container justify="space-between">
+                <React.Fragment>
+                  <AceCodeEditor
+                    code={code}
+                    onChange={this.onChange}
+                    role={profile.role}
+                    start={start}
+                  />
+
                   <Button
                     type="submit"
                     name="action"
+                    fullWidth
                     onClick={e => this.handleOnRun(e, code, name)}
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
+                    className={classes.btn}
                   >
                     RUN
                   </Button>
-                  <Button
-                    type="button"
-                    onClick={this.redirectToTarget}
-                    variant="contained"
-                    color="secondary"
-                  >
-                    BAIL
-                  </Button>
-                </Grid>
+                </React.Fragment>
               </Grid>
               <Grid item xs={4}>
                 <Box
@@ -277,6 +258,16 @@ class Room extends React.Component {
                   />
                   <RoomResults result={result} />
                 </Box>
+                <Button
+                  type="button"
+                  onClick={this.redirectToTarget}
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.btn}
+                >
+                  BAIL
+                </Button>
               </Grid>
             </Grid>
           </Container>

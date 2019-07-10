@@ -50,7 +50,6 @@ export const AvailableRooms = props => {
       ) : null
     })
     .filter(component => component !== null)
-
   return (
     <div className={classes.root}>
       <List

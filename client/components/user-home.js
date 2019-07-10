@@ -12,7 +12,6 @@ import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -21,8 +20,6 @@ import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import Chip from '@material-ui/core/Chip'
-import FaceIcon from '@material-ui/icons/Face'
-import DoneIcon from '@material-ui/icons/Done'
 import blue from '@material-ui/core/colors/blue'
 import Loading from './Loading'
 
@@ -62,7 +59,6 @@ const styles = theme => ({
   blue: {
     margin: '3px',
     border: 0,
-    padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(10, 10, 10, .3)',
     marginTop: '24px',
     marginBottom: '24px',

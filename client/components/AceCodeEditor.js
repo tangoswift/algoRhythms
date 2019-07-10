@@ -2,7 +2,7 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
-import 'brace/theme/solarized_dark'
+import 'brace/theme/monokai'
 
 export const AceCodeEditor = props => {
   const {role, start, onChange} = props
@@ -15,7 +15,7 @@ export const AceCodeEditor = props => {
   return (
     <AceEditor
       mode="javascript"
-      theme="solarized_dark"
+      theme="monokai"
       onChange={onChange}
       name="UNIQUE_ID_OF_DIV"
       editorProps={{$blockScrolling: true}}
@@ -27,7 +27,7 @@ export const AceCodeEditor = props => {
       highlightActiveLine={true}
       wrapEnabled={true}
       width="100%"
-      height="85%"
+      height="100%"
       value={code}
       readOnly={readOnly}
     />
