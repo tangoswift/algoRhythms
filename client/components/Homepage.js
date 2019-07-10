@@ -35,7 +35,7 @@ class Homepage extends Component {
                 <i>rhythm</i>
               </b>{' '}
               <br />
-              of solving challenges in pairs... Remotely
+              of solving coding challenges in pairs...Remotely!
             </p>
           }
           button={
