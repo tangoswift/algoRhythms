@@ -28,7 +28,7 @@ class Homepage extends Component {
       <React.Fragment>
         <Card>
           <CardMedia
-            src="https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/danial-ricaros-FCHlYvR5gJI-unsplash_fade.jpg?alt=media&token=c2c40a3f-6861-4135-a3e0-84681fe33e5d"
+            src="https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/danial-ricaros-FCHlYvR5gJI-unsplash_algorhythm_fade.jpg?alt=media&token=88541a39-f74a-4ca1-af53-fda62774837b"
             component="img"
             style={{height: '93vh'}}
           />
