@@ -9,6 +9,8 @@ import {withStyles} from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
 import FaceIcon from '@material-ui/icons/Face'
 import DoneIcon from '@material-ui/icons/Done'
+import Badge from '@material-ui/core/Badge'
+import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
   root: {
@@ -21,6 +23,12 @@ const styles = theme => ({
     height: '48px',
     boxShadow: '0 3px 5px 2px rgba(25, 15, 15, .3)',
     marginTop: '10px'
+  },
+  badges: {
+    margin: theme.spacing(2)
+  },
+  padding: {
+    padding: theme.spacing(0, 1.2)
   }
 })
 
@@ -46,9 +54,32 @@ export class UserProfile extends Component {
       return (
         <Container>
           <div className={classes.root}>
-            <Chip
-              // className="stats-name"
-              // variant="contained"
+            <Avatar>
+              {profile.firstName[0]}
+              {profile.lastName[0]}
+            </Avatar>
+
+            <div>
+              <Badge
+                className={classes.badges}
+                badgeContent={totalProblemsSolved}
+                color="secondary"
+              >
+                <Typography className={classes.padding}>Solved</Typography>
+              </Badge>
+              <Badge
+                className={classes.badges}
+                badgeContent={totalPoints}
+                color="secondary"
+              >
+                <Typography className={classes.padding}>
+                  Total Points
+                </Typography>
+              </Badge>
+            </div>
+            {/* <Chip
+              className="stats-name"
+              variant="contained"
               color="secondary"
               label={`${profile.firstName} ${
                 profile.lastName
@@ -56,19 +87,19 @@ export class UserProfile extends Component {
             />
             <div>
               <Chip
-                // variant="outlined"
+                variant="outlined"
                 color="secondary"
-                // deleteIcon={<DoneIcon />}
-                // icon={<FaceIcon />}
+                deleteIcon={<DoneIcon />}
+                icon={<FaceIcon />}
                 label={`Problems Solved : ${totalProblemsSolved}`}
               />{' '}
               <Chip
-                // variant="outlined"
+                variant="outlined"
                 color="secondary"
-                // icon={<FaceIcon />}
+                icon={<FaceIcon />}
                 label={`Total Points = ${totalPoints}`}
               />
-            </div>
+            </div> */}
           </div>
           {roomHistory.length === 0 ? (
             //Displays when user has no problems history
