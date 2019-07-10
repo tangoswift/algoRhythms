@@ -64,14 +64,14 @@ class Countdown extends Component {
     return (
       <React.Fragment>
         {start ? (
-          <React.Fragment>
+          <div>
             <span id="timer" fontSize="50">
               {seconds}
             </span>
             <span id="timerMessage" fontSize="50">
               {message}
             </span>
-          </React.Fragment>
+          </div>
         ) : (
           <Button
             color="primary"

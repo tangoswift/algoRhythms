@@ -27,7 +27,7 @@ export const AceCodeEditor = props => {
       highlightActiveLine={true}
       wrapEnabled={true}
       width="100%"
-      height="85%"
+      height="100%"
       value={code}
       readOnly={readOnly}
     />

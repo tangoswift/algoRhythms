@@ -49,6 +49,10 @@ const styles = theme => ({
     marginTop: '10px',
     marginBottom: '10px'
   },
+  btn: {
+    marginTop: '10px',
+    marginBottom: '10px'
+  },
   countdown: {
     marginTop: '10px',
     marginBottom: '10px',
@@ -158,7 +162,6 @@ class Room extends React.Component {
                             You are the {profile.role.toUpperCase()}
                           </React.Fragment>
                         )}
-                        <br />
                         <Countdown
                           start={start}
                           roomId={id}
@@ -226,7 +229,7 @@ class Room extends React.Component {
                   role={profile.role}
                   start={start}
                 />
-                <Grid container justify="space-between">
+                <Grid container className={classes.btn} justify="space-around">
                   <Button
                     type="submit"
                     name="action"
