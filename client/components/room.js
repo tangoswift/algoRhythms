@@ -22,6 +22,13 @@ import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
+import UserEntrySnackbar from './UserEntrySnackbar'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 /**
  * MATERIAL UI
@@ -38,7 +45,7 @@ const styles = theme => ({
     borderRadius: 3,
     border: 0,
     padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginTop: '24px',
     marginBottom: '24px'
   },
@@ -49,6 +56,30 @@ const styles = theme => ({
   countdown: {
     marginTop: '10px',
     marginBottom: '10px'
+  },
+
+  instruction: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 3,
+    border: 0,
+    padding: '0 30px',
+    marginTop: '24px',
+    marginBottom: '24px'
+  },
+
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+    flexBasis: '33.33%',
+    flexShrink: 0
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary
+  },
+  progress: {
+    margin: theme.spacing(2)
   }
 })
 
@@ -98,6 +129,7 @@ class Room extends React.Component {
 
   render() {
     let {room} = this.props
+
     /**
      * Check if room exist
      */
@@ -106,6 +138,7 @@ class Room extends React.Component {
     } else {
       let id = this.props.match.params.id
       const {profile, classes} = this.props
+
       let {
         name,
         result,
@@ -117,100 +150,138 @@ class Room extends React.Component {
       } = this.props.room
 
       return (
-        <Container className={classes.root}>
-          <Paper className={classes.header}>
-            {start ? (
-              <Typography
-                className={classes.font}
-                align="center"
-                variant="h5"
-                gutterBottom
-              >
-                You are currently the {profile.role}
-              </Typography>
-            ) : visible ? (
-              <Typography
-                className={classes.font}
-                align="center"
-                variant="h5"
-                gutterBottom
-              >
-                Waiting for coding partner...
-              </Typography>
-            ) : (
-              <Typography
-                className={classes.font}
-                align="center"
-                variant="h5"
-                gutterBottom
-              >
-                Click Start
-              </Typography>
-            )}
-            <Typography
-              className={classes.countdown}
-              align="center"
-              variant="h6"
-              component="div"
-              gutterBottom
-            >
-              Room ID: {id}
-              {!solved && (
-                <Countdown
-                  start={start}
-                  roomId={id}
-                  role={profile.role}
-                  visible={visible}
-                />
+        <React.Fragment>
+          <Container className={classes.root}>
+            <Paper className={classes.header}>
+              {start ? (
+                <Typography
+                  className={classes.font}
+                  align="center"
+                  variant="h5"
+                  gutterBottom
+                >
+                  You are the {profile.role.toUpperCase()}
+                </Typography>
+              ) : visible ? (
+                <React.Fragment>
+                  <LinearProgress className={classes.root} />
+                  <Typography
+                    className={classes.font}
+                    align="center"
+                    variant="h5"
+                    gutterBottom
+                  >
+                    Waiting for your partner
+                  </Typography>
+                  <LinearProgress variant="query" className={classes.root} />
+                </React.Fragment>
+              ) : (
+                <Typography
+                  className={classes.font}
+                  align="center"
+                  variant="h5"
+                  gutterBottom
+                >
+                  Click Start
+                </Typography>
               )}
-            </Typography>
-          </Paper>
-          <Grid container spacing={2} className="room">
-            <Grid item xs={8} pr={0}>
-              <Typography variant="h6">Instructions: {instructions}</Typography>
-              <AceCodeEditor
-                code={code}
-                onChange={this.onChange}
-                role={profile.role}
-                start={start}
-              />
-              <Grid container justify="space-between">
-                <Button
-                  type="submit"
-                  name="action"
-                  onClick={e => this.handleOnRun(e, code, name)}
-                  variant="contained"
-                  color="primary"
+              <Typography
+                className={classes.countdown}
+                align="center"
+                variant="h6"
+                component="div"
+                gutterBottom
+              >
+                {!solved && (
+                  <Countdown
+                    start={start}
+                    roomId={id}
+                    role={profile.role}
+                    visible={visible}
+                  />
+                )}
+              </Typography>
+            </Paper>
+            <div className={classes.instruction}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
                 >
-                  RUN
-                </Button>
-                <Button
-                  type="button"
-                  onClick={this.redirectToTarget}
-                  variant="contained"
-                  color="primary"
+                  <Typography variant="h6" className={classes.heading}>
+                    Shared Room ID
+                  </Typography>
+                  <Typography className={classes.secondaryHeading}>
+                    Your partner must have the same room id
+                  </Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Typography>{id}</Typography>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+              <ExpansionPanel>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
                 >
-                  BAIL
-                </Button>
+                  <Typography variant="h6" className={classes.heading}>
+                    Coding Instructions
+                  </Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Typography>{instructions}</Typography>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </div>
+            <Grid container spacing={2} className="room">
+              <Grid item xs={8} pr={0}>
+                <AceCodeEditor
+                  code={code}
+                  onChange={this.onChange}
+                  role={profile.role}
+                  start={start}
+                />
+                <Grid container justify="space-between">
+                  <Button
+                    type="submit"
+                    name="action"
+                    onClick={e => this.handleOnRun(e, code, name)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    RUN
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={this.redirectToTarget}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    BAIL
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid item xs={4}>
+                <Box
+                  bgcolor="text.primary"
+                  color="background.paper"
+                  height="100%"
+                >
+                  <iframe
+                    src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
+                    width="100%"
+                    height="50%"
+                    allow="microphone; camera"
+                  />
+                  <RoomResults result={result} />
+                </Box>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Box
-                bgcolor="text.primary"
-                color="background.paper"
-                height="100%"
-              >
-                <iframe
-                  src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=c5b89831-6e30-4f25-a41e-d19d8b84ae1f&room=${id}&iframe=true`}
-                  width="100%"
-                  height="50%"
-                  allow="microphone; camera"
-                />
-                <RoomResults result={result} />
-              </Box>
-            </Grid>
-          </Grid>
-        </Container>
+          </Container>
+          {/* <UserEntrySnackbar visible={visible} /> */}
+        </React.Fragment>
       )
     }
   }

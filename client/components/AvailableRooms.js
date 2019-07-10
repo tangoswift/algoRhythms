@@ -25,7 +25,6 @@ export const AvailableRooms = props => {
     addRoomToUser,
     setAsDriver
   } = props
-
   const classes = useStyles()
   const handleListItemClick = async (event, roomId) => {
     event.preventDefault()
@@ -60,6 +59,7 @@ export const AvailableRooms = props => {
             <JoinSpecificRoom
               firestore={firestore}
               handleListItemClick={handleListItemClick}
+              classes={props.classes}
             />
             Most Recent Available Rooms:
           </ListSubheader>

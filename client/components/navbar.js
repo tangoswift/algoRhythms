@@ -32,7 +32,8 @@ const Navbar = ({auth, signOut}) => {
               component={RouterLink}
               underline="none"
               color="inherit"
-              to="/"
+              // to="/"
+              to={auth.uid ? '/home' : '/'}
             >
               algoRhythms
             </Link>
