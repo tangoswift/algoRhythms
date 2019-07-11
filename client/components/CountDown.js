@@ -33,7 +33,6 @@ class Countdown extends Component {
         document.getElementById('timerMessage').style = 'color:red'
         document.getElementById('timer').style = 'color:red'
       }
-
       //Reverse the role when timer hits zero
       if (this.state.seconds === 0) {
         if (this.props.role == 'navigator') {
@@ -41,7 +40,7 @@ class Countdown extends Component {
         } else {
           this.props.setNavigator(this.props.roomId, this.props.auth.uid)
         }
-        this.setState({seconds: 10})
+        this.setState({seconds: 30})
         this.setState({message: ''})
         document.getElementById('timer').style = 'color:white'
         document.getElementById('timerMessage').style = 'color:white'
@@ -57,7 +56,7 @@ class Countdown extends Component {
     const {seconds, message} = this.state
     if (start && seconds === -1) {
       this.setState({
-        seconds: 10
+        seconds: 30
       })
       this.timer = setInterval(this.tick, 1000)
     }

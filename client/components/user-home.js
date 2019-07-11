@@ -65,6 +65,9 @@ const styles = theme => ({
   textField: {
     padding: '5px 5px',
     width: '75%'
+  },
+  problemInstruction: {
+    backgroundColor: 'lightgray'
   }
 })
 
@@ -161,7 +164,9 @@ export class UserHome extends Component {
                         >
                           <ListItemText
                             className="problem-name"
-                            primary={problems[problemName].name}
+                            primary={`View Instruction - ${
+                              problems[problemName].name
+                            }`}
                           />
                           {this.state.open[idx] ? (
                             <ExpandLess />
@@ -177,13 +182,16 @@ export class UserHome extends Component {
                           <List component="div" disablePadding>
                             <ListItem
                               button
+                              className={classes.problemInstruction}
                               onClick={() =>
                                 this.createRoom(problems[problemName])
                               }
                             >
                               <ListItemText
                                 className="problem-instruction"
-                                primary={problems[problemName].instructions}
+                                primary={`Click To Create Room - ${
+                                  problems[problemName].instructions
+                                }`}
                               >
                                 {problems[problemName].instructions}
                               </ListItemText>

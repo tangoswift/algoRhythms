@@ -6,8 +6,8 @@ const useStyles = makeStyles(theme => ({
   progress: {
     margin: theme.spacing(2),
     position: 'absolute',
-    top: '50%',
-    left: '50%'
+    top: '40%',
+    left: '45%'
   }
 }))
 
