@@ -31,7 +31,7 @@ To be paired up in an existing room, simply click on an existing room. Now that 
 
 To start a video conference, simply click "Click to Start Video Chat"
 
-![Video Conference](https://im2.ezgif.com/tmp/ezgif-2-aa880b354702.gif)
+![Video Conference](https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/ReadMe%20Images%2Fvideo.gif?alt=media&token=0b6d16c0-2094-426a-a03d-8b660fed53a6)
 
 ### Solving a Problem Together
 
