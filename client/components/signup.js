@@ -88,7 +88,7 @@ export class SignUp extends React.Component {
           <CardMedia
             src="https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/ben-kolde-t9DooibgMEk-unsplash_fade.jpg?alt=media&token=defca4c6-573b-4956-98f1-57f446b9d3c6"
             component="img"
-            style={{height: '93vh'}}
+            style={{height: '100vh'}}
           />
         </Card>
         <div>
