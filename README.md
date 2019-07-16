@@ -19,7 +19,7 @@ After a user creates an account or logs into **algoRhythms**, they are are prese
 
 In the image below, no existing rooms are available so a new room was created. The user cannot type in the code editor until the room is paired with another coding partner
 
-![Rooms](https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/ReadMe%20Images%2Frooms.gif?alt=media&token=dae9c307-2c51-4e4b-a240-0bd64296d712)
+![Rooms](https://firebasestorage.googleapis.com/v0/b/algorhythms1904.appspot.com/o/ReadMe%20Images%2Frooms.gif?alt=media&token=1a7421b9-ced6-48a0-8457-5d1a4bb1f697)
 
 ### Pairing Up
 
