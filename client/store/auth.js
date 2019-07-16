@@ -79,7 +79,6 @@ export const signUpThunk = user => async (
         firstName: user.firstName,
         lastName: user.lastName
       })
-
     dispatch(signUpSuccess())
     //Redirect to home after successful sign up
     history.push('/home')

@@ -33,7 +33,6 @@ class Countdown extends Component {
         document.getElementById('timerMessage').style = 'color:red'
         document.getElementById('timer').style = 'color:red'
       }
-
       //Reverse the role when timer hits zero
       if (this.state.seconds === 0) {
         if (this.props.role == 'navigator') {

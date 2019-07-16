@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link as RouterLink} from 'react-router-dom'
 import Link from '@material-ui/core/Link'
+import Icon from '@material-ui/core/Icon'
 import {signOutThunk} from '../store/auth'
 
 // Material UI Dependencies

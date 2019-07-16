@@ -27,6 +27,9 @@ const styles = theme => ({
   },
   padding: {
     padding: theme.spacing(0, 1.2)
+  },
+  avatar: {
+    backgroundColor: '#747474'
   }
 })
 
@@ -52,7 +55,7 @@ export class UserProfile extends Component {
       return (
         <Container>
           <div className={classes.root}>
-            <Avatar>
+            <Avatar className={classes.avatar}>
               {profile.firstName[0]}
               {profile.lastName[0]}
             </Avatar>
@@ -75,29 +78,6 @@ export class UserProfile extends Component {
                 </Typography>
               </Badge>
             </div>
-            {/* <Chip
-              className="stats-name"
-              variant="contained"
-              color="secondary"
-              label={`${profile.firstName} ${
-                profile.lastName
-              } : Problems History`}
-            />
-            <div>
-              <Chip
-                variant="outlined"
-                color="secondary"
-                deleteIcon={<DoneIcon />}
-                icon={<FaceIcon />}
-                label={`Problems Solved : ${totalProblemsSolved}`}
-              />{' '}
-              <Chip
-                variant="outlined"
-                color="secondary"
-                icon={<FaceIcon />}
-                label={`Total Points = ${totalPoints}`}
-              />
-            </div> */}
           </div>
           {roomHistory.length === 0 ? (
             //Displays when user has no problems history
