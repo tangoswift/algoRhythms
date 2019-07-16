@@ -15,7 +15,7 @@ Coming from Fullstack Academy of Code, pair programming was heavily emphasized t
 
 ### Creating a New Room
 
-After a user creates an account or log into **algoRhythms**, they are are presented a choice of pairing up with a coding partner in an existing room or creating a new room by selecting a new problem to solve.
+After a user creates an account or logs into **algoRhythms**, they are are presented a choice of pairing up with a coding partner in an existing room or creating a new room by selecting a new problem to solve.
 
 In the image below, no existing rooms are available so a new room was created. The user cannot type in the code editor until the room is paired with another coding partner
 
@@ -45,7 +45,7 @@ Once the timer reaches zero, the roles are reversed and the timer is reset.
 
 ### Running Tests
 
-Once the coding pair are happy with their solutions, they can click run to see if they past all the tests. If all tests pass, the timer will stop and state that the problem is solved.
+Once the coding pair are happy with their solutions, they can click run to see if they pass all the tests. If all tests pass, the timer will stop and state that the problem is solved.
 
 If all the tests do not pass, the user can continue to try solving the problem until all tests pass.
 
